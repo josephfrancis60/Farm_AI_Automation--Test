@@ -1,6 +1,6 @@
 from services.weather_service import get_weather
 
-def weather_tool(city="London, GB"):
+def weather_tool(city="Kanija Bhavan"):
 
     weather = get_weather(city)
 

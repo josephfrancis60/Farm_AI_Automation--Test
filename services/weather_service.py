@@ -7,7 +7,7 @@ load_dotenv()
 
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
-def get_weather(city="London, GB"):
+def get_weather(city="Kanija Bhavan"):
     # Current weather
     current_url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
     # 5-day forecast

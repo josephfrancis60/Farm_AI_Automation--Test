@@ -95,3 +95,21 @@ def delete_field(field_id):
         return f"Successfully deleted field {field_id}."
     else:
         return f"Error: Field ID {field_id} not found."
+
+def get_field_id_by_crop(crop_name):
+    """
+    Get the FieldId for a given crop name.
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    # Use case-insensitive matching
+    query = "SELECT FieldId FROM Fields WHERE LOWER(Crop) = LOWER(?)"
+    cursor.execute(query, (crop_name,))
+    
+    row = cursor.fetchone()
+    conn.close()
+
+    if row:
+        return row.FieldId
+    return None

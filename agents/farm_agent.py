@@ -7,9 +7,14 @@ class FarmAgent:
 
     def ask(self, user_input):
         try:
+            from datetime import datetime
+            now = datetime.now()
+            context = f"[Context: Current time is {now.strftime('%A, %Y-%m-%d %H:%M:%S')}]\n"
+            full_input = context + user_input
+            
             # Use LangGraph agent for processing
             result = self.agent.invoke(
-                {"messages": [("user", user_input)]},
+                {"messages": [("user", full_input)]},
                 config=self.config
             )
             # The last message in the state is the agent's response
