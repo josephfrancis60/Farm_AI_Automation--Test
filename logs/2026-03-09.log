@@ -1,0 +1,81 @@
+2026-03-09 15:24:22,208 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-09 15:24:22,209 - INFO - HUMAN: hi
+2026-03-09 15:24:22,210 - INFO - AGENT REPLY: Hello. How can I assist you with your farm today?
+2026-03-09 15:24:22,212 - INFO - TOKEN USAGE: {'completion_tokens': 13, 'prompt_tokens': 1881, 'total_tokens': 1894, 'completion_time': 0.037442847, 'completion_tokens_details': None, 'prompt_time': 0.102031323, 'prompt_tokens_details': None, 'queue_time': 0.048596606, 'total_time': 0.13947417}
+2026-03-09 15:24:22,216 - INFO - --------------------------------------------------
+
+2026-03-09 15:25:35,473 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-09 15:25:35,477 - INFO - HUMAN: what all crops do i have right now?
+2026-03-09 15:25:35,488 - INFO - AGENT TOOL DECISION: crops | PARAMETERS: {}
+2026-03-09 15:25:35,490 - INFO - AGENT REPLY: You currently have Tomato, Corn, and Potato crops in your farm.
+2026-03-09 15:25:35,491 - INFO - TOKEN USAGE: {'completion_tokens': 15, 'prompt_tokens': 1968, 'total_tokens': 1983, 'completion_time': 0.045392241, 'completion_tokens_details': None, 'prompt_time': 0.204687504, 'prompt_tokens_details': None, 'queue_time': 0.162686474, 'total_time': 0.250079745}
+2026-03-09 15:25:35,493 - INFO - --------------------------------------------------
+
+2026-03-09 15:27:30,674 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-09 15:27:30,675 - INFO - HUMAN: hey good news, i have planted sugarcane in my farm...
+2026-03-09 15:27:30,676 - INFO - AGENT REPLY: That's great news. To add the sugarcane to your farm's records, I just need to know a few more details. Can you please tell me what type of soil the sugarcane is planted in and how many acres it covers?
+2026-03-09 15:27:30,676 - INFO - TOKEN USAGE: {'completion_tokens': 51, 'prompt_tokens': 1894, 'total_tokens': 1945, 'completion_time': 0.195270966, 'completion_tokens_details': None, 'prompt_time': 0.219439063, 'prompt_tokens_details': None, 'queue_time': 0.048366366, 'total_time': 0.414710029}
+2026-03-09 15:27:30,677 - INFO - --------------------------------------------------
+
+2026-03-09 15:41:03,432 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-09 15:41:03,434 - INFO - HUMAN: Hi...
+2026-03-09 15:41:03,438 - INFO - AGENT REPLY: Hello. How can I assist you with your farm today?
+2026-03-09 15:41:03,447 - INFO - TOKEN USAGE: {'completion_tokens': 13, 'prompt_tokens': 1882, 'total_tokens': 1895, 'completion_time': 0.029852404, 'completion_tokens_details': None, 'prompt_time': 0.100913792, 'prompt_tokens_details': None, 'queue_time': 0.048578727, 'total_time': 0.130766196}
+2026-03-09 15:41:03,454 - INFO - --------------------------------------------------
+
+2026-03-09 15:43:01,335 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-09 15:43:01,335 - INFO - HUMAN: what all crops do i have right now?
+2026-03-09 15:43:01,335 - INFO - AGENT TOOL DECISION: crops | PARAMETERS: {}
+2026-03-09 15:43:01,336 - INFO - AGENT REPLY: You currently have Tomato, Corn, and Potato crops in your farm. Would you like to add, update, or remove any crops?
+2026-03-09 15:43:01,336 - INFO - TOKEN USAGE: {'completion_tokens': 28, 'prompt_tokens': 1968, 'total_tokens': 1996, 'completion_time': 0.086001616, 'completion_tokens_details': None, 'prompt_time': 0.111117902, 'prompt_tokens_details': None, 'queue_time': 0.049546267, 'total_time': 0.197119518}
+2026-03-09 15:43:01,336 - INFO - --------------------------------------------------
+
+2026-03-09 15:46:24,814 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-09 15:46:24,814 - INFO - HUMAN: do i have to water any of the crops today?
+2026-03-09 15:46:24,815 - INFO - AGENT TOOL DECISION: weather | PARAMETERS: {'city': 'London'}
+2026-03-09 15:46:24,815 - INFO - AGENT TOOL DECISION: crops | PARAMETERS: {}
+2026-03-09 15:46:24,815 - INFO - AGENT REPLY: It seems that there is light rain forecasted for today, so you may not need to water your crops. However, I would recommend checking the soil moisture levels to confirm. If the soil is already moist from previous rainfall, you may not need to water your crops today. 
+
+If you would like to water your crops, I can help you with that. Please let me know which crop you would like to water and for how long. I can use the irrigation tool to activate the sprinkler system. 
+
+Please note that the default duration for irrigation is 60 minutes unless specified.
+2026-03-09 15:46:24,816 - INFO - TOKEN USAGE: {'completion_tokens': 118, 'prompt_tokens': 2150, 'total_tokens': 2268, 'completion_time': 0.44731469, 'completion_tokens_details': None, 'prompt_time': 0.110210391, 'prompt_tokens_details': None, 'queue_time': 0.048988998, 'total_time': 0.557525081}
+2026-03-09 15:46:24,816 - INFO - --------------------------------------------------
+
+2026-03-09 15:49:27,056 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-09 15:49:27,057 - INFO - HUMAN: hey i have a good news. i have planted a new crop in the farm. its sugarcane.
+2026-03-09 15:49:27,057 - INFO - AGENT REPLY: That's great news about the new sugarcane crop. To add it to our records, I just need to know a bit more information. Can you please tell me what type of soil the sugarcane is planted in and how many acres it covers?
+2026-03-09 15:49:27,057 - INFO - TOKEN USAGE: {'completion_tokens': 53, 'prompt_tokens': 1902, 'total_tokens': 1955, 'completion_time': 0.171515595, 'completion_tokens_details': None, 'prompt_time': 0.139485595, 'prompt_tokens_details': None, 'queue_time': 0.050525675, 'total_time': 0.31100119}
+2026-03-09 15:49:27,057 - INFO - --------------------------------------------------
+
+2026-03-09 15:50:13,706 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-09 15:50:13,706 - INFO - HUMAN: it  is loamy soil and about 3.5 acres 
+2026-03-09 15:50:13,706 - INFO - AGENT TOOL DECISION: add_new_crop | PARAMETERS: {'area_acres': 3.5, 'crop': 'Sugarcane', 'soil_type': 'Loamy'}
+2026-03-09 15:50:13,707 - INFO - AGENT REPLY: I've added the new crop to the farm fields. The crop is Sugarcane, planted in loamy soil, and covers an area of 3.5 acres. If you need to update or delete this crop, or if you'd like to add another one, just let me know.
+2026-03-09 15:50:13,707 - INFO - TOKEN USAGE: {'completion_tokens': 61, 'prompt_tokens': 1956, 'total_tokens': 2017, 'completion_time': 0.216838733, 'completion_tokens_details': None, 'prompt_time': 0.167397595, 'prompt_tokens_details': None, 'queue_time': 0.049796984, 'total_time': 0.384236328}
+2026-03-09 15:50:13,707 - INFO - --------------------------------------------------
+
