@@ -185,16 +185,17 @@ def remove_from_inventory(fertilizer_name: str):
     return delete_fertilizer(fertilizer_name)
 
 @tool
-def irrigation(field_id: int, duration_minutes: int):
+def irrigation(field_id: int, duration_minutes: int, delay_minutes: float = 0.0):
     """
-    Activate the sprinkler irrigation system for a specific field and record the history.
+    Activate or schedule the sprinkler irrigation system for a specific field and record the history.
     
     Args:
         field_id: The ID of the field to irrigate.
         duration_minutes: Duration of watering in minutes.
+        delay_minutes: Delay in minutes before starting. MANDATORY: If the user says 'start after 2 minutes', set this to 2. If they say 'start now', set to 0.
     """
-    print(f"Tool: irrigation({field_id}, {duration_minutes})")
-    return activate_sprinkler(field_id, duration_minutes)
+    print(f"Tool: irrigation({field_id}, {duration_minutes}, {delay_minutes})")
+    return activate_sprinkler(field_id, duration_minutes, delay_minutes)
 
 @tool
 def weather(city: str):

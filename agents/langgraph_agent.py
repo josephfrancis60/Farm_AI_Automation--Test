@@ -50,6 +50,7 @@ def get_agent():
         "\n- Never run a tool unless the user's message is clearly about that topic."
         "\n- Look up IDs internally — never ask the farmer for technical IDs."
         "\n- Default irrigation is the duration from the schedule unless otherwise specified."
+        "\n- IMPORTANT (DELAYED IRRIGATION): If you schedule irrigation for later (using delay_minutes), confirm it to the user by saying something like 'Ok, I will start it after {number} minutes.' Do NOT say it has started already if it is scheduled for the future."
     )
 
     agent = create_react_agent(

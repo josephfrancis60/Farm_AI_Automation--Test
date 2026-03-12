@@ -1,24 +1,85 @@
+import os
+import threading
+from twilio.rest import Client
 from database.db_connection import get_connection
 from datetime import datetime, date
 
-def activate_sprinkler(field_id, duration_minutes):
+def _execute_irrigation(field_id, duration_minutes, crop_name):
+    """
+    Internal function to execute the database records and SMS.
+    """
+    print(f"DEBUG: Executing irrigation for {crop_name} NOW...")
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        # Record in history
+        query = "INSERT INTO IrrigationHistory (FieldId, DurationMinutes, ActivatedAt) VALUES (?, ?, ?)"
+        cursor.execute(query, (field_id, duration_minutes, datetime.now()))
+        
+        conn.commit()
+    except Exception as e:
+        print(f"Database error during irrigation execution: {e}")
+    finally:
+        if 'conn' in locals() and conn:
+            conn.close()
+
+    # Send SMS via Twilio
+    account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
+    auth_token = os.environ.get('TWILIO_AUTH_TOKEN')
+    twilio_phone = os.environ.get('TWILIO_PHONE_NUMBER')
+    target_phone = os.environ.get('TARGET_PHONE_NUMBER')
+
+    if account_sid and auth_token and account_sid != "your_account_sid_here":
+        try:
+            client = Client(account_sid, auth_token)
+            message = client.messages.create(
+                body=f"Sprinkler: turned on for {duration_minutes} minutes in field '{crop_name}'.",
+                from_=twilio_phone,
+                to=target_phone
+            )
+            print(f"SMS notification sent to {target_phone} (SID: {message.sid}).")
+        except Exception as e:
+            print(f"Failed to send SMS notification: {str(e)}")
+
+
+def activate_sprinkler(field_id, duration_minutes, delay_minutes=0):
+    """
+    Activates the sprinkler for a given field and duration.
+    If delay_minutes > 0, the activation is scheduled asynchronously.
+    """
     conn = get_connection()
     cursor = conn.cursor()
 
-    # Record in history
-    query = "INSERT INTO IrrigationHistory (FieldId, DurationMinutes, ActivatedAt) VALUES (?, ?, ?)"
-    cursor.execute(query, (field_id, duration_minutes, datetime.now()))
-    
-    conn.commit()
+    # Fetch the Field Name (Crop) based on FieldId
+    crop_name = f"Field {field_id}"
+    cursor.execute("SELECT Crop FROM Fields WHERE FieldId = ?", (field_id,))
+    row = cursor.fetchone()
+    if row and row.Crop:
+        crop_name = row.Crop
+        
     conn.close()
 
-    return (
-        f"Irrigation Decision:\n"
-        f"Sprinkler system activated for field ID {field_id}.\n"
-        f"Duration: {duration_minutes} minutes.\n"
-        f"Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
-        f"Transaction recorded in database."
-    )
+    if delay_minutes > 0:
+        # Schedule the execution asynchronously
+        print(f"DEBUG: Scheduling irrigation for {crop_name} in {delay_minutes} minutes.")
+        timer = threading.Timer(delay_minutes * 60.0, _execute_irrigation, args=[field_id, duration_minutes, crop_name])
+        timer.start()
+        return (
+            f"Irrigation Decision:\n"
+            f"Sprinkler system scheduled to activate for field '{crop_name}' in {delay_minutes} minutes.\n"
+            f"Duration: {duration_minutes} minutes."
+        )
+    else:
+        # Execute immediately
+        _execute_irrigation(field_id, duration_minutes, crop_name)
+        return (
+            f"Irrigation Decision:\n"
+            f"Sprinkler system activated for field '{crop_name}'.\n"
+            f"Duration: {duration_minutes} minutes.\n"
+            f"Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
+            f"Transaction recorded in database and SMS sent (if configured)."
+        )
 
 def was_already_watered_today(field_id):
     """
