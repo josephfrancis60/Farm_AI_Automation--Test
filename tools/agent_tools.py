@@ -4,7 +4,7 @@ from tools.crop_tool import get_all_crops, add_crop, update_field, delete_field,
 from tools.fertilizer_tool import get_fertilizer_recommendation
 from tools.inventory_tool import check_fertilizer_stock, add_fertilizer, update_fertilizer_stock, delete_fertilizer
 from tools.irrigation_tool import activate_sprinkler, get_irrigation_schedule, was_already_watered_today
-from services.weather_service import get_weather
+from services.weather_service import get_weather, add_weather_history
 from datetime import datetime
 
 @tool
@@ -196,6 +196,20 @@ def irrigation(field_id: int, duration_minutes: int, delay_minutes: float = 0.0)
     """
     print(f"Tool: irrigation({field_id}, {duration_minutes}, {delay_minutes})")
     return activate_sprinkler(field_id, duration_minutes, delay_minutes)
+
+@tool
+def update_weather_history(location: str, temperature: float, rain_condition: str, humidity: float):
+    """
+    Manually add a weather record to the WeatherHistory table.
+    
+    Args:
+        location: The location name (e.g., 'Kanija Bhavan').
+        temperature: The temperature in Celsius.
+        rain_condition: The rain condition (e.g., 'Rainy', 'Light Rain', 'Stormy').
+        humidity: The humidity percentage.
+    """
+    print(f"Tool: update_weather_history('{location}', {temperature}, '{rain_condition}', {humidity})")
+    return add_weather_history(location, temperature, rain_condition, humidity)
 
 @tool
 def weather(city: str):

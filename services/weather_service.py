@@ -56,3 +56,23 @@ def get_weather(city="Kanija Bhavan"):
     _weather_cache[city] = (time.time(), result)
     
     return result
+
+def add_weather_history(location, temperature, rain_condition, humidity):
+    """
+    Inserts a row into the WeatherHistory table.
+    """
+    from database.db_connection import get_connection
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("""
+            INSERT INTO WeatherHistory (Location, Temperature, Rain, Humidity, Timestamp)
+            VALUES (?, ?, ?, ?, GETDATE())
+        """, (location, temperature, rain_condition, humidity))
+        conn.commit()
+        return f"Successfully added weather history for {location}: {rain_condition}."
+    except Exception as e:
+        conn.rollback()
+        return f"Error adding weather history: {e}"
+    finally:
+        conn.close()

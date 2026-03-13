@@ -1,0 +1,10 @@
+[
+    {
+        "id": "20260313171802576682",
+        "timestamp": "2026-03-13 17:18:02",
+        "title": "Irrigation Recommended",
+        "message": "Field 2 (Corn) needs watering. Reason: Rain detected, but sandy soil drains fast. Suggest light irrigation.",
+        "category": "INFO",
+        "is_read": false
+    }
+]

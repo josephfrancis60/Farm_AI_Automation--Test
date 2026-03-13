@@ -1,0 +1,554 @@
+2026-03-13 11:58:24,143 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-13 11:58:24,145 - INFO - USER INPUT  : System Context: The user wants to proceed with the recommendation in this alert: 'Field 4 (Sugarcane) needs watering. Reason: Soil moisture might be low and no rain detected.'. Please check the current irrigation status first, and if it still makes sense, activate the sprinkler. If it was already watered or conditions changed, explain that instead.
+2026-03-13 11:58:24,147 - INFO - TOOL [1] CALLED  : evaluate_irrigation_need
+2026-03-13 11:58:24,150 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-13 11:58:24,152 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-13 11:58:24,153 - INFO - TOOL [2] CALLED  : Irrigation Schedule & Weather Check
+2026-03-13 11:58:24,154 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 11:58:24,156 - INFO -        RESPONSE  : Irrigation Schedule for Friday:
+              - Sugarcane: Scheduled for 06:30, 40 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-13 11:58:24,157 - INFO - TOOL [3] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-13 11:58:24,159 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 40, 'field_id': 4}
+2026-03-13 11:58:24,160 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Sugarcane'.
+              Duration: 40 minutes.
+              Started at: 2026-03-13 11:58:23
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-13 11:58:24,163 - INFO - AGENT REPLY : The irrigation for Field 4 (Sugarcane) has started. I've activated the sprinkler system for 40 minutes as scheduled. If you need any further assistance, feel free to ask!
+2026-03-13 11:58:24,164 - INFO - TOKENS      : prompt=2646 | completion=42 | total=2688 | time=0.303s
+2026-03-13 11:58:24,167 - INFO - --------------------------------------------------
+
+2026-03-13 11:59:09,029 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-13 11:59:09,030 - INFO - USER INPUT  : hows my farm today so far?
+2026-03-13 11:59:09,031 - INFO - TOOL [1] CALLED  : evaluate_irrigation_need
+2026-03-13 11:59:09,031 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-13 11:59:09,032 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-13 11:59:09,032 - INFO - TOOL [2] CALLED  : Irrigation Schedule & Weather Check
+2026-03-13 11:59:09,033 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 11:59:09,034 - INFO -        RESPONSE  : Irrigation Schedule for Friday:
+              - Sugarcane: Scheduled for 06:30, 40 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-13 11:59:09,034 - INFO - TOOL [3] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-13 11:59:09,035 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 40, 'field_id': 4}
+2026-03-13 11:59:09,036 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Sugarcane'.
+              Duration: 40 minutes.
+              Started at: 2026-03-13 11:58:23
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-13 11:59:09,036 - INFO - TOOL [4] CALLED  : Crop List Lookup
+2026-03-13 11:59:09,037 - INFO -        PARAMETERS : {}
+2026-03-13 11:59:09,038 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              
+2026-03-13 11:59:09,039 - INFO - AGENT REPLY : Your farm is looking good so far today. You have four fields with different crops: Tomato, Corn, Potato, and Sugarcane. I've just watered the Sugarcane field as it needed it. Everything seems to be in order, but if you'd like to check the fertilizer inventory or the weather forecast, just let me know!
+2026-03-13 11:59:09,039 - INFO - TOKENS      : prompt=2826 | completion=71 | total=2897 | time=0.379s
+2026-03-13 11:59:09,041 - INFO - --------------------------------------------------
+
+2026-03-13 11:59:29,171 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-13 11:59:29,172 - INFO - USER INPUT  : can i grow mushrooms in my farm?
+2026-03-13 11:59:29,173 - INFO - TOOL [1] CALLED  : evaluate_irrigation_need
+2026-03-13 11:59:29,173 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-13 11:59:29,174 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-13 11:59:29,175 - INFO - TOOL [2] CALLED  : Irrigation Schedule & Weather Check
+2026-03-13 11:59:29,175 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 11:59:29,176 - INFO -        RESPONSE  : Irrigation Schedule for Friday:
+              - Sugarcane: Scheduled for 06:30, 40 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-13 11:59:29,177 - INFO - TOOL [3] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-13 11:59:29,177 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 40, 'field_id': 4}
+2026-03-13 11:59:29,178 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Sugarcane'.
+              Duration: 40 minutes.
+              Started at: 2026-03-13 11:58:23
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-13 11:59:29,179 - INFO - TOOL [4] CALLED  : Crop List Lookup
+2026-03-13 11:59:29,180 - INFO -        PARAMETERS : {}
+2026-03-13 11:59:29,180 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              
+2026-03-13 11:59:29,181 - INFO - TOOL [5] CALLED  : Weather Forecast
+2026-03-13 11:59:29,182 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 11:59:29,182 - INFO -        RESPONSE  : {"current": {"temperature": 29.44, "humidity": 17, "condition": "clear sky"}, "forecast": [{"time": "2026-03-13 09:00:00", "condition": "clear sky", "temp": 30.58}, {"time": "2026-03-13 12:00:00", "condition": "clear sky", "temp": 30.85}, {"time": "2026-03-13 15:00:00", "condition": "clear sky", "temp": 26.66}, {"time": "2026-03-13 18:00:00", "condition": "clear sky", "temp": 23.54}]}
+2026-03-13 11:59:29,183 - INFO - AGENT REPLY : Mushrooms can be a great addition to your farm. However, they typically require a more controlled environment, like a greenhouse, and specific conditions such as high humidity and lower temperatures. 
+
+Considering your current farm setup and the weather forecast, which shows clear skies and high temperatures, it might not be the most ideal conditions for growing mushrooms outdoors. But if you're interested, we could explore options for creating a suitable environment for them. Would you like to know more about that?
+2026-03-13 11:59:29,185 - INFO - TOKENS      : prompt=3120 | completion=97 | total=3217 | time=0.807s
+2026-03-13 11:59:29,186 - INFO - --------------------------------------------------
+
+2026-03-13 12:02:35,198 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-13 12:02:35,199 - INFO - USER INPUT  : i have bought a new fertilizer
+2026-03-13 12:02:35,199 - INFO - TOOL [1] CALLED  : evaluate_irrigation_need
+2026-03-13 12:02:35,199 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-13 12:02:35,199 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-13 12:02:35,199 - INFO - TOOL [2] CALLED  : Irrigation Schedule & Weather Check
+2026-03-13 12:02:35,199 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 12:02:35,200 - INFO -        RESPONSE  : Irrigation Schedule for Friday:
+              - Sugarcane: Scheduled for 06:30, 40 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-13 12:02:35,200 - INFO - TOOL [3] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-13 12:02:35,200 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 40, 'field_id': 4}
+2026-03-13 12:02:35,200 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Sugarcane'.
+              Duration: 40 minutes.
+              Started at: 2026-03-13 11:58:23
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-13 12:02:35,200 - INFO - TOOL [4] CALLED  : Crop List Lookup
+2026-03-13 12:02:35,200 - INFO -        PARAMETERS : {}
+2026-03-13 12:02:35,201 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              
+2026-03-13 12:02:35,201 - INFO - TOOL [5] CALLED  : Weather Forecast
+2026-03-13 12:02:35,201 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 12:02:35,201 - INFO -        RESPONSE  : {"current": {"temperature": 29.44, "humidity": 17, "condition": "clear sky"}, "forecast": [{"time": "2026-03-13 09:00:00", "condition": "clear sky", "temp": 30.58}, {"time": "2026-03-13 12:00:00", "condition": "clear sky", "temp": 30.85}, {"time": "2026-03-13 15:00:00", "condition": "clear sky", "temp": 26.66}, {"time": "2026-03-13 18:00:00", "condition": "clear sky", "temp": 23.54}]}
+2026-03-13 12:02:35,201 - INFO - TOOL [6] CALLED  : Fertilizer Inventory Check
+2026-03-13 12:02:35,202 - INFO -        PARAMETERS : {}
+2026-03-13 12:02:35,202 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              
+2026-03-13 12:02:35,202 - INFO - AGENT REPLY : You've got a new fertilizer. What kind is it? I've checked your current inventory, and you have some nitrogen, phosphorus, and potassium. Let me know the details of the new one so I can help you update the inventory!
+2026-03-13 12:02:35,202 - INFO - TOKENS      : prompt=3304 | completion=50 | total=3354 | time=0.64s
+2026-03-13 12:02:35,203 - INFO - --------------------------------------------------
+
+2026-03-13 12:04:55,615 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-13 12:04:55,616 - INFO - USER INPUT  : panchagavya for 50kg. will this be beneficial for my farm?
+2026-03-13 12:04:55,616 - INFO - TOOL [1] CALLED  : evaluate_irrigation_need
+2026-03-13 12:04:55,616 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-13 12:04:55,616 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-13 12:04:55,617 - INFO - TOOL [2] CALLED  : Irrigation Schedule & Weather Check
+2026-03-13 12:04:55,617 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 12:04:55,617 - INFO -        RESPONSE  : Irrigation Schedule for Friday:
+              - Sugarcane: Scheduled for 06:30, 40 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-13 12:04:55,617 - INFO - TOOL [3] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-13 12:04:55,617 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 40, 'field_id': 4}
+2026-03-13 12:04:55,618 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Sugarcane'.
+              Duration: 40 minutes.
+              Started at: 2026-03-13 11:58:23
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-13 12:04:55,618 - INFO - TOOL [4] CALLED  : Crop List Lookup
+2026-03-13 12:04:55,618 - INFO -        PARAMETERS : {}
+2026-03-13 12:04:55,618 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              
+2026-03-13 12:04:55,619 - INFO - TOOL [5] CALLED  : Weather Forecast
+2026-03-13 12:04:55,619 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 12:04:55,619 - INFO -        RESPONSE  : {"current": {"temperature": 29.44, "humidity": 17, "condition": "clear sky"}, "forecast": [{"time": "2026-03-13 09:00:00", "condition": "clear sky", "temp": 30.58}, {"time": "2026-03-13 12:00:00", "condition": "clear sky", "temp": 30.85}, {"time": "2026-03-13 15:00:00", "condition": "clear sky", "temp": 26.66}, {"time": "2026-03-13 18:00:00", "condition": "clear sky", "temp": 23.54}]}
+2026-03-13 12:04:55,619 - INFO - TOOL [6] CALLED  : Fertilizer Inventory Check
+2026-03-13 12:04:55,620 - INFO -        PARAMETERS : {}
+2026-03-13 12:04:55,620 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              
+2026-03-13 12:04:55,620 - INFO - TOOL [7] CALLED  : Crop List Lookup
+2026-03-13 12:04:55,620 - INFO -        PARAMETERS : {}
+2026-03-13 12:04:55,621 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              
+2026-03-13 12:04:55,621 - INFO - AGENT REPLY : Panchagavya is an organic fertilizer. Considering your current crops - Tomato, Corn, Potato, and Sugarcane, it can be beneficial as it promotes soil health and plant growth. 
+
+However, to give you a more specific recommendation, I'd like to know more about your soil conditions and the area you plan to apply it to. Would you like me to suggest the best way to use the 50kg of Panchagavya you've purchased?
+2026-03-13 12:04:55,621 - INFO - TOKENS      : prompt=3502 | completion=96 | total=3598 | time=0.681s
+2026-03-13 12:04:55,622 - INFO - --------------------------------------------------
+
+2026-03-13 12:05:45,287 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-13 12:05:45,288 - INFO - USER INPUT  : can you check and suggest me how to use it?
+2026-03-13 12:05:45,289 - INFO - TOOL [1] CALLED  : evaluate_irrigation_need
+2026-03-13 12:05:45,291 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-13 12:05:45,292 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-13 12:05:45,293 - INFO - TOOL [2] CALLED  : Irrigation Schedule & Weather Check
+2026-03-13 12:05:45,293 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 12:05:45,294 - INFO -        RESPONSE  : Irrigation Schedule for Friday:
+              - Sugarcane: Scheduled for 06:30, 40 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-13 12:05:45,295 - INFO - TOOL [3] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-13 12:05:45,295 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 40, 'field_id': 4}
+2026-03-13 12:05:45,296 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Sugarcane'.
+              Duration: 40 minutes.
+              Started at: 2026-03-13 11:58:23
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-13 12:05:45,297 - INFO - TOOL [4] CALLED  : Crop List Lookup
+2026-03-13 12:05:45,297 - INFO -        PARAMETERS : {}
+2026-03-13 12:05:45,298 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              
+2026-03-13 12:05:45,298 - INFO - TOOL [5] CALLED  : Weather Forecast
+2026-03-13 12:05:45,299 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 12:05:45,300 - INFO -        RESPONSE  : {"current": {"temperature": 29.44, "humidity": 17, "condition": "clear sky"}, "forecast": [{"time": "2026-03-13 09:00:00", "condition": "clear sky", "temp": 30.58}, {"time": "2026-03-13 12:00:00", "condition": "clear sky", "temp": 30.85}, {"time": "2026-03-13 15:00:00", "condition": "clear sky", "temp": 26.66}, {"time": "2026-03-13 18:00:00", "condition": "clear sky", "temp": 23.54}]}
+2026-03-13 12:05:45,300 - INFO - TOOL [6] CALLED  : Fertilizer Inventory Check
+2026-03-13 12:05:45,301 - INFO -        PARAMETERS : {}
+2026-03-13 12:05:45,302 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              
+2026-03-13 12:05:45,303 - INFO - TOOL [7] CALLED  : Crop List Lookup
+2026-03-13 12:05:45,307 - INFO -        PARAMETERS : {}
+2026-03-13 12:05:45,309 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              
+2026-03-13 12:05:45,311 - INFO - TOOL [8] CALLED  : Fertilizer Recommendation
+2026-03-13 12:05:45,312 - INFO -        PARAMETERS : {'crop_name': 'Tomato'}
+2026-03-13 12:05:45,312 - INFO -        RESPONSE  : {"crop": "Tomato", "soil_type": "Loamy", "area_acres": 2.5, "message": "Retrieved data for Tomato. Soil type: Loamy, Area: 2.5 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:05:45,313 - INFO - TOOL [9] CALLED  : Fertilizer Recommendation
+2026-03-13 12:05:45,314 - INFO -        PARAMETERS : {'crop_name': 'Corn'}
+2026-03-13 12:05:45,314 - INFO -        RESPONSE  : {"crop": "Corn", "soil_type": "Sandy", "area_acres": 1.8, "message": "Retrieved data for Corn. Soil type: Sandy, Area: 1.8 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:05:45,315 - INFO - TOOL [10] CALLED  : Fertilizer Recommendation
+2026-03-13 12:05:45,315 - INFO -        PARAMETERS : {'crop_name': 'Potato'}
+2026-03-13 12:05:45,315 - INFO -        RESPONSE  : {"crop": "Potato", "soil_type": "Clay", "area_acres": 1.2, "message": "Retrieved data for Potato. Soil type: Clay, Area: 1.2 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:05:45,316 - INFO - TOOL [11] CALLED  : Fertilizer Recommendation
+2026-03-13 12:05:45,316 - INFO -        PARAMETERS : {'crop_name': 'Sugarcane'}
+2026-03-13 12:05:45,317 - INFO -        RESPONSE  : {"crop": "Sugarcane", "soil_type": "Loamy", "area_acres": 3.5, "message": "Retrieved data for Sugarcane. Soil type: Loamy, Area: 3.5 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:05:45,317 - INFO - TOOL [12] CALLED  : Add Inventory Item
+2026-03-13 12:05:45,317 - INFO -        PARAMETERS : {'fertilizer_name': 'Panchagavya', 'stock_kg': 50}
+2026-03-13 12:05:45,318 - INFO -        RESPONSE  : Successfully added Panchagavya to inventory.
+2026-03-13 12:05:45,318 - INFO - AGENT REPLY : I've added the Panchagavya to your inventory. Based on your crops and soil types, here's a suggested usage plan:
+
+* For Tomato (Loamy soil, 2.5 acres): 5kg/acre, so 12.5kg
+* For Corn (Sandy soil, 1.8 acres): 3kg/acre, so 5.4kg
+* For Potato (Clay soil, 1.2 acres): 4kg/acre, so 4.8kg
+* For Sugarcane (Loamy soil, 3.5 acres): 6kg/acre, so 21kg
+
+This plan uses a total of 44.7kg of Panchagavya, leaving you with 5.3kg remaining in your inventory. Please confirm if this plan works for you or if you'd like me to adjust it!
+2026-03-13 12:05:45,319 - INFO - TOKENS      : prompt=4012 | completion=186 | total=4198 | time=0.758s
+2026-03-13 12:05:45,319 - INFO - --------------------------------------------------
+
+2026-03-13 12:06:17,008 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-13 12:06:17,008 - INFO - USER INPUT  : what this fertilizer is made of?
+2026-03-13 12:06:17,009 - INFO - TOOL [1] CALLED  : evaluate_irrigation_need
+2026-03-13 12:06:17,010 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-13 12:06:17,011 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-13 12:06:17,012 - INFO - TOOL [2] CALLED  : Irrigation Schedule & Weather Check
+2026-03-13 12:06:17,013 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 12:06:17,014 - INFO -        RESPONSE  : Irrigation Schedule for Friday:
+              - Sugarcane: Scheduled for 06:30, 40 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-13 12:06:17,015 - INFO - TOOL [3] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-13 12:06:17,016 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 40, 'field_id': 4}
+2026-03-13 12:06:17,016 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Sugarcane'.
+              Duration: 40 minutes.
+              Started at: 2026-03-13 11:58:23
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-13 12:06:17,017 - INFO - TOOL [4] CALLED  : Crop List Lookup
+2026-03-13 12:06:17,018 - INFO -        PARAMETERS : {}
+2026-03-13 12:06:17,019 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              
+2026-03-13 12:06:17,020 - INFO - TOOL [5] CALLED  : Weather Forecast
+2026-03-13 12:06:17,020 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 12:06:17,021 - INFO -        RESPONSE  : {"current": {"temperature": 29.44, "humidity": 17, "condition": "clear sky"}, "forecast": [{"time": "2026-03-13 09:00:00", "condition": "clear sky", "temp": 30.58}, {"time": "2026-03-13 12:00:00", "condition": "clear sky", "temp": 30.85}, {"time": "2026-03-13 15:00:00", "condition": "clear sky", "temp": 26.66}, {"time": "2026-03-13 18:00:00", "condition": "clear sky", "temp": 23.54}]}
+2026-03-13 12:06:17,022 - INFO - TOOL [6] CALLED  : Fertilizer Inventory Check
+2026-03-13 12:06:17,023 - INFO -        PARAMETERS : {}
+2026-03-13 12:06:17,023 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              
+2026-03-13 12:06:17,025 - INFO - TOOL [7] CALLED  : Crop List Lookup
+2026-03-13 12:06:17,026 - INFO -        PARAMETERS : {}
+2026-03-13 12:06:17,028 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              
+2026-03-13 12:06:17,029 - INFO - TOOL [8] CALLED  : Fertilizer Recommendation
+2026-03-13 12:06:17,030 - INFO -        PARAMETERS : {'crop_name': 'Tomato'}
+2026-03-13 12:06:17,031 - INFO -        RESPONSE  : {"crop": "Tomato", "soil_type": "Loamy", "area_acres": 2.5, "message": "Retrieved data for Tomato. Soil type: Loamy, Area: 2.5 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:06:17,032 - INFO - TOOL [9] CALLED  : Fertilizer Recommendation
+2026-03-13 12:06:17,032 - INFO -        PARAMETERS : {'crop_name': 'Corn'}
+2026-03-13 12:06:17,033 - INFO -        RESPONSE  : {"crop": "Corn", "soil_type": "Sandy", "area_acres": 1.8, "message": "Retrieved data for Corn. Soil type: Sandy, Area: 1.8 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:06:17,034 - INFO - TOOL [10] CALLED  : Fertilizer Recommendation
+2026-03-13 12:06:17,035 - INFO -        PARAMETERS : {'crop_name': 'Potato'}
+2026-03-13 12:06:17,036 - INFO -        RESPONSE  : {"crop": "Potato", "soil_type": "Clay", "area_acres": 1.2, "message": "Retrieved data for Potato. Soil type: Clay, Area: 1.2 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:06:17,037 - INFO - TOOL [11] CALLED  : Fertilizer Recommendation
+2026-03-13 12:06:17,038 - INFO -        PARAMETERS : {'crop_name': 'Sugarcane'}
+2026-03-13 12:06:17,038 - INFO -        RESPONSE  : {"crop": "Sugarcane", "soil_type": "Loamy", "area_acres": 3.5, "message": "Retrieved data for Sugarcane. Soil type: Loamy, Area: 3.5 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:06:17,039 - INFO - TOOL [12] CALLED  : Add Inventory Item
+2026-03-13 12:06:17,040 - INFO -        PARAMETERS : {'fertilizer_name': 'Panchagavya', 'stock_kg': 50}
+2026-03-13 12:06:17,040 - INFO -        RESPONSE  : Successfully added Panchagavya to inventory.
+2026-03-13 12:06:17,041 - INFO - AGENT REPLY : Panchagavya is an organic fertilizer made from five main ingredients:
+
+1. Cow dung
+2. Cow urine
+3. Milk
+4. Curd
+5. Ghee
+
+These ingredients are mixed in specific proportions and fermented to create a nutrient-rich fertilizer that promotes soil health and plant growth. It's a natural and eco-friendly way to fertilize your crops!
+2026-03-13 12:06:17,041 - INFO - TOKENS      : prompt=4236 | completion=77 | total=4313 | time=0.515s
+2026-03-13 12:06:17,042 - INFO - --------------------------------------------------
+
+2026-03-13 12:07:14,750 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-13 12:07:14,751 - INFO - USER INPUT  : what would be better for my farm like which type of fertilizers: organic or synthetic. 
+2026-03-13 12:07:14,751 - INFO - TOOL [1] CALLED  : evaluate_irrigation_need
+2026-03-13 12:07:14,752 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-13 12:07:14,752 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-13 12:07:14,753 - INFO - TOOL [2] CALLED  : Irrigation Schedule & Weather Check
+2026-03-13 12:07:14,754 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 12:07:14,754 - INFO -        RESPONSE  : Irrigation Schedule for Friday:
+              - Sugarcane: Scheduled for 06:30, 40 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-13 12:07:14,755 - INFO - TOOL [3] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-13 12:07:14,755 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 40, 'field_id': 4}
+2026-03-13 12:07:14,756 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Sugarcane'.
+              Duration: 40 minutes.
+              Started at: 2026-03-13 11:58:23
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-13 12:07:14,757 - INFO - TOOL [4] CALLED  : Crop List Lookup
+2026-03-13 12:07:14,757 - INFO -        PARAMETERS : {}
+2026-03-13 12:07:14,758 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              
+2026-03-13 12:07:14,759 - INFO - TOOL [5] CALLED  : Weather Forecast
+2026-03-13 12:07:14,760 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 12:07:14,760 - INFO -        RESPONSE  : {"current": {"temperature": 29.44, "humidity": 17, "condition": "clear sky"}, "forecast": [{"time": "2026-03-13 09:00:00", "condition": "clear sky", "temp": 30.58}, {"time": "2026-03-13 12:00:00", "condition": "clear sky", "temp": 30.85}, {"time": "2026-03-13 15:00:00", "condition": "clear sky", "temp": 26.66}, {"time": "2026-03-13 18:00:00", "condition": "clear sky", "temp": 23.54}]}
+2026-03-13 12:07:14,761 - INFO - TOOL [6] CALLED  : Fertilizer Inventory Check
+2026-03-13 12:07:14,761 - INFO -        PARAMETERS : {}
+2026-03-13 12:07:14,762 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              
+2026-03-13 12:07:14,763 - INFO - TOOL [7] CALLED  : Crop List Lookup
+2026-03-13 12:07:14,763 - INFO -        PARAMETERS : {}
+2026-03-13 12:07:14,764 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              
+2026-03-13 12:07:14,765 - INFO - TOOL [8] CALLED  : Fertilizer Recommendation
+2026-03-13 12:07:14,765 - INFO -        PARAMETERS : {'crop_name': 'Tomato'}
+2026-03-13 12:07:14,766 - INFO -        RESPONSE  : {"crop": "Tomato", "soil_type": "Loamy", "area_acres": 2.5, "message": "Retrieved data for Tomato. Soil type: Loamy, Area: 2.5 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:07:14,766 - INFO - TOOL [9] CALLED  : Fertilizer Recommendation
+2026-03-13 12:07:14,767 - INFO -        PARAMETERS : {'crop_name': 'Corn'}
+2026-03-13 12:07:14,768 - INFO -        RESPONSE  : {"crop": "Corn", "soil_type": "Sandy", "area_acres": 1.8, "message": "Retrieved data for Corn. Soil type: Sandy, Area: 1.8 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:07:14,768 - INFO - TOOL [10] CALLED  : Fertilizer Recommendation
+2026-03-13 12:07:14,769 - INFO -        PARAMETERS : {'crop_name': 'Potato'}
+2026-03-13 12:07:14,769 - INFO -        RESPONSE  : {"crop": "Potato", "soil_type": "Clay", "area_acres": 1.2, "message": "Retrieved data for Potato. Soil type: Clay, Area: 1.2 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:07:14,770 - INFO - TOOL [11] CALLED  : Fertilizer Recommendation
+2026-03-13 12:07:14,770 - INFO -        PARAMETERS : {'crop_name': 'Sugarcane'}
+2026-03-13 12:07:14,771 - INFO -        RESPONSE  : {"crop": "Sugarcane", "soil_type": "Loamy", "area_acres": 3.5, "message": "Retrieved data for Sugarcane. Soil type: Loamy, Area: 3.5 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:07:14,772 - INFO - TOOL [12] CALLED  : Add Inventory Item
+2026-03-13 12:07:14,772 - INFO -        PARAMETERS : {'fertilizer_name': 'Panchagavya', 'stock_kg': 50}
+2026-03-13 12:07:14,773 - INFO -        RESPONSE  : Successfully added Panchagavya to inventory.
+2026-03-13 12:07:14,773 - INFO - AGENT REPLY : Considering your farm has a variety of crops like Tomato, Corn, Potato, and Sugarcane, I'd recommend using a combination of both organic and synthetic fertilizers. 
+
+Organic fertilizers like Panchagavya, which we just added to your inventory, are great for promoting soil health and providing nutrients to your crops. They're also environmentally friendly and can help reduce your farm's carbon footprint.
+
+However, synthetic fertilizers can provide a quicker release of nutrients, which can be beneficial for certain crops or during specific growth stages. They can also be more cost-effective and widely available.
+
+A balanced approach would be to use organic fertilizers as the primary source of nutrients and supplement with synthetic fertilizers as needed. This way, you can promote soil health while also ensuring your crops receive the necessary nutrients for optimal growth.
+
+Would you like me to suggest a specific ratio of organic to synthetic fertilizers for your farm?
+2026-03-13 12:07:14,774 - INFO - TOKENS      : prompt=4363 | completion=185 | total=4548 | time=1.366s
+2026-03-13 12:07:14,775 - INFO - --------------------------------------------------
+
+2026-03-13 12:12:14,828 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-13 12:12:14,828 - INFO - USER INPUT  : i was planning to grow shiitake in my farm how about that?
+2026-03-13 12:12:14,828 - INFO - TOOL [1] CALLED  : evaluate_irrigation_need
+2026-03-13 12:12:14,828 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-13 12:12:14,829 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-13 12:12:14,829 - INFO - TOOL [2] CALLED  : Irrigation Schedule & Weather Check
+2026-03-13 12:12:14,829 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 12:12:14,829 - INFO -        RESPONSE  : Irrigation Schedule for Friday:
+              - Sugarcane: Scheduled for 06:30, 40 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-13 12:12:14,829 - INFO - TOOL [3] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-13 12:12:14,830 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 40, 'field_id': 4}
+2026-03-13 12:12:14,830 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Sugarcane'.
+              Duration: 40 minutes.
+              Started at: 2026-03-13 11:58:23
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-13 12:12:14,830 - INFO - TOOL [4] CALLED  : Crop List Lookup
+2026-03-13 12:12:14,830 - INFO -        PARAMETERS : {}
+2026-03-13 12:12:14,831 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              
+2026-03-13 12:12:14,831 - INFO - TOOL [5] CALLED  : Weather Forecast
+2026-03-13 12:12:14,831 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-13 12:12:14,831 - INFO -        RESPONSE  : {"current": {"temperature": 29.44, "humidity": 17, "condition": "clear sky"}, "forecast": [{"time": "2026-03-13 09:00:00", "condition": "clear sky", "temp": 30.58}, {"time": "2026-03-13 12:00:00", "condition": "clear sky", "temp": 30.85}, {"time": "2026-03-13 15:00:00", "condition": "clear sky", "temp": 26.66}, {"time": "2026-03-13 18:00:00", "condition": "clear sky", "temp": 23.54}]}
+2026-03-13 12:12:14,831 - INFO - TOOL [6] CALLED  : Fertilizer Inventory Check
+2026-03-13 12:12:14,832 - INFO -        PARAMETERS : {}
+2026-03-13 12:12:14,832 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              
+2026-03-13 12:12:14,832 - INFO - TOOL [7] CALLED  : Crop List Lookup
+2026-03-13 12:12:14,832 - INFO -        PARAMETERS : {}
+2026-03-13 12:12:14,833 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              
+2026-03-13 12:12:14,833 - INFO - TOOL [8] CALLED  : Fertilizer Recommendation
+2026-03-13 12:12:14,833 - INFO -        PARAMETERS : {'crop_name': 'Tomato'}
+2026-03-13 12:12:14,834 - INFO -        RESPONSE  : {"crop": "Tomato", "soil_type": "Loamy", "area_acres": 2.5, "message": "Retrieved data for Tomato. Soil type: Loamy, Area: 2.5 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:12:14,834 - INFO - TOOL [9] CALLED  : Fertilizer Recommendation
+2026-03-13 12:12:14,834 - INFO -        PARAMETERS : {'crop_name': 'Corn'}
+2026-03-13 12:12:14,835 - INFO -        RESPONSE  : {"crop": "Corn", "soil_type": "Sandy", "area_acres": 1.8, "message": "Retrieved data for Corn. Soil type: Sandy, Area: 1.8 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:12:14,835 - INFO - TOOL [10] CALLED  : Fertilizer Recommendation
+2026-03-13 12:12:14,835 - INFO -        PARAMETERS : {'crop_name': 'Potato'}
+2026-03-13 12:12:14,835 - INFO -        RESPONSE  : {"crop": "Potato", "soil_type": "Clay", "area_acres": 1.2, "message": "Retrieved data for Potato. Soil type: Clay, Area: 1.2 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:12:14,836 - INFO - TOOL [11] CALLED  : Fertilizer Recommendation
+2026-03-13 12:12:14,836 - INFO -        PARAMETERS : {'crop_name': 'Sugarcane'}
+2026-03-13 12:12:14,836 - INFO -        RESPONSE  : {"crop": "Sugarcane", "soil_type": "Loamy", "area_acres": 3.5, "message": "Retrieved data for Sugarcane. Soil type: Loamy, Area: 3.5 acres. Please recommend a suitable fertilizer."}
+2026-03-13 12:12:14,837 - INFO - TOOL [12] CALLED  : Add Inventory Item
+2026-03-13 12:12:14,837 - INFO -        PARAMETERS : {'fertilizer_name': 'Panchagavya', 'stock_kg': 50}
+2026-03-13 12:12:14,837 - INFO -        RESPONSE  : Successfully added Panchagavya to inventory.
+2026-03-13 12:12:14,837 - INFO - AGENT REPLY : Shiitake mushrooms can be a fantastic addition to your farm. They're a great choice for several reasons:
+
+1. Climate: Shiitake mushrooms can thrive in a variety of climates, including the one in Kanija Bhavan.
+2. Substrate: They can grow on a wide range of substrates, including logs, stumps, and even sawdust.
+3. Market demand: Shiitake mushrooms are in high demand and can be sold at a premium price.
+4. Low maintenance: Compared to other crops, shiitake mushrooms require relatively low maintenance and care.
+
+To get started, you'll need to prepare the substrate, inoculate it with shiitake mushroom spawn, and provide the right environment for growth. I can help you with more specific guidance on how to do this.
+
+Keep in mind that shiitake mushrooms typically require a more controlled environment, such as a greenhouse or a shaded area with consistent temperature and humidity levels.
+
+Would you like me to provide more information on how to grow shiitake mushrooms on your farm?
+2026-03-13 12:12:14,838 - INFO - TOKENS      : prompt=4595 | completion=217 | total=4812 | time=0.942s
+2026-03-13 12:12:14,838 - INFO - --------------------------------------------------
+
+2026-03-13 12:13:44,598 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-13 12:13:44,598 - INFO - USER INPUT  : hey sam whats up?
+2026-03-13 12:13:44,599 - INFO - AGENT REPLY : Not much! Just checking on the farm. How about you? Need any help or just wanna chat about the farm?
+2026-03-13 12:13:44,599 - INFO - TOKENS      : prompt=2317 | completion=25 | total=2342 | time=0.351s
+2026-03-13 12:13:44,599 - INFO - --------------------------------------------------
+
+2026-03-13 12:14:11,298 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-13 12:14:11,300 - INFO - USER INPUT  : what was the kind of mushroom i was talking about lately?
+2026-03-13 12:14:11,301 - INFO - AGENT REPLY : We haven't discussed mushrooms recently, so I'm not sure which type you're thinking of. Want to refresh my memory?
+2026-03-13 12:14:11,303 - INFO - TOKENS      : prompt=2385 | completion=26 | total=2411 | time=0.705s
+2026-03-13 12:14:11,304 - INFO - --------------------------------------------------
+
+2026-03-13 12:30:28,845 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-13 12:30:28,845 - INFO - USER INPUT  : i planted peanuts in my farm
+2026-03-13 12:30:28,846 - INFO - AGENT REPLY : That's awesome. I'll make sure to keep an eye on your peanuts. Would you like me to add them to our farm records? If so, I'll need to know a bit more about the soil type and area where you planted them.
+2026-03-13 12:30:28,846 - INFO - TOKENS      : prompt=2318 | completion=51 | total=2369 | time=0.509s
+2026-03-13 12:30:28,846 - INFO - --------------------------------------------------
+
+2026-03-13 12:30:55,678 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-13 12:30:55,679 - INFO - USER INPUT  : loamy soil 
+2026-03-13 12:30:55,679 - INFO - TOOL [1] CALLED  : Add New Crop
+2026-03-13 12:30:55,679 - INFO -        PARAMETERS : {'area_acres': 1, 'crop': 'Peanuts', 'soil_type': 'Loamy'}
+2026-03-13 12:30:55,679 - INFO -        RESPONSE  : Successfully added Peanuts (ID: 5) to the fields.
+2026-03-13 12:30:55,680 - INFO - AGENT REPLY : I've added your peanuts to the farm records. I'll keep an eye on them. By the way, would you like to know the fertilizer recommendation for your peanuts?
+2026-03-13 12:30:55,680 - INFO - TOKENS      : prompt=2462 | completion=35 | total=2497 | time=0.341s
+2026-03-13 12:30:55,680 - INFO - --------------------------------------------------
+
+2026-03-13 15:27:05,720 - WARNING - [SYSTEM] Model switch: llama-3.3-70b-versatile -> llama-3.1-70b-versatile
+2026-03-13 16:39:46,002 - INFO - [USER] Hello
+2026-03-13 16:45:00,682 - INFO - [USER] hey sam
+2026-03-13 16:45:03,611 - INFO - [ASSISTANT] Hey, how's it going? Just checked the farm and everything seems okay for now. Want me to check the weather or irrigation schedule for you?
+2026-03-13 16:45:18,672 - INFO - [USER] yep
+2026-03-13 16:45:20,738 - INFO - [ASSISTANT] Hey, I've got the list of crops for you. We have 5 fields with different crops. Would you like to check the irrigation status or something else?
+2026-03-13 16:45:27,957 - INFO - [USER] yes
+2026-03-13 16:45:30,961 - INFO - [ASSISTANT] It seems like most fields don't need irrigation right now due to recent rain, except for field 2 (Corn) which might need light irrigation because it's on sandy soil. Should I start the irrigation for field 2?
+2026-03-13 16:46:10,218 - INFO - [USER (VOICE)]  Hey Sam.
+2026-03-13 16:46:16,979 - INFO - [ASSISTANT] An error occurred: Error code: 400 - {'error': {'message': 'The model `mixtral-8x7b-32768` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+2026-03-13 16:47:31,652 - INFO - [USER (VOICE)]  Hey, can you check my irrigation for today?
+2026-03-13 16:47:34,902 - INFO - [ASSISTANT] An error occurred: Error code: 400 - {'error': {'message': 'The model `llama-3.1-70b-versatile` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+2026-03-13 16:51:23,824 - INFO - [USER (VOICE)]  Hi Sam, how are you doing?
+2026-03-13 16:51:25,680 - INFO - [ASSISTANT] I'm doing great, thanks for asking. How about you? Is there something I can help you with on the farm today?
+2026-03-13 16:56:40,755 - INFO - [USER] hows irrigation 
+2026-03-13 16:56:44,755 - INFO - [ASSISTANT] Would you like me to check the weather forecast for the next 12 hours in Kanija Bhavan?
