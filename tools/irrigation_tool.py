@@ -3,6 +3,7 @@ import threading
 from twilio.rest import Client
 from database.db_connection import get_connection
 from datetime import datetime, date
+from services.logger_service import log_interaction
 
 def _execute_irrigation(field_id, duration_minutes, crop_name):
     """
@@ -38,9 +39,11 @@ def _execute_irrigation(field_id, duration_minutes, crop_name):
                 from_=twilio_phone,
                 to=target_phone
             )
-            print(f"SMS notification sent to {target_phone} (SID: {message.sid}).")
+            log_interaction("SYSTEM", f"SMS notification sent to {target_phone} (SID: {message.sid}).")
         except Exception as e:
-            print(f"Failed to send SMS notification: {str(e)}")
+            log_interaction("SYSTEM", f"Failed to send SMS notification: {str(e)}", status="ERROR")
+    else:
+        log_interaction("SYSTEM", "Twilio credentials not configured. Irrigation SMS skipped.", status="WARNING")
 
 
 def activate_sprinkler(field_id, duration_minutes, delay_minutes=0):

@@ -45,15 +45,15 @@ def start_ui():
             st.divider()
 
             # Fields Overview
-            st.subheader("🌾 Fields Status")
-            cursor.execute("SELECT Crop, SoilType FROM Fields")
-            fields = cursor.fetchall()
-            for f in fields:
-                st.write(f"- **{f.Crop}:** {f.SoilType} soil")
+            # st.subheader("🌾 Fields Status")
+            # cursor.execute("SELECT Crop, SoilType FROM Fields")
+            # fields = cursor.fetchall()
+            # for f in fields:
+            #     st.write(f"- **{f.Crop}:** {f.SoilType} soil")
 
-            conn.close()
+            # conn.close()
 
-        st.divider()
+        # st.divider()
 
         # 2. Alerts Header and Clear All Button
         col_a, col_b = st.columns([2, 1])

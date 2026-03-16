@@ -19,6 +19,15 @@ def check_farm_status():
     try:
         cursor = conn.cursor()
         
+        # 0. Throttling: Check if we just ran recently (less than 30 mins ago)
+        cursor.execute("SELECT LastRunTime FROM SystemState WHERE Id = 1")
+        row = cursor.fetchone()
+        if row and row.LastRunTime:
+            time_since_last_run = datetime.now() - row.LastRunTime
+            if time_since_last_run < timedelta(minutes=30):
+                print(f"DEBUG: Monitoring skipped. Last run was {int(time_since_last_run.total_seconds()/60)} mins ago (Threshold: 30 mins).")
+                return
+
         # 1. Check Downtime
         check_system_downtime(cursor)
 
@@ -65,7 +74,7 @@ def check_system_downtime(cursor):
     last_run = row.LastRunTime
     downtime = datetime.now() - last_run
     
-    if downtime > timedelta(minutes=5):
+    if downtime > timedelta(minutes=30):
         minutes = int(downtime.total_seconds() / 60)
         print(f"  ! Downtime detected: {minutes} minutes.")
         add_alert("System Catch-up", f"System was offline for {minutes} minutes. Analyzing missed weather events...", "INFO")

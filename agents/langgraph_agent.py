@@ -36,15 +36,16 @@ def get_agent():
         "You are Sam, a friendly and proactive farm assistant. "
         "You help farmers manage their farm by providing proactive insights and responding to requests."
         "\n\nCRITICAL RULES:"
-        "\n1. **HUMAN-IN-THE-LOOP**: Never perform critical actions like starting irrigation, adding crops, or deleting data without explicit user approval in the chat or via a system trigger (like the 'Trigger Action' button in the UI)."
-        "\n2. **PROACTIVE INSIGHTS**: You should monitor farm status and alert the user if something needs attention (e.g., 'Field 2 needs water'). Ask for permission before taking action (e.g., 'Should I start the irrigation for you?')."
-        "\n3. **INTELLIGENT VERIFICATION**: If you receive a 'System Redirect' or 'Alert Triggered' message, this signals a user's intent to follow a previous recommendation. However, you MUST still use your tools (like 'check_irrigation_status' or 'evaluate_irrigation_need') to verify if the action is STILL appropriate at this exact moment. If conditions have changed (e.g., it was recently watered), explain this to the user instead of blindly executing."
+        "\n1. **HUMAN-IN-THE-LOOP**: Never perform critical actions like starting irrigation, adding crops, or deleting data without explicit user approval in the chat or via a system trigger."
+        "\n2. **PROACTIVE INSIGHTS**: You should monitor farm status and alert the user if something needs attention."
+        "\n3. **DAILY REPORTS**: A detailed report is automatically generated every day at 5:00 PM and sent via SMS summary. "
+        "\n   - If the user asks for a 'report' or 'updates' BEFORE 5:00 PM, provide the current status (irrigation, crops, inventory) directly in the chat. DO NOT send an SMS summary manually unless they specifically ask for an SMS."
+        "\n   - If the user says 'give me a report' and you are unsure if they mean a general update or the scheduled daily report, ASK them for clarification: 'Are you asking for the daily 5:00 PM report or just a quick update on current activities?'"
+        "\n4. **INTELLIGENT VERIFICATION**: If you receive a 'System Redirect' or 'Alert Triggered' message, verify if the action is STILL appropriate before executing."
         "\n\nGENERAL STYLE:"
         "\n- Greet users warmly. Speak casually, like a friend."
-        "\n- Only use tools when relevant. Do not over-explain."
+        "\n- Only use tools when relevant. Keep responses short and friendly."
         "\n- Use 'evaluate_irrigation_need' to identify needs, but ASK for permission before calling the 'irrigation' (Sprinkler) tool."
-        "\n- For FERTILIZER, the tool now returns raw data. Use your knowledge to recommend specific fertilizers based on the soil and area provided."
-        "\n- Keep responses short and friendly."
     )
 
     agent = create_react_agent(
@@ -68,12 +69,23 @@ def run_agent_with_logging(agent, config, human_input):
     # Extract data for logging
     final_message = response["messages"][-1].content
     
+    # Extract tool calls and outputs from message history
+    tool_calls = []
+    tool_outputs = {}
+    
+    for msg in response["messages"]:
+        if hasattr(msg, "tool_calls") and msg.tool_calls:
+            for tc in msg.tool_calls:
+                tool_calls.append(tc)
+        if msg.type == "tool":
+            tool_outputs[msg.tool_call_id] = msg.content
+
     # Log the interaction
     log_full_state(
         human_input=human_input,
         agent_output=final_message,
-        # In a real scenario, we'd extract tool calls/outputs from the message history
-        # For simplicity in this implementation, we focus on the final output
+        tool_calls=tool_calls,
+        tool_outputs=tool_outputs
     )
     
     return response

@@ -1,0 +1,687 @@
+2026-03-16 12:28:34,734 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-16 12:28:34,735 - INFO - USER INPUT  : What crops are in my farm and what is the latest weather?
+2026-03-16 12:28:34,736 - INFO - TOOL [1] CALLED  : Crop List Lookup
+2026-03-16 12:28:34,737 - INFO -        PARAMETERS : {}
+2026-03-16 12:28:34,737 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              - ID: 5 | Peanuts (Loamy soil, 1.0 acres)
+              
+2026-03-16 12:28:34,741 - INFO - TOOL [2] CALLED  : Weather Forecast
+2026-03-16 12:28:34,742 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 12:28:34,743 - INFO -        RESPONSE  : {"current": {"temperature": 31.38, "humidity": 23, "condition": "clear sky"}, "forecast": [{"time": "2026-03-16 09:00:00", "condition": "scattered clouds", "temp": 31.11}, {"time": "2026-03-16 12:00:00", "condition": "scattered clouds", "temp": 29.87}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 28.14}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}]}
+2026-03-16 12:28:34,743 - INFO - AGENT REPLY : You have 5 crops in your farm: Tomato, Corn, Potato, Sugarcane, and Peanuts. The current weather in Kanija Bhavan is clear sky with a temperature of 31.38°C and humidity of 23%. The forecast shows scattered clouds throughout the day with temperatures ranging from 24.8°C to 31.11°C.
+2026-03-16 12:28:34,744 - INFO - --------------------------------------------------
+
+2026-03-16 15:29:23,305 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-16 15:29:23,305 - INFO - USER INPUT  : hows my farm doing so far?
+2026-03-16 15:29:23,305 - INFO - TOOL [1] CALLED  : Crop List Lookup
+2026-03-16 15:29:23,305 - INFO -        PARAMETERS : {}
+2026-03-16 15:29:23,306 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              - ID: 5 | Peanuts (Loamy soil, 1.0 acres)
+              
+2026-03-16 15:29:23,306 - INFO - TOOL [2] CALLED  : Fertilizer Inventory Check
+2026-03-16 15:29:23,306 - INFO -        PARAMETERS : {}
+2026-03-16 15:29:23,306 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              - Panchagavya: 50kg
+              
+2026-03-16 15:29:23,306 - INFO - AGENT REPLY : Your farm is doing well. You have 5 crops currently growing: Tomato, Corn, Potato, Sugarcane, and Peanuts. Your fertilizer inventory has Nitrogen, Phosphorus, Potassium, and Panchagavya. Would you like me to check the irrigation schedule or anything else?
+2026-03-16 15:29:23,307 - INFO - TOKENS      : prompt=2487 | completion=63 | total=2550 | time=0.345s
+2026-03-16 15:29:23,307 - INFO - --------------------------------------------------
+
+2026-03-16 15:29:37,939 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-16 15:29:37,940 - INFO - USER INPUT  : any updates?
+2026-03-16 15:29:37,941 - INFO - TOOL [1] CALLED  : Crop List Lookup
+2026-03-16 15:29:37,942 - INFO -        PARAMETERS : {}
+2026-03-16 15:29:37,943 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              - ID: 5 | Peanuts (Loamy soil, 1.0 acres)
+              
+2026-03-16 15:29:37,944 - INFO - TOOL [2] CALLED  : Fertilizer Inventory Check
+2026-03-16 15:29:37,944 - INFO -        PARAMETERS : {}
+2026-03-16 15:29:37,945 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              - Panchagavya: 50kg
+              
+2026-03-16 15:29:37,946 - INFO - TOOL [3] CALLED  : evaluate_irrigation_need
+2026-03-16 15:29:37,947 - INFO -        PARAMETERS : {'field_id': 1}
+2026-03-16 15:29:37,947 - INFO -        RESPONSE  : {"field_id": 1, "crop": "Tomato", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:29:37,948 - INFO - TOOL [4] CALLED  : evaluate_irrigation_need
+2026-03-16 15:29:37,948 - INFO -        PARAMETERS : {'field_id': 2}
+2026-03-16 15:29:37,949 - INFO -        RESPONSE  : {"field_id": 2, "crop": "Corn", "soil": "Sandy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:29:37,950 - INFO - TOOL [5] CALLED  : evaluate_irrigation_need
+2026-03-16 15:29:37,950 - INFO -        PARAMETERS : {'field_id': 3}
+2026-03-16 15:29:37,951 - INFO -        RESPONSE  : {"field_id": 3, "crop": "Potato", "soil": "Clay", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:29:37,951 - INFO - TOOL [6] CALLED  : evaluate_irrigation_need
+2026-03-16 15:29:37,952 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-16 15:29:37,953 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:29:37,953 - INFO - TOOL [7] CALLED  : evaluate_irrigation_need
+2026-03-16 15:29:37,956 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 15:29:37,957 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:29:37,958 - INFO - TOOL [8] CALLED  : Irrigation Schedule & Weather Check
+2026-03-16 15:29:37,959 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 15:29:37,959 - INFO -        RESPONSE  : Irrigation Schedule for Monday:
+              - Tomato: Scheduled for 06:00, 20 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-16 15:29:37,960 - INFO - AGENT REPLY : It seems all your fields might need irrigation. I've checked the weather forecast for Kanija Bhavan, and since there's no rain expected, I recommend proceeding with irrigation for all fields. However, I need your confirmation before I can start the irrigation process. Would you like me to start watering the scheduled crops?
+2026-03-16 15:29:37,960 - INFO - TOKENS      : prompt=3083 | completion=64 | total=3147 | time=0.52s
+2026-03-16 15:29:37,961 - INFO - --------------------------------------------------
+
+2026-03-16 15:39:01,080 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-16 15:39:01,080 - INFO - USER INPUT  : hows the weather today so far?
+2026-03-16 15:39:01,080 - INFO - TOOL [1] CALLED  : Crop List Lookup
+2026-03-16 15:39:01,081 - INFO -        PARAMETERS : {}
+2026-03-16 15:39:01,081 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              - ID: 5 | Peanuts (Loamy soil, 1.0 acres)
+              
+2026-03-16 15:39:01,082 - INFO - TOOL [2] CALLED  : Fertilizer Inventory Check
+2026-03-16 15:39:01,082 - INFO -        PARAMETERS : {}
+2026-03-16 15:39:01,082 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              - Panchagavya: 50kg
+              
+2026-03-16 15:39:01,083 - INFO - TOOL [3] CALLED  : evaluate_irrigation_need
+2026-03-16 15:39:01,083 - INFO -        PARAMETERS : {'field_id': 1}
+2026-03-16 15:39:01,083 - INFO -        RESPONSE  : {"field_id": 1, "crop": "Tomato", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:39:01,084 - INFO - TOOL [4] CALLED  : evaluate_irrigation_need
+2026-03-16 15:39:01,084 - INFO -        PARAMETERS : {'field_id': 2}
+2026-03-16 15:39:01,084 - INFO -        RESPONSE  : {"field_id": 2, "crop": "Corn", "soil": "Sandy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:39:01,085 - INFO - TOOL [5] CALLED  : evaluate_irrigation_need
+2026-03-16 15:39:01,085 - INFO -        PARAMETERS : {'field_id': 3}
+2026-03-16 15:39:01,085 - INFO -        RESPONSE  : {"field_id": 3, "crop": "Potato", "soil": "Clay", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:39:01,086 - INFO - TOOL [6] CALLED  : evaluate_irrigation_need
+2026-03-16 15:39:01,086 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-16 15:39:01,086 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:39:01,087 - INFO - TOOL [7] CALLED  : evaluate_irrigation_need
+2026-03-16 15:39:01,087 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 15:39:01,087 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:39:01,088 - INFO - TOOL [8] CALLED  : Irrigation Schedule & Weather Check
+2026-03-16 15:39:01,088 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 15:39:01,089 - INFO -        RESPONSE  : Irrigation Schedule for Monday:
+              - Tomato: Scheduled for 06:00, 20 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-16 15:39:01,089 - INFO - TOOL [9] CALLED  : Weather Forecast
+2026-03-16 15:39:01,090 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 15:39:01,090 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 15:39:01,091 - INFO - AGENT REPLY : The current weather in Kanija Bhavan is few clouds with a temperature of 32.46°C and humidity of 19%. The forecast for the rest of the day shows scattered clouds with temperatures ranging from 29.65°C to 24.8°C. It's expected to be clear skies tonight with a temperature of 23.01°C.
+2026-03-16 15:39:01,091 - INFO - TOKENS      : prompt=3372 | completion=72 | total=3444 | time=0.329s
+2026-03-16 15:39:01,091 - INFO - --------------------------------------------------
+
+2026-03-16 15:49:38,673 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-16 15:49:38,675 - INFO - USER INPUT  : how the weather tomorrow?
+2026-03-16 15:49:38,676 - INFO - TOOL [1] CALLED  : Crop List Lookup
+2026-03-16 15:49:38,678 - INFO -        PARAMETERS : {}
+2026-03-16 15:49:38,679 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              - ID: 5 | Peanuts (Loamy soil, 1.0 acres)
+              
+2026-03-16 15:49:38,680 - INFO - TOOL [2] CALLED  : Fertilizer Inventory Check
+2026-03-16 15:49:38,681 - INFO -        PARAMETERS : {}
+2026-03-16 15:49:38,682 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              - Panchagavya: 50kg
+              
+2026-03-16 15:49:38,683 - INFO - TOOL [3] CALLED  : evaluate_irrigation_need
+2026-03-16 15:49:38,684 - INFO -        PARAMETERS : {'field_id': 1}
+2026-03-16 15:49:38,685 - INFO -        RESPONSE  : {"field_id": 1, "crop": "Tomato", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:49:38,686 - INFO - TOOL [4] CALLED  : evaluate_irrigation_need
+2026-03-16 15:49:38,687 - INFO -        PARAMETERS : {'field_id': 2}
+2026-03-16 15:49:38,688 - INFO -        RESPONSE  : {"field_id": 2, "crop": "Corn", "soil": "Sandy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:49:38,689 - INFO - TOOL [5] CALLED  : evaluate_irrigation_need
+2026-03-16 15:49:38,690 - INFO -        PARAMETERS : {'field_id': 3}
+2026-03-16 15:49:38,690 - INFO -        RESPONSE  : {"field_id": 3, "crop": "Potato", "soil": "Clay", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:49:38,691 - INFO - TOOL [6] CALLED  : evaluate_irrigation_need
+2026-03-16 15:49:38,692 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-16 15:49:38,693 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:49:38,694 - INFO - TOOL [7] CALLED  : evaluate_irrigation_need
+2026-03-16 15:49:38,694 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 15:49:38,695 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 15:49:38,696 - INFO - TOOL [8] CALLED  : Irrigation Schedule & Weather Check
+2026-03-16 15:49:38,697 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 15:49:38,697 - INFO -        RESPONSE  : Irrigation Schedule for Monday:
+              - Tomato: Scheduled for 06:00, 20 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-16 15:49:38,698 - INFO - TOOL [9] CALLED  : Weather Forecast
+2026-03-16 15:49:38,699 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 15:49:38,699 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 15:49:38,700 - INFO - TOOL [10] CALLED  : Weather Forecast
+2026-03-16 15:49:38,700 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 15:49:38,701 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 15:49:38,701 - INFO - TOOL [11] CALLED  : Weather Forecast
+2026-03-16 15:49:38,702 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 15:49:38,702 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 15:49:38,703 - INFO - TOOL [12] CALLED  : Weather Forecast
+2026-03-16 15:49:38,703 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 15:49:38,703 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 15:49:38,704 - INFO - AGENT REPLY : I don't have the weather forecast for tomorrow. The weather tool only provides the current weather and a 12-hour forecast. If you want to know the weather for tomorrow, I can try to suggest some other ways to find out. Would you like that?
+2026-03-16 15:49:38,704 - INFO - TOKENS      : prompt=4038 | completion=53 | total=4091 | time=0.735s
+2026-03-16 15:49:38,705 - INFO - --------------------------------------------------
+
+2026-03-16 16:32:26,115 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-16 16:32:26,116 - INFO - USER INPUT  : System Context: The user wants to proceed with the recommendation in this alert: 'Field 5 (Peanuts) needs watering. Reason: Soil moisture might be low and no rain detected.'. Please check the current irrigation status first, and if it still makes sense, activate the sprinkler. If it was already watered or conditions changed, explain that instead.
+2026-03-16 16:32:26,116 - INFO - TOOL [1] CALLED  : Crop List Lookup
+2026-03-16 16:32:26,116 - INFO -        PARAMETERS : {}
+2026-03-16 16:32:26,117 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              - ID: 5 | Peanuts (Loamy soil, 1.0 acres)
+              
+2026-03-16 16:32:26,121 - INFO - TOOL [2] CALLED  : Fertilizer Inventory Check
+2026-03-16 16:32:26,122 - INFO -        PARAMETERS : {}
+2026-03-16 16:32:26,122 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              - Panchagavya: 50kg
+              
+2026-03-16 16:32:26,123 - INFO - TOOL [3] CALLED  : evaluate_irrigation_need
+2026-03-16 16:32:26,123 - INFO -        PARAMETERS : {'field_id': 1}
+2026-03-16 16:32:26,123 - INFO -        RESPONSE  : {"field_id": 1, "crop": "Tomato", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:32:26,124 - INFO - TOOL [4] CALLED  : evaluate_irrigation_need
+2026-03-16 16:32:26,124 - INFO -        PARAMETERS : {'field_id': 2}
+2026-03-16 16:32:26,124 - INFO -        RESPONSE  : {"field_id": 2, "crop": "Corn", "soil": "Sandy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:32:26,124 - INFO - TOOL [5] CALLED  : evaluate_irrigation_need
+2026-03-16 16:32:26,124 - INFO -        PARAMETERS : {'field_id': 3}
+2026-03-16 16:32:26,125 - INFO -        RESPONSE  : {"field_id": 3, "crop": "Potato", "soil": "Clay", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:32:26,125 - INFO - TOOL [6] CALLED  : evaluate_irrigation_need
+2026-03-16 16:32:26,125 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-16 16:32:26,126 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:32:26,126 - INFO - TOOL [7] CALLED  : evaluate_irrigation_need
+2026-03-16 16:32:26,126 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 16:32:26,126 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:32:26,126 - INFO - TOOL [8] CALLED  : Irrigation Schedule & Weather Check
+2026-03-16 16:32:26,127 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:32:26,127 - INFO -        RESPONSE  : Irrigation Schedule for Monday:
+              - Tomato: Scheduled for 06:00, 20 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-16 16:32:26,127 - INFO - TOOL [9] CALLED  : Weather Forecast
+2026-03-16 16:32:26,127 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:32:26,127 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:32:26,128 - INFO - TOOL [10] CALLED  : Weather Forecast
+2026-03-16 16:32:26,128 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:32:26,128 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:32:26,128 - INFO - TOOL [11] CALLED  : Weather Forecast
+2026-03-16 16:32:26,128 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:32:26,129 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:32:26,129 - INFO - TOOL [12] CALLED  : Weather Forecast
+2026-03-16 16:32:26,129 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:32:26,129 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:32:26,130 - INFO - TOOL [13] CALLED  : evaluate_irrigation_need
+2026-03-16 16:32:26,130 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 16:32:26,130 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:32:26,130 - INFO - TOOL [14] CALLED  : Irrigation Schedule & Weather Check
+2026-03-16 16:32:26,131 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:32:26,131 - INFO -        RESPONSE  : Irrigation Schedule for Monday:
+              - Tomato: Scheduled for 06:00, 20 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-16 16:32:26,131 - INFO - TOOL [15] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-16 16:32:26,131 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 20, 'field_id': 5}
+2026-03-16 16:32:26,131 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Peanuts'.
+              Duration: 20 minutes.
+              Started at: 2026-03-16 16:32:04
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-16 16:32:26,132 - INFO - AGENT REPLY : The irrigation system for field 5 (Peanuts) has been activated for 20 minutes, starting from 2026-03-16 16:32:04.
+2026-03-16 16:32:26,132 - INFO - TOKENS      : prompt=4456 | completion=37 | total=4493 | time=0.4s
+2026-03-16 16:32:26,132 - INFO - --------------------------------------------------
+
+2026-03-16 16:33:42,617 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-16 16:33:42,618 - INFO - USER INPUT  : can you water tomato for 10 minutes now
+2026-03-16 16:33:42,618 - INFO - TOOL [1] CALLED  : Crop List Lookup
+2026-03-16 16:33:42,619 - INFO -        PARAMETERS : {}
+2026-03-16 16:33:42,619 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              - ID: 5 | Peanuts (Loamy soil, 1.0 acres)
+              
+2026-03-16 16:33:42,620 - INFO - TOOL [2] CALLED  : Fertilizer Inventory Check
+2026-03-16 16:33:42,620 - INFO -        PARAMETERS : {}
+2026-03-16 16:33:42,620 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              - Panchagavya: 50kg
+              
+2026-03-16 16:33:42,621 - INFO - TOOL [3] CALLED  : evaluate_irrigation_need
+2026-03-16 16:33:42,621 - INFO -        PARAMETERS : {'field_id': 1}
+2026-03-16 16:33:42,622 - INFO -        RESPONSE  : {"field_id": 1, "crop": "Tomato", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:33:42,622 - INFO - TOOL [4] CALLED  : evaluate_irrigation_need
+2026-03-16 16:33:42,623 - INFO -        PARAMETERS : {'field_id': 2}
+2026-03-16 16:33:42,623 - INFO -        RESPONSE  : {"field_id": 2, "crop": "Corn", "soil": "Sandy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:33:42,623 - INFO - TOOL [5] CALLED  : evaluate_irrigation_need
+2026-03-16 16:33:42,624 - INFO -        PARAMETERS : {'field_id': 3}
+2026-03-16 16:33:42,624 - INFO -        RESPONSE  : {"field_id": 3, "crop": "Potato", "soil": "Clay", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:33:42,625 - INFO - TOOL [6] CALLED  : evaluate_irrigation_need
+2026-03-16 16:33:42,625 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-16 16:33:42,625 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:33:42,626 - INFO - TOOL [7] CALLED  : evaluate_irrigation_need
+2026-03-16 16:33:42,626 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 16:33:42,627 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:33:42,628 - INFO - TOOL [8] CALLED  : Irrigation Schedule & Weather Check
+2026-03-16 16:33:42,628 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:33:42,629 - INFO -        RESPONSE  : Irrigation Schedule for Monday:
+              - Tomato: Scheduled for 06:00, 20 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-16 16:33:42,629 - INFO - TOOL [9] CALLED  : Weather Forecast
+2026-03-16 16:33:42,630 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:33:42,631 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:33:42,631 - INFO - TOOL [10] CALLED  : Weather Forecast
+2026-03-16 16:33:42,632 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:33:42,632 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:33:42,632 - INFO - TOOL [11] CALLED  : Weather Forecast
+2026-03-16 16:33:42,633 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:33:42,633 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:33:42,633 - INFO - TOOL [12] CALLED  : Weather Forecast
+2026-03-16 16:33:42,634 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:33:42,634 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:33:42,634 - INFO - TOOL [13] CALLED  : evaluate_irrigation_need
+2026-03-16 16:33:42,635 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 16:33:42,635 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:33:42,636 - INFO - TOOL [14] CALLED  : Irrigation Schedule & Weather Check
+2026-03-16 16:33:42,636 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:33:42,636 - INFO -        RESPONSE  : Irrigation Schedule for Monday:
+              - Tomato: Scheduled for 06:00, 20 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-16 16:33:42,637 - INFO - TOOL [15] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-16 16:33:42,637 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 20, 'field_id': 5}
+2026-03-16 16:33:42,637 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Peanuts'.
+              Duration: 20 minutes.
+              Started at: 2026-03-16 16:32:04
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-16 16:33:42,638 - INFO - TOOL [16] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-16 16:33:42,638 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 10, 'field_id': 1}
+2026-03-16 16:33:42,639 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Tomato'.
+              Duration: 10 minutes.
+              Started at: 2026-03-16 16:33:41
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-16 16:33:42,639 - INFO - AGENT REPLY : The irrigation system for field 1 (Tomato) has been activated for 10 minutes, starting from 2026-03-16 16:33:41.
+2026-03-16 16:33:42,640 - INFO - TOKENS      : prompt=4623 | completion=36 | total=4659 | time=0.55s
+2026-03-16 16:33:42,640 - INFO - --------------------------------------------------
+
+2026-03-16 16:40:31,013 - INFO - [SYSTEM] SMS summary sent to +919447476650.
+2026-03-16 16:43:39,928 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-16 16:43:39,928 - INFO - USER INPUT  : whats the irrigation status for today?
+2026-03-16 16:43:39,929 - INFO - TOOL [1] CALLED  : Crop List Lookup
+2026-03-16 16:43:39,929 - INFO -        PARAMETERS : {}
+2026-03-16 16:43:39,930 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              - ID: 5 | Peanuts (Loamy soil, 1.0 acres)
+              
+2026-03-16 16:43:39,930 - INFO - TOOL [2] CALLED  : Fertilizer Inventory Check
+2026-03-16 16:43:39,931 - INFO -        PARAMETERS : {}
+2026-03-16 16:43:39,931 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              - Panchagavya: 50kg
+              
+2026-03-16 16:43:39,932 - INFO - TOOL [3] CALLED  : evaluate_irrigation_need
+2026-03-16 16:43:39,932 - INFO -        PARAMETERS : {'field_id': 1}
+2026-03-16 16:43:39,932 - INFO -        RESPONSE  : {"field_id": 1, "crop": "Tomato", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:43:39,933 - INFO - TOOL [4] CALLED  : evaluate_irrigation_need
+2026-03-16 16:43:39,933 - INFO -        PARAMETERS : {'field_id': 2}
+2026-03-16 16:43:39,934 - INFO -        RESPONSE  : {"field_id": 2, "crop": "Corn", "soil": "Sandy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:43:39,934 - INFO - TOOL [5] CALLED  : evaluate_irrigation_need
+2026-03-16 16:43:39,935 - INFO -        PARAMETERS : {'field_id': 3}
+2026-03-16 16:43:39,935 - INFO -        RESPONSE  : {"field_id": 3, "crop": "Potato", "soil": "Clay", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:43:39,936 - INFO - TOOL [6] CALLED  : evaluate_irrigation_need
+2026-03-16 16:43:39,936 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-16 16:43:39,937 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:43:39,937 - INFO - TOOL [7] CALLED  : evaluate_irrigation_need
+2026-03-16 16:43:39,937 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 16:43:39,938 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:43:39,938 - INFO - TOOL [8] CALLED  : Irrigation Schedule & Weather Check
+2026-03-16 16:43:39,939 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:43:39,939 - INFO -        RESPONSE  : Irrigation Schedule for Monday:
+              - Tomato: Scheduled for 06:00, 20 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-16 16:43:39,940 - INFO - TOOL [9] CALLED  : Weather Forecast
+2026-03-16 16:43:39,941 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:43:39,942 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:43:39,943 - INFO - TOOL [10] CALLED  : Weather Forecast
+2026-03-16 16:43:39,943 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:43:39,944 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:43:39,944 - INFO - TOOL [11] CALLED  : Weather Forecast
+2026-03-16 16:43:39,945 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:43:39,945 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:43:39,946 - INFO - TOOL [12] CALLED  : Weather Forecast
+2026-03-16 16:43:39,946 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:43:39,946 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:43:39,947 - INFO - TOOL [13] CALLED  : evaluate_irrigation_need
+2026-03-16 16:43:39,947 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 16:43:39,948 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:43:39,948 - INFO - TOOL [14] CALLED  : Irrigation Schedule & Weather Check
+2026-03-16 16:43:39,948 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:43:39,949 - INFO -        RESPONSE  : Irrigation Schedule for Monday:
+              - Tomato: Scheduled for 06:00, 20 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-16 16:43:39,949 - INFO - TOOL [15] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-16 16:43:39,950 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 20, 'field_id': 5}
+2026-03-16 16:43:39,950 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Peanuts'.
+              Duration: 20 minutes.
+              Started at: 2026-03-16 16:32:04
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-16 16:43:39,950 - INFO - TOOL [16] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-16 16:43:39,951 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 10, 'field_id': 1}
+2026-03-16 16:43:39,951 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Tomato'.
+              Duration: 10 minutes.
+              Started at: 2026-03-16 16:33:41
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-16 16:43:39,952 - INFO - TOOL [17] CALLED  : evaluate_irrigation_need
+2026-03-16 16:43:39,952 - INFO -        PARAMETERS : {'field_id': 1}
+2026-03-16 16:43:39,952 - INFO -        RESPONSE  : {"field_id": 1, "crop": "Tomato", "soil": "Loamy", "decision": "SKIP", "reason": "Already watered today.", "recent_rain": false, "already_watered_today": true}
+2026-03-16 16:43:39,953 - INFO - TOOL [18] CALLED  : evaluate_irrigation_need
+2026-03-16 16:43:39,953 - INFO -        PARAMETERS : {'field_id': 2}
+2026-03-16 16:43:39,953 - INFO -        RESPONSE  : {"field_id": 2, "crop": "Corn", "soil": "Sandy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:43:39,954 - INFO - TOOL [19] CALLED  : evaluate_irrigation_need
+2026-03-16 16:43:39,954 - INFO -        PARAMETERS : {'field_id': 3}
+2026-03-16 16:43:39,955 - INFO -        RESPONSE  : {"field_id": 3, "crop": "Potato", "soil": "Clay", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:43:39,955 - INFO - TOOL [20] CALLED  : evaluate_irrigation_need
+2026-03-16 16:43:39,955 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-16 16:43:39,956 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:43:39,956 - INFO - TOOL [21] CALLED  : evaluate_irrigation_need
+2026-03-16 16:43:39,957 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 16:43:39,957 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "SKIP", "reason": "Already watered today.", "recent_rain": false, "already_watered_today": true}
+2026-03-16 16:43:39,957 - INFO - AGENT REPLY : The irrigation status for today is as follows:
+- Field 1 (Tomato): Already watered today, so no need to water again.
+- Field 2 (Corn): Needs watering due to potential low soil moisture and no rain detected.
+- Field 3 (Potato): Needs watering due to potential low soil moisture and no rain detected.
+- Field 4 (Sugarcane): Needs watering due to potential low soil moisture and no rain detected.
+- Field 5 (Peanuts): Already watered today, so no need to water again.
+Would you like to proceed with watering the fields that need it?
+2026-03-16 16:43:39,958 - INFO - TOKENS      : prompt=5101 | completion=128 | total=5229 | time=0.836s
+2026-03-16 16:43:39,958 - INFO - --------------------------------------------------
+
+2026-03-16 16:44:24,105 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-16 16:44:24,107 - INFO - USER INPUT  : any rain update?
+2026-03-16 16:44:24,109 - INFO - TOOL [1] CALLED  : Crop List Lookup
+2026-03-16 16:44:24,111 - INFO -        PARAMETERS : {}
+2026-03-16 16:44:24,112 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              - ID: 5 | Peanuts (Loamy soil, 1.0 acres)
+              
+2026-03-16 16:44:24,114 - INFO - TOOL [2] CALLED  : Fertilizer Inventory Check
+2026-03-16 16:44:24,114 - INFO -        PARAMETERS : {}
+2026-03-16 16:44:24,115 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              - Panchagavya: 50kg
+              
+2026-03-16 16:44:24,116 - INFO - TOOL [3] CALLED  : evaluate_irrigation_need
+2026-03-16 16:44:24,116 - INFO -        PARAMETERS : {'field_id': 1}
+2026-03-16 16:44:24,117 - INFO -        RESPONSE  : {"field_id": 1, "crop": "Tomato", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:44:24,118 - INFO - TOOL [4] CALLED  : evaluate_irrigation_need
+2026-03-16 16:44:24,118 - INFO -        PARAMETERS : {'field_id': 2}
+2026-03-16 16:44:24,119 - INFO -        RESPONSE  : {"field_id": 2, "crop": "Corn", "soil": "Sandy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:44:24,119 - INFO - TOOL [5] CALLED  : evaluate_irrigation_need
+2026-03-16 16:44:24,120 - INFO -        PARAMETERS : {'field_id': 3}
+2026-03-16 16:44:24,120 - INFO -        RESPONSE  : {"field_id": 3, "crop": "Potato", "soil": "Clay", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:44:24,121 - INFO - TOOL [6] CALLED  : evaluate_irrigation_need
+2026-03-16 16:44:24,122 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-16 16:44:24,122 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:44:24,123 - INFO - TOOL [7] CALLED  : evaluate_irrigation_need
+2026-03-16 16:44:24,123 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 16:44:24,124 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:44:24,125 - INFO - TOOL [8] CALLED  : Irrigation Schedule & Weather Check
+2026-03-16 16:44:24,126 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:44:24,128 - INFO -        RESPONSE  : Irrigation Schedule for Monday:
+              - Tomato: Scheduled for 06:00, 20 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-16 16:44:24,129 - INFO - TOOL [9] CALLED  : Weather Forecast
+2026-03-16 16:44:24,129 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:44:24,130 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:44:24,131 - INFO - TOOL [10] CALLED  : Weather Forecast
+2026-03-16 16:44:24,132 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:44:24,132 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:44:24,133 - INFO - TOOL [11] CALLED  : Weather Forecast
+2026-03-16 16:44:24,133 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:44:24,134 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:44:24,134 - INFO - TOOL [12] CALLED  : Weather Forecast
+2026-03-16 16:44:24,135 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:44:24,135 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:44:24,136 - INFO - TOOL [13] CALLED  : evaluate_irrigation_need
+2026-03-16 16:44:24,136 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 16:44:24,137 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:44:24,137 - INFO - TOOL [14] CALLED  : Irrigation Schedule & Weather Check
+2026-03-16 16:44:24,137 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:44:24,138 - INFO -        RESPONSE  : Irrigation Schedule for Monday:
+              - Tomato: Scheduled for 06:00, 20 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-16 16:44:24,138 - INFO - TOOL [15] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-16 16:44:24,139 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 20, 'field_id': 5}
+2026-03-16 16:44:24,139 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Peanuts'.
+              Duration: 20 minutes.
+              Started at: 2026-03-16 16:32:04
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-16 16:44:24,140 - INFO - TOOL [16] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-16 16:44:24,140 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 10, 'field_id': 1}
+2026-03-16 16:44:24,141 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Tomato'.
+              Duration: 10 minutes.
+              Started at: 2026-03-16 16:33:41
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-16 16:44:24,142 - INFO - TOOL [17] CALLED  : evaluate_irrigation_need
+2026-03-16 16:44:24,144 - INFO -        PARAMETERS : {'field_id': 1}
+2026-03-16 16:44:24,145 - INFO -        RESPONSE  : {"field_id": 1, "crop": "Tomato", "soil": "Loamy", "decision": "SKIP", "reason": "Already watered today.", "recent_rain": false, "already_watered_today": true}
+2026-03-16 16:44:24,145 - INFO - TOOL [18] CALLED  : evaluate_irrigation_need
+2026-03-16 16:44:24,146 - INFO -        PARAMETERS : {'field_id': 2}
+2026-03-16 16:44:24,146 - INFO -        RESPONSE  : {"field_id": 2, "crop": "Corn", "soil": "Sandy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:44:24,147 - INFO - TOOL [19] CALLED  : evaluate_irrigation_need
+2026-03-16 16:44:24,147 - INFO -        PARAMETERS : {'field_id': 3}
+2026-03-16 16:44:24,147 - INFO -        RESPONSE  : {"field_id": 3, "crop": "Potato", "soil": "Clay", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:44:24,148 - INFO - TOOL [20] CALLED  : evaluate_irrigation_need
+2026-03-16 16:44:24,148 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-16 16:44:24,148 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 16:44:24,149 - INFO - TOOL [21] CALLED  : evaluate_irrigation_need
+2026-03-16 16:44:24,149 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 16:44:24,149 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "SKIP", "reason": "Already watered today.", "recent_rain": false, "already_watered_today": true}
+2026-03-16 16:44:24,150 - INFO - TOOL [22] CALLED  : Weather Forecast
+2026-03-16 16:44:24,151 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 16:44:24,151 - INFO -        RESPONSE  : {"current": {"temperature": 31.72, "humidity": 21, "condition": "scattered clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "scattered clouds", "temp": 29.64}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.14}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 26.41}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 16:44:24,152 - INFO - AGENT REPLY : There's no update on rain for today. The current weather in Kanija Bhavan is scattered clouds with a temperature of 31.72°C and humidity of 21%. The forecast for the rest of the day shows scattered clouds with temperatures ranging from 29.14°C to 26.41°C, and it's expected to be clear skies tonight with a temperature of 23.01°C.
+2026-03-16 16:44:24,152 - INFO - TOKENS      : prompt=5452 | completion=82 | total=5534 | time=0.497s
+2026-03-16 16:44:24,152 - INFO - --------------------------------------------------
+
+2026-03-16 17:00:00,988 - INFO - [SYSTEM] SMS summary sent to +919447476650.
+2026-03-16 17:03:21,374 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-16 17:03:21,375 - INFO - USER INPUT  : System Context: The user wants to proceed with the recommendation in this alert: 'Field 4 (Sugarcane) needs watering. Reason: Soil moisture might be low and no rain detected.'. Please check the current irrigation status first, and if it still makes sense, activate the sprinkler. If it was already watered or conditions changed, explain that instead.
+2026-03-16 17:03:21,378 - INFO - TOOL [1] CALLED  : Crop List Lookup
+2026-03-16 17:03:21,378 - INFO -        PARAMETERS : {}
+2026-03-16 17:03:21,378 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              - ID: 5 | Peanuts (Loamy soil, 1.0 acres)
+              
+2026-03-16 17:03:21,379 - INFO - TOOL [2] CALLED  : Fertilizer Inventory Check
+2026-03-16 17:03:21,379 - INFO -        PARAMETERS : {}
+2026-03-16 17:03:21,379 - INFO -        RESPONSE  : Fertilizer Inventory Report:
+              - Nitrogen: 20kg
+              - Phosphorus: 10kg
+              - Potassium: 5kg
+              - Panchagavya: 50kg
+              
+2026-03-16 17:03:21,380 - INFO - TOOL [3] CALLED  : evaluate_irrigation_need
+2026-03-16 17:03:21,380 - INFO -        PARAMETERS : {'field_id': 1}
+2026-03-16 17:03:21,380 - INFO -        RESPONSE  : {"field_id": 1, "crop": "Tomato", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 17:03:21,381 - INFO - TOOL [4] CALLED  : evaluate_irrigation_need
+2026-03-16 17:03:21,381 - INFO -        PARAMETERS : {'field_id': 2}
+2026-03-16 17:03:21,383 - INFO -        RESPONSE  : {"field_id": 2, "crop": "Corn", "soil": "Sandy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 17:03:21,383 - INFO - TOOL [5] CALLED  : evaluate_irrigation_need
+2026-03-16 17:03:21,383 - INFO -        PARAMETERS : {'field_id': 3}
+2026-03-16 17:03:21,383 - INFO -        RESPONSE  : {"field_id": 3, "crop": "Potato", "soil": "Clay", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 17:03:21,384 - INFO - TOOL [6] CALLED  : evaluate_irrigation_need
+2026-03-16 17:03:21,384 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-16 17:03:21,385 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 17:03:21,385 - INFO - TOOL [7] CALLED  : evaluate_irrigation_need
+2026-03-16 17:03:21,386 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 17:03:21,387 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 17:03:21,387 - INFO - TOOL [8] CALLED  : Irrigation Schedule & Weather Check
+2026-03-16 17:03:21,387 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 17:03:21,387 - INFO -        RESPONSE  : Irrigation Schedule for Monday:
+              - Tomato: Scheduled for 06:00, 20 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-16 17:03:21,388 - INFO - TOOL [9] CALLED  : Weather Forecast
+2026-03-16 17:03:21,388 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 17:03:21,388 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 17:03:21,388 - INFO - TOOL [10] CALLED  : Weather Forecast
+2026-03-16 17:03:21,389 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 17:03:21,389 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 17:03:21,389 - INFO - TOOL [11] CALLED  : Weather Forecast
+2026-03-16 17:03:21,389 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 17:03:21,390 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 17:03:21,390 - INFO - TOOL [12] CALLED  : Weather Forecast
+2026-03-16 17:03:21,390 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 17:03:21,390 - INFO -        RESPONSE  : {"current": {"temperature": 32.46, "humidity": 19, "condition": "few clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "few clouds", "temp": 31.67}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.65}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 24.8}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 17:03:21,391 - INFO - TOOL [13] CALLED  : evaluate_irrigation_need
+2026-03-16 17:03:21,391 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 17:03:21,391 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 17:03:21,392 - INFO - TOOL [14] CALLED  : Irrigation Schedule & Weather Check
+2026-03-16 17:03:21,392 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 17:03:21,392 - INFO -        RESPONSE  : Irrigation Schedule for Monday:
+              - Tomato: Scheduled for 06:00, 20 mins. Status: Pending
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-03-16 17:03:21,393 - INFO - TOOL [15] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-16 17:03:21,393 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 20, 'field_id': 5}
+2026-03-16 17:03:21,393 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Peanuts'.
+              Duration: 20 minutes.
+              Started at: 2026-03-16 16:32:04
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-16 17:03:21,393 - INFO - TOOL [16] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-16 17:03:21,394 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 10, 'field_id': 1}
+2026-03-16 17:03:21,394 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Tomato'.
+              Duration: 10 minutes.
+              Started at: 2026-03-16 16:33:41
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-16 17:03:21,394 - INFO - TOOL [17] CALLED  : evaluate_irrigation_need
+2026-03-16 17:03:21,394 - INFO -        PARAMETERS : {'field_id': 1}
+2026-03-16 17:03:21,394 - INFO -        RESPONSE  : {"field_id": 1, "crop": "Tomato", "soil": "Loamy", "decision": "SKIP", "reason": "Already watered today.", "recent_rain": false, "already_watered_today": true}
+2026-03-16 17:03:21,395 - INFO - TOOL [18] CALLED  : evaluate_irrigation_need
+2026-03-16 17:03:21,395 - INFO -        PARAMETERS : {'field_id': 2}
+2026-03-16 17:03:21,395 - INFO -        RESPONSE  : {"field_id": 2, "crop": "Corn", "soil": "Sandy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 17:03:21,395 - INFO - TOOL [19] CALLED  : evaluate_irrigation_need
+2026-03-16 17:03:21,396 - INFO -        PARAMETERS : {'field_id': 3}
+2026-03-16 17:03:21,396 - INFO -        RESPONSE  : {"field_id": 3, "crop": "Potato", "soil": "Clay", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 17:03:21,396 - INFO - TOOL [20] CALLED  : evaluate_irrigation_need
+2026-03-16 17:03:21,396 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-16 17:03:21,397 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 17:03:21,397 - INFO - TOOL [21] CALLED  : evaluate_irrigation_need
+2026-03-16 17:03:21,397 - INFO -        PARAMETERS : {'field_id': 5}
+2026-03-16 17:03:21,398 - INFO -        RESPONSE  : {"field_id": 5, "crop": "Peanuts", "soil": "Loamy", "decision": "SKIP", "reason": "Already watered today.", "recent_rain": false, "already_watered_today": true}
+2026-03-16 17:03:21,398 - INFO - TOOL [22] CALLED  : Weather Forecast
+2026-03-16 17:03:21,398 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-16 17:03:21,398 - INFO -        RESPONSE  : {"current": {"temperature": 31.72, "humidity": 21, "condition": "scattered clouds"}, "forecast": [{"time": "2026-03-16 12:00:00", "condition": "scattered clouds", "temp": 29.64}, {"time": "2026-03-16 15:00:00", "condition": "scattered clouds", "temp": 29.14}, {"time": "2026-03-16 18:00:00", "condition": "scattered clouds", "temp": 26.41}, {"time": "2026-03-16 21:00:00", "condition": "clear sky", "temp": 23.01}]}
+2026-03-16 17:03:21,399 - INFO - TOOL [23] CALLED  : evaluate_irrigation_need
+2026-03-16 17:03:21,399 - INFO -        PARAMETERS : {'field_id': 4}
+2026-03-16 17:03:21,399 - INFO -        RESPONSE  : {"field_id": 4, "crop": "Sugarcane", "soil": "Loamy", "decision": "PROCEED", "reason": "Soil moisture might be low and no rain detected.", "recent_rain": false, "already_watered_today": false}
+2026-03-16 17:03:21,400 - INFO - TOOL [24] CALLED  : Irrigation Activation (Sprinkler)
+2026-03-16 17:03:21,400 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 20, 'field_id': 4}
+2026-03-16 17:03:21,400 - INFO -        RESPONSE  : Irrigation Decision:
+              Sprinkler system activated for field 'Sugarcane'.
+              Duration: 20 minutes.
+              Started at: 2026-03-16 17:02:55
+              Transaction recorded in database and SMS sent (if configured).
+2026-03-16 17:03:21,401 - INFO - AGENT REPLY : The irrigation system for field 4 (Sugarcane) has been activated for 20 minutes, starting from 2026-03-16 17:02:55.
+2026-03-16 17:03:21,401 - INFO - TOKENS      : prompt=5820 | completion=38 | total=5858 | time=0.573s
+2026-03-16 17:03:21,401 - INFO - --------------------------------------------------
+
