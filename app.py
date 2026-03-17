@@ -1,4 +1,5 @@
-from ui.chat_interface import start_ui
+from ui.chat_interface import start_ui          # Streamlit UI (original)
+from ui.chat_interface_2 import start_ui_jarvis  # JARVIS CustomTkinter UI (new)
 from scheduler.farm_scheduler import start_scheduler
 import os
 
@@ -11,5 +12,8 @@ if __name__ == "__main__":
     # Start Background Scheduler
     start_scheduler()
 
-    # Launch Streamlit UI
-    start_ui()
+    # ── UI Selection ────────────────────────────────────────────────────────
+    # Comment/uncomment to switch between the two UIs:
+
+    # start_ui()         # Original Streamlit UI  RUN SCRIPT: streamlit run app.py
+    start_ui_jarvis()    # JARVIS HUD UI (CustomTkinter) RUN SCRIPT: python app.py
