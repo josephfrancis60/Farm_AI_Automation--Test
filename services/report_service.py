@@ -62,18 +62,24 @@ class ReportService:
             # C. Fertilizer Inventory (Current state)
             cursor.execute("SELECT FertilizerName, StockKg FROM FertilizerInventory")
             inventory = cursor.fetchall()
-            detailed_content += "3. FERTILIZER INVENTORY:\n"
-            low_stock = []
+            detailed_content += "3. FERTILIZER INVENTORY & RECOMMENDATIONS:\n"
+            restock_list = []
             if inventory:
                 for row in inventory:
-                    detailed_content += f"- {row.FertilizerName}: {row.StockKg}kg\n"
-                    if row.StockKg < 10: # Threshold for restock update
-                        low_stock.append(row.FertilizerName)
+                    status = "OK"
+                    recommendation = ""
+                    if row.StockKg < 10:
+                        recomm_qty = 50 - row.StockKg
+                        status = "LOW"
+                        recommendation = f" -> RECO: Restock {recomm_qty}kg"
+                        restock_list.append(f"{row.FertilizerName}({recomm_qty}kg)")
+                    
+                    detailed_content += f"- {row.FertilizerName}: {row.StockKg}kg [{status}]{recommendation}\n"
             else:
                 detailed_content += "- Inventory is empty.\n"
             
-            if low_stock:
-                sms_summary += f"- Restock: {', '.join(low_stock)}\n"
+            if restock_list:
+                sms_summary += f"- Need: {', '.join(restock_list)}\n"
             detailed_content += "\n"
             
             # D. Weather History (Latest entry BEFORE or ON target date)
@@ -86,7 +92,9 @@ class ReportService:
             detailed_content += "4. LATEST WEATHER UPDATE:\n"
             if weather:
                 detailed_content += f"- Temp: {weather.Temperature}°C, Condition: {weather.Rain}, Humidity: {weather.Humidity}%\n"
-                sms_summary += f"- Weather: {weather.Rain}, {weather.Temperature}C\n"
+                # Keep SMS weather very short
+                weather_short = "Rainy" if "rain" in weather.Rain.lower() else weather.Rain
+                sms_summary += f"- Weather: {weather_short}, {int(weather.Temperature)}C\n"
             else:
                 detailed_content += "- No weather data available.\n"
                 

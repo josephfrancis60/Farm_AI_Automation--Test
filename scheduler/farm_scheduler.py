@@ -48,11 +48,16 @@ def check_for_missed_reports():
         report_file = os.path.join(report_dir, f"report_{date_str}.txt")
         
         if not os.path.exists(report_file):
+            # Skip today's report if it's before 17:00
+            is_today = (i == 0)
+            if is_today and now.hour < 17:
+                print(f"DEBUG: Skipping today's report ({date_str}) as it's not yet 17:00.")
+                continue
+
             print(f"DEBUG: Missed report found for {date_str}. Generating...")
             
             # Should we send SMS? 
             # Only if it's today (i=0) and it's past 17:00.
-            is_today = (i == 0)
             is_past_reporting_time = (now.hour >= 17)
             should_send_sms = is_today and is_past_reporting_time
             

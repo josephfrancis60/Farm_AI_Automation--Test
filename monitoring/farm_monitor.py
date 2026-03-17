@@ -3,6 +3,7 @@ from alerts.alert_manager import add_alert
 from tools.irrigation_decision_tool import evaluate_irrigation_need
 from tools.harvest_prediction_tool import predict_harvest_date
 from services.logger_service import log_agent_action
+from services.weather_service import get_historical_weather, add_weather_history_batch
 from datetime import datetime, timedelta
 
 def check_farm_status():
@@ -64,7 +65,7 @@ def check_farm_status():
 
 def check_system_downtime(cursor):
     """
-    Checks if the system was offline and catches up on events.
+    Checks if the system was offline and catches up on missed events.
     """
     cursor.execute("SELECT LastRunTime FROM SystemState WHERE Id = 1")
     row = cursor.fetchone()
@@ -72,18 +73,30 @@ def check_system_downtime(cursor):
         return
 
     last_run = row.LastRunTime
-    downtime = datetime.now() - last_run
+    now = datetime.now()
+    downtime = now - last_run
     
+    # Only process significant downtime ( > 30 mins)
     if downtime > timedelta(minutes=30):
         minutes = int(downtime.total_seconds() / 60)
-        print(f"  ! Downtime detected: {minutes} minutes.")
-        add_alert("System Catch-up", f"System was offline for {minutes} minutes. Analyzing missed weather events...", "INFO")
+        hours = minutes // 60
+        remaining_mins = minutes % 60
+        downtime_str = f"{hours}h {remaining_mins}m" if hours > 0 else f"{minutes}m"
         
-        # Check if it rained during downtime
+        print(f"  ! Downtime detected: {downtime_str}.")
+        add_alert("System Catch-up", f"System was offline for {downtime_str}. Fetching missed weather data...", "INFO")
+        
+        # 1. Fetch and Log Missed Weather Events
+        missed_weather = get_historical_weather(start_time=last_run, end_time=now)
+        if missed_weather:
+            count = add_weather_history_batch(missed_weather)
+            print(f"  - Recovered {count} missed weather data points.")
+        
+        # 2. Check if it rained during downtime
         cursor.execute("SELECT COUNT(*) FROM WeatherHistory WHERE Timestamp > ? AND Rain LIKE '%rain%'", (last_run,))
         rain_count = cursor.fetchone()[0]
         if rain_count > 0:
-            add_alert("Downtime Rain Detected", f"It rained while the system was offline. Adjusting irrigation plans.", "WARNING")
+            add_alert("Downtime Rain Detected", f"Rain was recorded during the {downtime_str} offline period. Irrigation plans updated.", "WARNING")
 
 if __name__ == "__main__":
     check_farm_status()
