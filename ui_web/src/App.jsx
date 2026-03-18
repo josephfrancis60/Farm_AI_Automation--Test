@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Mic, Send, AlertTriangle, Info, CheckCircle, XCircle, Bell, Clock } from 'lucide-react';
+import VoiceVisualizer from './VoiceVisualizer';
 
 const API_BASE = '/api';
 
@@ -17,6 +18,7 @@ function App() {
   const [isListening, setIsListening] = useState(false);
   const [alerts, setAlerts] = useState([]);
   const [reminders, setReminders] = useState([]);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const [isBackendOnline, setIsBackendOnline] = useState(true);
   const prevOnlineRef = useRef(true);
@@ -189,6 +191,10 @@ function App() {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
 
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+
     // Find a good male voice if possible
     const voices = window.speechSynthesis.getVoices();
     const preferred = voices.find(v => v.name.includes('David') || v.name.includes('Microsoft David') || v.name.includes('Daniel'));
@@ -229,7 +235,8 @@ function App() {
   return (
     <div className="hud-container">
       <header>
-        <div className="logo">ECHO</div>
+        <div className="logo">Echo</div>
+        <VoiceVisualizer isListening={isListening} isSpeaking={isSpeaking} />
         <div className="status-indicator">
           <div className={`status-dot ${!isBackendOnline ? 'offline' : ''}`}></div>
           <span className={!isBackendOnline ? 'text-offline' : ''}>
@@ -249,6 +256,7 @@ function App() {
               <div className="message-content">{msg.content}</div>
             </div>
           ))}
+          <VoiceVisualizer isListening={isListening} isSpeaking={isSpeaking} />
           {isProcessing && (
             <div className="typing-indicator">● ● ● ECHO IS PROCESSING...</div>
           )}
@@ -305,7 +313,6 @@ function App() {
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             disabled={isProcessing}
-            autoFocus
           />
         </div>
         <button className="send-btn" onClick={() => handleSend()}>

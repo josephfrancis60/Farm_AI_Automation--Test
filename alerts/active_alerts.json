@@ -1,9 +1,9 @@
 [
     {
-        "id": "20260318131408933988",
-        "timestamp": "2026-03-18 13:14:08",
+        "id": "20260318155831494262",
+        "timestamp": "2026-03-18 15:58:31",
         "title": "System Catch-up",
-        "message": "System was offline for 51m. Fetching missed weather data...",
+        "message": "System was offline for 44m. Fetching missed weather data...",
         "category": "INFO",
         "is_read": false
     }

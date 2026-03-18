@@ -305,9 +305,38 @@ input:focus {
   border-color: var(--cyan);
 }
 
-.typing-indicator {
-  font-size: 0.8rem;
-  color: var(--cyan-dim);
-  margin-bottom: 8px;
+.voice-visualizer-container {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.voice-canvas {
+  filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.2));
+}
+
+.voice-tooltip {
+  margin-top: -10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--cyan);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
   font-family: var(--font-mono);
+  border: 1px solid var(--cyan-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: fadeInOut 3s infinite;
+  pointer-events: auto;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-5px); }
 }

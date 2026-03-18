@@ -11,8 +11,17 @@ def run_agent(user_input):
         config = {"configurable": {"thread_id": "farm_user_1"}}
         
         from datetime import datetime
+        from alerts.alert_manager import get_active_alerts
         now = datetime.now()
-        context = f"[Context: Current time is {now.strftime('%A, %Y-%m-%d %H:%M:%S')}]\n"
+        alerts_list = get_active_alerts()
+        
+        alerts_context = ""
+        if alerts_list:
+            alerts_context = "\n[Active Alerts Check]:\n"
+            for i, a in enumerate(alerts_list[:5], start=1):
+                alerts_context += f"{i}. {a['title']}: {a['message']} (Category: {a['category']})\n"
+        
+        context = f"[Context: Current time is {now.strftime('%A, %Y-%m-%d %H:%M:%S')}]\n{alerts_context}\n"
         full_input = context + user_input
 
         # Invoke agent

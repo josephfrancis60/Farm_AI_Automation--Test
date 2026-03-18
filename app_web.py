@@ -9,6 +9,7 @@ from datetime import datetime
 from agents.run_agent import run_agent
 from alerts.alert_manager import get_active_alerts, remove_alert
 from scheduler.farm_scheduler import start_scheduler
+from alerts.reminder_manager import get_active_reminders
 
 app = FastAPI()
 
@@ -60,9 +61,7 @@ def delete_alert(alert_id: str):
 
 @app.get("/reminders")
 def reminders():
-    # For now, we'll return an empty list or implement reminder storage if needed
-    # The Tkinter UI had a self.reminders list. We should probably persist this.
-    return []
+    return get_active_reminders()
 
 if __name__ == "__main__":
     import uvicorn
