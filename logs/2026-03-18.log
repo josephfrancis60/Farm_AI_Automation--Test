@@ -617,3 +617,32 @@ NEW INTERACTION
 2026-03-18 16:10:34,543 - INFO - --------------------------------------------------
 
 2026-03-18 16:10:34,543 - ERROR - AGENT ERROR: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99554, Requested 2619. Please try again in 31m17.472s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-03-18 17:23:38,785 - INFO - [SYSTEM] SMS summary sent to +919447476650.
+2026-03-18 17:24:03,773 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-18 17:24:03,773 - INFO - USER INPUT  : Is there any recent update about the form?
+2026-03-18 17:24:03,773 - INFO - TOOL [1] CALLED  : Crop List Lookup
+2026-03-18 17:24:03,773 - INFO -        PARAMETERS : {}
+2026-03-18 17:24:03,774 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Corn (Sandy soil, 1.8 acres)
+              - ID: 3 | Potato (Clay soil, 1.2 acres)
+              - ID: 4 | Sugarcane (Loamy soil, 3.5 acres)
+              - ID: 5 | Peanuts (Loamy soil, 1.0 acres)
+              
+2026-03-18 17:24:03,774 - INFO - AGENT REPLY : There are no recent updates about the farm. The system was offline for 48 minutes, but it has caught up on all missed activities. The current list of crops in the farm includes Tomato, Corn, Potato, Sugarcane, and Peanuts.
+2026-03-18 17:24:03,774 - INFO - TOKENS      : prompt=2560 | completion=52 | total=2612 | time=0.267s
+2026-03-18 17:24:03,774 - INFO - --------------------------------------------------
+
+2026-03-18 17:24:38,929 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-18 17:24:38,929 - INFO - USER INPUT  : Is the weather OK afterwards? What do I need to do? Any irrigation?
+2026-03-18 17:24:38,930 - INFO - AGENT REPLY : LIMITATION: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99474, Requested 2689. Please try again in 31m8.832s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-03-18 17:24:38,930 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-18 17:24:38,930 - INFO - --------------------------------------------------
+
+2026-03-18 17:24:38,930 - ERROR - AGENT ERROR: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99474, Requested 2689. Please try again in 31m8.832s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}

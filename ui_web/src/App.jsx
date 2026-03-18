@@ -5,14 +5,7 @@ import VoiceVisualizer from './VoiceVisualizer';
 const API_BASE = '/api';
 
 function App() {
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      role: 'echo',
-      content: "Systems initialized. Active monitoring is engaged. How may I assist you?",
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    }
-  ]);
+  const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [isListening, setIsListening] = useState(false);
@@ -38,7 +31,7 @@ function App() {
             id: Date.now(),
             role: 'echo',
             content: "Connectivity restored. Systems operational.",
-            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
           }]);
         }
         setIsBackendOnline(true);
@@ -84,12 +77,27 @@ function App() {
 
     // Initial check
     checkBackendStatus().then(() => {
+      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+      
       // If still offline after first check
       if (!prevOnlineRef.current) {
-        speak("I am unable to connect to my main processing cores. Please ensure that the servers are running.");
+        const offMsg = "I am unable to connect to my main processing cores. Please ensure that the servers are running.";
+        speak(offMsg);
+        setMessages([{
+          id: Date.now(),
+          role: 'error',
+          content: offMsg,
+          timestamp: now
+        }]);
         isSpokenRef.current = true;
       } else if (!isSpokenRef.current) {
         speak(initialGreeting);
+        setMessages([{
+          id: Date.now(),
+          role: 'echo',
+          content: initialGreeting,
+          timestamp: now
+        }]);
         isSpokenRef.current = true;
       }
     });
@@ -149,7 +157,7 @@ function App() {
       id: Date.now(),
       role: 'user',
       content: messageText,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
     };
 
     setMessages(prev => [...prev, userMsg]);
@@ -168,7 +176,7 @@ function App() {
         id: Date.now() + 1,
         role: 'echo',
         content: data.reply,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
       };
 
       setMessages(prev => [...prev, echoMsg]);
@@ -178,7 +186,7 @@ function App() {
         id: Date.now() + 1,
         role: 'error',
         content: 'Failed to connect to Echo backend.',
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
       };
       setMessages(prev => [...prev, errMsg]);
     } finally {

@@ -1,0 +1,22 @@
+--- DAILY FARM REPORT: 2026-03-18 ---
+
+1. CROP FIELDS SUMMARY:
+- Tomato: 2.5 acres, Loamy soil
+- Corn: 1.8 acres, Sandy soil
+- Potato: 1.2 acres, Clay soil
+- Sugarcane: 3.5 acres, Loamy soil
+- Peanuts: 1.0 acres, Loamy soil
+
+2. IRRIGATION ACTIVITIES TODAY:
+- Corn: 10 mins at 11:24
+- Corn: 10 mins at 11:24
+- Tomato: 30 mins at 15:52
+
+3. FERTILIZER INVENTORY & RECOMMENDATIONS:
+- Nitrogen: 20kg [OK]
+- Phosphorus: 10kg [OK]
+- Potassium: 5kg [LOW] -> RECO: Restock 45kg
+- Panchagavya: 50kg [OK]
+
+4. LATEST WEATHER UPDATE:
+- Temp: 29.28°C, Condition: scattered clouds, Humidity: 42.0%
