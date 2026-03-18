@@ -1,0 +1,71 @@
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+import threading
+import time
+import os
+import json
+from datetime import datetime
+from agents.run_agent import run_agent
+from alerts.alert_manager import get_active_alerts, remove_alert
+from scheduler.farm_scheduler import start_scheduler
+
+app = FastAPI()
+
+# Enable CORS for local development
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class ChatRequest(BaseModel):
+    message: str
+
+@app.get("/health")
+def health():
+    return {"status": "online"}
+
+@app.post("/chat")
+async def chat(request: ChatRequest):
+    try:
+        reply = run_agent(request.message)
+        return {"reply": reply}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/alerts")
+def alerts():
+    # Reuse filtering logic from the Tkinter UI
+    all_alerts = get_active_alerts()
+    today_str = datetime.now().strftime("%Y-%m-%d")
+    filtered = []
+    for a in all_alerts:
+        ts = a.get("timestamp", "")
+        if ts.startswith(today_str):
+            filtered.append(a)
+        else:
+            title = a.get("title", "").lower()
+            if "catch-up" not in title and "downtime" not in title:
+                filtered.append(a)
+    return filtered[:20]
+
+@app.delete("/alerts/{alert_id}")
+def delete_alert(alert_id: str):
+    success = remove_alert(alert_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Alert not found")
+    return {"status": "success"}
+
+@app.get("/reminders")
+def reminders():
+    # For now, we'll return an empty list or implement reminder storage if needed
+    # The Tkinter UI had a self.reminders list. We should probably persist this.
+    return []
+
+if __name__ == "__main__":
+    import uvicorn
+    # Start background scheduler
+    start_scheduler()
+    uvicorn.run(app, host="0.0.0.0", port=8000)

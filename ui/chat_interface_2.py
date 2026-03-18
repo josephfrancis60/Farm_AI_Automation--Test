@@ -1,5 +1,5 @@
 """
-JARVIS — Farm AI Agent Desktop UI (v4)
+Echo — Farm AI Agent Desktop UI (v4)
 Refined HUD: Fixed message width (no more cut-offs), Added alert messages, Better spacing.
 """
 
@@ -51,11 +51,11 @@ ctk.set_default_color_theme("dark-blue")
 
 
 class JarvisUI:
-    """Main JARVIS desktop chat interface."""
+    """Main Echo desktop chat interface."""
 
     def __init__(self):
         self.root = ctk.CTk()
-        self.root.title("JARVIS — Farm AI Agent")
+        self.root.title("Echo — Farm AI Agent")
         self.root.geometry("1400x820")
         self.root.minsize(1000, 700)
         self.root.configure(fg_color=C["bg"])
@@ -75,8 +75,8 @@ class JarvisUI:
 
         # ─── Build UI ────────────────────────────────────────────────────────
         self._build_header()
-        self._build_main_area()
         self._build_footer()
+        self._build_main_area()
 
         if TTS_AVAILABLE:
             self._init_tts()
@@ -88,13 +88,11 @@ class JarvisUI:
         self._start_queue_processor()
 
         # Welcome sequence
-        self.root.after(300, lambda: self._add_message(
-            "jarvis", "JARVIS",
-            "Systems initialized. I am JARVIS. Active monitoring is engaged. How may I assist you with the farm today?"
-        ))
+        welcome_text = "Systems initialized. I am Echo. Active monitoring is engaged. How may I assist you with the farm today?"
+        self.root.after(300, lambda: self._add_message("jarvis", "JARVIS", welcome_text))
         self.root.after(400, lambda: threading.Thread(
             target=self._speak,
-            args=("Systems initialized. I am JARVIS. How may I assist you today?",),
+            args=(welcome_text,),
             daemon=True
         ).start())
 
@@ -134,7 +132,7 @@ class JarvisUI:
 
         logo_frame = tk.Frame(hdr, bg=C["bg2"])
         logo_frame.pack(side="left", padx=24, pady=10)
-        tk.Label(logo_frame, text="JARVIS", font=("Courier New", 22, "bold"),
+        tk.Label(logo_frame, text="ECHO", font=("Courier New", 22, "bold"),
                  fg=C["cyan"], bg=C["bg2"]).pack(side="left")
 
         right = tk.Frame(hdr, bg=C["bg2"])
@@ -178,7 +176,7 @@ class JarvisUI:
         tk.Frame(outer, bg=C["border"], width=1).pack(side="right", fill="y")
 
         # Header for Monitor
-        tk.Label(monitor_col, text="SYSTEM MONITOR", font=("Courier New", 11, "bold"),
+        tk.Label(monitor_col, text="SYSTEM MONITOR / ALERTS", font=("Courier New", 11, "bold"),
                  fg=C["text_dim"], bg=C["bg3"]).pack(pady=(16, 4), padx=16, anchor="w")
         tk.Frame(monitor_col, bg=C["border"], height=1).pack(fill="x", padx=16, pady=(0, 10))
 
@@ -214,7 +212,7 @@ class JarvisUI:
 
         # Typing Indicator
         self._typing_frame = tk.Frame(chat_col, bg=C["bg2"], height=30)
-        self._typing_lbl = tk.Label(self._typing_frame, text="● ● ● JARVIS IS PROCESSING...",
+        self._typing_lbl = tk.Label(self._typing_frame, text="● ● ● ECHO IS PROCESSING...",
                                      font=("Courier New", 10), fg=C["cyan_dim"], bg=C["bg2"])
         self._typing_lbl.pack(padx=20, pady=4)
         self._typing_visible = False
@@ -237,14 +235,29 @@ class JarvisUI:
         self._chat_canvas.pack(side="left", fill="both", expand=True)
         self._chat_sb.pack(side="right", fill="y")
 
-        self.root.bind_all("<MouseWheel>", self._on_mousewheel)
+        # Canvas Scrolling logic
+        self._chat_canvas.bind("<Enter>", lambda e: self._chat_canvas.bind_all("<MouseWheel>", self._on_chat_mousewheel))
+        self._chat_canvas.bind("<Leave>", lambda e: self._chat_canvas.unbind_all("<MouseWheel>"))
+        self._mon_canvas.bind("<Enter>", lambda e: self._mon_canvas.bind_all("<MouseWheel>", self._on_mon_mousewheel))
+        self._mon_canvas.bind("<Leave>", lambda e: self._mon_canvas.unbind_all("<MouseWheel>"))
+
+        # Global Key Bindings
+        self.root.bind("<KeyPress-m>", self._on_m_key)
 
     def _on_chat_resize(self, event):
         # Update width of chat inner frame to fill canvas
         self._chat_canvas.itemconfig(self._chat_win, width=event.width)
 
-    def _on_mousewheel(self, event):
+    def _on_chat_mousewheel(self, event):
         self._chat_canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+    def _on_mon_mousewheel(self, event):
+        self._mon_canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+    def _on_m_key(self, event):
+        # Only trigger if not typing in the entry box
+        if self.root.focus_get() != self._text_in:
+            self._toggle_mic()
 
     def _build_footer(self):
         tk.Frame(self.root, bg=C["border"], height=1).pack(fill="x")
@@ -361,7 +374,22 @@ class JarvisUI:
                  fg=C["cyan_dim"], bg=C["bg3"]).pack(anchor="w", pady=(5,5))
         try:
             from alerts.alert_manager import get_active_alerts
-            alerts = get_active_alerts()[:15]
+            all_alerts = get_active_alerts()
+            
+            # Filtering Logic
+            today_str = datetime.datetime.now().strftime("%Y-%m-%d")
+            alerts = []
+            for a in all_alerts:
+                ts = a.get("timestamp", "")
+                if ts.startswith(today_str):
+                    alerts.append(a)
+                else:
+                    # Previous days: filter out non-essential alerts
+                    title = a.get("title", "").lower()
+                    if "catch-up" not in title and "downtime" not in title:
+                        alerts.append(a)
+            
+            alerts = alerts[:20] # Show up to 20 filtered alerts
         except: alerts = []
         if not alerts:
             tk.Label(self._alert_list_frame, text="CLEARED", font=("Courier New", 10),

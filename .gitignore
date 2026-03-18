@@ -151,3 +151,11 @@ cython_debug/
 
 # PyCharm
 .idea/
+# Web UI (React)
+ui_web/node_modules/
+ui_web/dist/
+ui_web/.env*
+ui_web/npm-debug.log*
+ui_web/yarn-debug.log*
+ui_web/yarn-error.log*
+ui_web/.vscode/

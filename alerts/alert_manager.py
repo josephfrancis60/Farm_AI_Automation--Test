@@ -30,6 +30,10 @@ def add_alert(title, message, category="INFO"):
         except:
             alerts = []
 
+    # Deduplication logic for "System Catch-up"
+    if "System Catch-up" in title:
+        alerts = [a for a in alerts if "System Catch-up" not in a.get("title", "")]
+
     # Keep only the last 50 alerts
     alerts.insert(0, alert)
     alerts = alerts[:50]

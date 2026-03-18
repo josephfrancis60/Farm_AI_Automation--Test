@@ -65,14 +65,21 @@ def run_agent(user_input):
 
     except Exception as e:
         error_str = str(e)
-        logger = __import__('logging').getLogger("FarmAIAgent")
+        from services.logger_service import get_logger
+        logger = get_logger()
 
-        # Log the full technical error to the log file (not visible in UI)
-        logger.error(f"AGENT ERROR (full details): {error_str}")
+        # Log to standard daily file
+        log_full_state(
+            human_input=user_input,
+            agent_output=f"LIMITATION: {error_str}",
+            tool_calls=[], tool_outputs={},
+            tokens={"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0, "total_time": 0}
+        )
+        logger.error(f"AGENT ERROR: {error_str}")
 
         # Friendly message for rate limit / API quota errors
         if "rate_limit_exceeded" in error_str or "429" in error_str:
-            return "Sorry, I'm a bit overloaded right now. Please try again in a few minutes! ☕"
+            return "Sir, I'm currently experiencing an overload in my communication processors. Please give me a moment to recalibrate and try again shortly."
 
         # Generic fallback for any other error
-        return "Hmm, something went wrong on my end. Please try again shortly."
+        return "I apologize, but I've encountered a system limitation. I'm attempting to resolve it now. Shall we try again in a moment?"

@@ -1,33 +1,9 @@
 [
     {
-        "id": "20260317174757906700",
-        "timestamp": "2026-03-17 17:47:57",
-        "title": "Rain Detected",
-        "message": "Current condition in Kanija Bhavan: thunderstorm with light rain. Check irrigation plans.",
-        "category": "WARNING",
-        "is_read": false
-    },
-    {
-        "id": "20260317173636722667",
-        "timestamp": "2026-03-17 17:36:36",
-        "title": "Irrigation Recommended",
-        "message": "Field 2 (Corn) needs watering. Reason: Rain detected, but sandy soil drains fast. Suggest light irrigation.",
-        "category": "INFO",
-        "is_read": false
-    },
-    {
-        "id": "20260317173636684777",
-        "timestamp": "2026-03-17 17:36:36",
-        "title": "Downtime Rain Detected",
-        "message": "Rain was recorded during the 43m offline period. Irrigation plans updated.",
-        "category": "WARNING",
-        "is_read": false
-    },
-    {
-        "id": "20260317173636673255",
-        "timestamp": "2026-03-17 17:36:36",
+        "id": "20260318131408933988",
+        "timestamp": "2026-03-18 13:14:08",
         "title": "System Catch-up",
-        "message": "System was offline for 43m. Fetching missed weather data...",
+        "message": "System was offline for 51m. Fetching missed weather data...",
         "category": "INFO",
         "is_read": false
     }
