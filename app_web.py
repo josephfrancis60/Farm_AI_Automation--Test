@@ -11,7 +11,21 @@ from alerts.alert_manager import get_active_alerts, remove_alert
 from scheduler.farm_scheduler import start_scheduler
 from alerts.reminder_manager import get_active_reminders
 
-app = FastAPI()
+from contextlib import asynccontextmanager
+from services.logger_service import log_agent_action
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    log_agent_action("=== Agent Backend Server Started ===")
+    app.state.scheduler = start_scheduler()
+    yield
+    # Shutdown
+    if hasattr(app.state, 'scheduler'):
+        app.state.scheduler.shutdown()
+    log_agent_action("=== Agent Backend Server Shutdown ===")
+
+app = FastAPI(lifespan=lifespan)
 
 # Enable CORS for local development
 app.add_middleware(
@@ -65,6 +79,4 @@ def reminders():
 
 if __name__ == "__main__":
     import uvicorn
-    # Start background scheduler
-    start_scheduler()
     uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -236,7 +236,6 @@ function App() {
     <div className="hud-container">
       <header>
         <div className="logo">Echo</div>
-        <VoiceVisualizer isListening={isListening} isSpeaking={isSpeaking} />
         <div className="status-indicator">
           <div className={`status-dot ${!isBackendOnline ? 'offline' : ''}`}></div>
           <span className={!isBackendOnline ? 'text-offline' : ''}>

@@ -5,6 +5,19 @@ from services.report_service import ReportService
 from datetime import datetime, timedelta
 import time
 import os
+from database.db_connection import get_connection
+
+def update_heartbeat():
+    """Updates the SystemState LastRunTime to act as a heartbeat."""
+    conn = get_connection()
+    if conn:
+        try:
+            cursor = conn.cursor()
+            # Update LastHeartbeat to act as a granular heartbeat
+            cursor.execute("UPDATE SystemState SET LastHeartbeat = ? WHERE Id = 1", (datetime.now(),))
+            conn.commit()
+        finally:
+            conn.close()
 
 def start_scheduler():
     """
@@ -18,13 +31,16 @@ def start_scheduler():
     # Farm monitoring every 30 minutes (Updated from 10)
     scheduler.add_job(check_farm_status, 'interval', minutes=30, id='farm_monitor')
     
+    # Heartbeat every 1 minute
+    scheduler.add_job(update_heartbeat, 'interval', minutes=1, id='system_heartbeat')
+
     # Daily Report at 17:00 (5:00 PM)
     scheduler.add_job(ReportService.generate_daily_report, 'cron', hour=17, minute=0, id='daily_report')
 
-    # Initial Run
+    # Initial Run (Bypass throttle to detect downtime immediately)
     print("DEBUG: Starting initial monitoring run...")
     monitor_weather()
-    check_farm_status()
+    check_farm_status(skip_throttle=True)
     
     # Check for missed reports
     check_for_missed_reports()

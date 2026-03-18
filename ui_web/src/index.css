@@ -155,13 +155,13 @@ main {
   text-align: right;
 }
 
-.message.system {
-  align-self: center;
-  background: rgba(16, 9, 0, 0.6);
-  border: 1px solid var(--amber);
-  color: var(--amber);
-  font-size: 0.8rem;
-  padding: 6px 12px;
+.message.error {
+  align-self: flex-start;
+  background: none;
+  border-left: 3px solid var(--red);
+  color: var(--red);
+  font-size: 0.85rem;
+  padding: 8px 16px;
 }
 
 .message-meta {
