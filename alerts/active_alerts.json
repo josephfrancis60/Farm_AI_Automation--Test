@@ -1,5 +1,13 @@
 [
     {
+        "id": "20260320111109668957",
+        "timestamp": "2026-03-20 11:11:09",
+        "title": "System Catch-up",
+        "message": "System was offline for 18m. Fetching missed activities...",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
         "id": "20260320104806306422",
         "timestamp": "2026-03-20 10:48:06",
         "title": "Irrigation Recommended",
@@ -36,14 +44,6 @@
         "timestamp": "2026-03-20 10:48:06",
         "title": "Irrigation Recommended",
         "message": "Field 1 (Tomato) needs watering. Reason: Soil moisture might be low and no rain detected.",
-        "category": "INFO",
-        "is_read": false
-    },
-    {
-        "id": "20260320104806023901",
-        "timestamp": "2026-03-20 10:48:06",
-        "title": "System Catch-up",
-        "message": "System was offline for 41h 22m. Fetching missed activities...",
         "category": "INFO",
         "is_read": false
     }

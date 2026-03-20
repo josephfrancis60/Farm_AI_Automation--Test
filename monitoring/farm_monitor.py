@@ -43,7 +43,7 @@ def check_farm_status(skip_throttle=False):
             irrigation_res = evaluate_irrigation_need.invoke({"field_id": field_id})
             if isinstance(irrigation_res, dict):
                 if irrigation_res["decision"] == "PROCEED":
-                    add_alert("Irrigation Recommended", f"Field {field_id} ({crop}) needs watering. Reason: {irrigation_res['reason']}", "INFO")
+                    add_alert("Irrigation Recommended", f"{crop} (Field {field_id}) needs watering. Reason: {irrigation_res['reason']}", "INFO")
             
             # Check Harvest
             harvest_res = predict_harvest_date.invoke({"field_id": field_id})
