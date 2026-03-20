@@ -19,6 +19,7 @@ function App() {
   const chatEndRef = useRef(null);
   const recognitionRef = useRef(null);
   const isSpokenRef = useRef(false); // To prevent multiple initial speaks
+  const announcedReminders = useRef(new Set());
 
   const checkBackendStatus = async () => {
     try {
@@ -44,6 +45,7 @@ function App() {
         // System just went offline
         setIsBackendOnline(false);
         prevOnlineRef.current = false;
+        speak("Servers are down, restore connectivity to my main processing cores.");
       }
     }
   };
@@ -143,9 +145,29 @@ function App() {
     try {
       const res = await fetch(`${API_BASE}/reminders`);
       const data = await res.json();
+      
+      // Auto-speak reminders when due
+      const now = new Date();
+      data.forEach(rem => {
+        const dueTime = new Date(rem.due_time);
+        if (now >= dueTime && !announcedReminders.current.has(rem.id)) {
+          speak(`Reminder: ${rem.title}. ${rem.message}`);
+          announcedReminders.current.add(rem.id);
+        }
+      });
+
       setReminders(data);
     } catch (err) {
       console.error('Failed to fetch reminders', err);
+    }
+  };
+
+  const clearReminder = async (id) => {
+    try {
+      await fetch(`${API_BASE}/reminders/${id}`, { method: 'DELETE' });
+      fetchReminders();
+    } catch (err) {
+      console.error('Failed to clear reminder', err);
     }
   };
 
@@ -182,10 +204,12 @@ function App() {
       setMessages(prev => [...prev, echoMsg]);
       speak(data.reply);
     } catch (err) {
+      const offlineMsg = "Servers are down, restore connectivity to my main processing cores.";
+      speak(offlineMsg);
       const errMsg = {
         id: Date.now() + 1,
         role: 'error',
-        content: 'Failed to connect to Echo backend.',
+        content: offlineMsg,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
       };
       setMessages(prev => [...prev, errMsg]);
@@ -243,12 +267,14 @@ function App() {
   return (
     <div className="hud-container">
       <header>
-        <div className="logo">Echo</div>
+        <div className="logo">ECHO</div>
         <div className="status-indicator">
           <div className={`status-dot ${!isBackendOnline ? 'offline' : ''}`}></div>
-          <span className={!isBackendOnline ? 'text-offline' : ''}>
-            {isBackendOnline ? 'SYSTEM ONLINE' : 'SYSTEM OFFLINE'} · KANIJA BHAVAN
+          <span className={isBackendOnline ? 'text-online' : 'text-offline'}>
+            {isBackendOnline ? 'SYSTEM ONLINE' : 'SYSTEM OFFLINE'}
           </span>
+          <span style={{ color: 'var(--text-dim)', margin: '0 4px' }}>·</span>
+          <span style={{ color: 'var(--cyan)' }}>KANIJA BHAVAN</span>
         </div>
       </header>
 
@@ -281,8 +307,10 @@ function App() {
               <div style={{ color: 'var(--text-dim)', fontSize: '0.8rem', padding: '10px' }}>NO ACTIVE REMINDERS</div>
             ) : (
               reminders.map(rem => (
-                <div key={rem.id} className="alert-card INFO">
-                  <div className="alert-title">{rem.title}</div>
+                <div key={rem.id} className="alert-card WARNING">
+                  <button className="alert-clear" onClick={() => clearReminder(rem.id)}>CNCL</button>
+                  <div className="alert-title" style={{ color: 'var(--amber)' }}>{rem.title}</div>
+                  <div className="alert-msg" style={{ fontSize: '0.75rem', opacity: 0.8 }}>{rem.message}</div>
                 </div>
               ))
             )}

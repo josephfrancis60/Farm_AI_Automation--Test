@@ -5,7 +5,9 @@ from tools.fertilizer_tool import get_fertilizer_recommendation
 from tools.inventory_tool import check_fertilizer_stock, add_fertilizer, update_fertilizer_stock, delete_fertilizer
 from tools.irrigation_tool import activate_sprinkler, get_irrigation_schedule, was_already_watered_today
 from services.weather_service import get_weather, add_weather_history
-from datetime import datetime
+from datetime import datetime, timedelta
+from alerts.reminder_manager import add_reminder, clear_reminders as clear_all_reminders
+from alerts.alert_manager import clear_alerts as clear_all_alerts
 
 @tool
 def crops():
@@ -15,6 +17,23 @@ def crops():
     """
     print("Tool: crops()")
     return get_all_crops()
+
+@tool
+def set_reminder(title: str, message: str, delay_minutes: float = 0.0):
+    """
+    Set a reminder for the user. This will be visible in the 'Reminders' section of the UI.
+    Use this when the user asks to be reminded about something (e.g., 'remind me to send an SMS in 5 minutes').
+    
+    Args:
+        title: A short, descriptive title for the reminder.
+        message: The detailed content of the reminder.
+        delay_minutes: Optional delay in minutes from now when the reminder should 'hit' and notify the user.
+    """
+    due_dt = datetime.now() + timedelta(minutes=delay_minutes)
+    due_time_str = due_dt.strftime("%Y-%m-%d %H:%M:%S")
+    
+    print(f"Tool: set_reminder('{title}', '{message}', due={due_time_str})")
+    return add_reminder(title, message, due_time=due_time_str)
 
 @tool
 def check_irrigation_status(city: str):
@@ -214,11 +233,46 @@ def update_weather_history(location: str, temperature: float, rain_condition: st
 @tool
 def weather(city: str):
     """
-    Get current weather and a 12-hour forecast (at 3-hour intervals) for a specific city.
-    Useful for checking current conditions and planning for upcoming rain or heat.
-    
+    Get the current weather and forecast for a specific city.
     Args:
-        city: The name of the city to check the weather for. If the user doesn't specify a city, use 'Kanija Bhavan' as a default.
+        city: City name (e.g., 'Kanija Bhavan').
     """
     print(f"Tool: weather('{city}')")
     return get_weather(city)
+
+@tool
+def set_reminder(title: str, message: str, delay_minutes: float = 0.0):
+    """
+    Set a reminder for the user. This will be visible in the 'Reminders' section of the UI.
+    Use this when the user asks to be reminded about something (e.g., 'remind me to send an SMS in 5 minutes').
+    
+    Args:
+        title: A short, descriptive title for the reminder.
+        message: The detailed content of the reminder.
+        delay_minutes: Optional delay in minutes from now when the reminder should 'hit' and notify the user.
+    """
+    due_dt = datetime.now() + timedelta(minutes=delay_minutes)
+    due_time_str = due_dt.strftime("%Y-%m-%d %H:%M:%S")
+    
+    print(f"Tool: set_reminder('{title}', '{message}', due={due_time_str})")
+    return add_reminder(title, message, due_time=due_time_str)
+
+@tool
+def clear_alerts():
+    """
+    Clear all active alerts from the system UI.
+    Use this when the user explicitly asks to 'clear all alerts'.
+    """
+    print("Tool: clear_alerts()")
+    clear_all_alerts()
+    return "All alerts have been cleared."
+
+@tool
+def clear_reminders():
+    """
+    Clear all active reminders from the system UI.
+    Use this when the user explicitly asks to 'clear all reminders'.
+    """
+    print("Tool: clear_reminders()")
+    clear_all_reminders()
+    return "All reminders have been cleared."

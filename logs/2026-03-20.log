@@ -342,3 +342,218 @@ NEW INTERACTION
 2026-03-20 11:15:49,738 - INFO - [SYSTEM] SMS notification sent to +919447476650 (SID: SM6fd7f97ecfa585fb5840f7e590793c61).
 2026-03-20 11:15:50,101 - INFO - [SYSTEM] SMS notification sent to +919447476650 (SID: SM55c5beaa769c9d67cd1a677a04688a93).
 2026-03-20 11:16:00,239 - INFO - [SYSTEM] SMS notification sent to +919447476650 (SID: SM282faa8681892bac36fea0dd69f46967).
+2026-03-20 12:07:55,739 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 12:07:55,741 - INFO - USER INPUT  : hey can you
+2026-03-20 12:07:55,742 - INFO - AGENT REPLY : LIMITATION: name 'clear_all_alerts' is not defined
+2026-03-20 12:07:55,743 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-20 12:07:55,743 - INFO - --------------------------------------------------
+
+2026-03-20 12:07:55,744 - ERROR - AGENT ERROR: name 'clear_all_alerts' is not defined
+2026-03-20 12:08:59,452 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 12:08:59,453 - INFO - USER INPUT  : Hey it's always to irrigate
+2026-03-20 12:08:59,454 - INFO - AGENT REPLY : LIMITATION: Found AIMessages with tool_calls that do not have a corresponding ToolMessage. Here are the first few of those tool calls: [{'name': 'clear_alerts', 'args': {}, 'id': '7yr17g7xk', 'type': 'tool_call'}].
+
+Every tool call (LLM requesting to call a tool) in the message history MUST have a corresponding ToolMessage (result of a tool invocation to return to the LLM) - this is required by most LLM providers.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CHAT_HISTORY
+2026-03-20 12:08:59,455 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-20 12:08:59,456 - INFO - --------------------------------------------------
+
+2026-03-20 12:08:59,458 - ERROR - AGENT ERROR: Found AIMessages with tool_calls that do not have a corresponding ToolMessage. Here are the first few of those tool calls: [{'name': 'clear_alerts', 'args': {}, 'id': '7yr17g7xk', 'type': 'tool_call'}].
+
+Every tool call (LLM requesting to call a tool) in the message history MUST have a corresponding ToolMessage (result of a tool invocation to return to the LLM) - this is required by most LLM providers.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CHAT_HISTORY
+2026-03-20 12:09:39,893 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 12:09:39,894 - INFO - USER INPUT  : what's the weather now
+2026-03-20 12:09:39,895 - INFO - AGENT REPLY : LIMITATION: Found AIMessages with tool_calls that do not have a corresponding ToolMessage. Here are the first few of those tool calls: [{'name': 'clear_alerts', 'args': {}, 'id': '7yr17g7xk', 'type': 'tool_call'}].
+
+Every tool call (LLM requesting to call a tool) in the message history MUST have a corresponding ToolMessage (result of a tool invocation to return to the LLM) - this is required by most LLM providers.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CHAT_HISTORY
+2026-03-20 12:09:39,897 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-20 12:09:39,897 - INFO - --------------------------------------------------
+
+2026-03-20 12:09:39,898 - ERROR - AGENT ERROR: Found AIMessages with tool_calls that do not have a corresponding ToolMessage. Here are the first few of those tool calls: [{'name': 'clear_alerts', 'args': {}, 'id': '7yr17g7xk', 'type': 'tool_call'}].
+
+Every tool call (LLM requesting to call a tool) in the message history MUST have a corresponding ToolMessage (result of a tool invocation to return to the LLM) - this is required by most LLM providers.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CHAT_HISTORY
+2026-03-20 12:56:56,221 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 12:56:56,222 - INFO - USER INPUT  : hey Google can you do one favour by clearing all the others
+2026-03-20 12:56:56,223 - INFO - AGENT REPLY : LIMITATION: Found AIMessages with tool_calls that do not have a corresponding ToolMessage. Here are the first few of those tool calls: [{'name': 'clear_alerts', 'args': {}, 'id': '7yr17g7xk', 'type': 'tool_call'}].
+
+Every tool call (LLM requesting to call a tool) in the message history MUST have a corresponding ToolMessage (result of a tool invocation to return to the LLM) - this is required by most LLM providers.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CHAT_HISTORY
+2026-03-20 12:56:56,224 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-20 12:56:56,225 - INFO - --------------------------------------------------
+
+2026-03-20 12:56:56,226 - ERROR - AGENT ERROR: Found AIMessages with tool_calls that do not have a corresponding ToolMessage. Here are the first few of those tool calls: [{'name': 'clear_alerts', 'args': {}, 'id': '7yr17g7xk', 'type': 'tool_call'}].
+
+Every tool call (LLM requesting to call a tool) in the message history MUST have a corresponding ToolMessage (result of a tool invocation to return to the LLM) - this is required by most LLM providers.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CHAT_HISTORY
+2026-03-20 12:57:29,490 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 12:57:29,492 - INFO - USER INPUT  : what's the weather now
+2026-03-20 12:57:29,498 - INFO - AGENT REPLY : LIMITATION: Found AIMessages with tool_calls that do not have a corresponding ToolMessage. Here are the first few of those tool calls: [{'name': 'clear_alerts', 'args': {}, 'id': '7yr17g7xk', 'type': 'tool_call'}].
+
+Every tool call (LLM requesting to call a tool) in the message history MUST have a corresponding ToolMessage (result of a tool invocation to return to the LLM) - this is required by most LLM providers.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CHAT_HISTORY
+2026-03-20 12:57:29,499 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-20 12:57:29,500 - INFO - --------------------------------------------------
+
+2026-03-20 12:57:29,501 - ERROR - AGENT ERROR: Found AIMessages with tool_calls that do not have a corresponding ToolMessage. Here are the first few of those tool calls: [{'name': 'clear_alerts', 'args': {}, 'id': '7yr17g7xk', 'type': 'tool_call'}].
+
+Every tool call (LLM requesting to call a tool) in the message history MUST have a corresponding ToolMessage (result of a tool invocation to return to the LLM) - this is required by most LLM providers.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CHAT_HISTORY
+2026-03-20 13:05:21,294 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 13:05:21,295 - INFO - USER INPUT  : hello that I have been taken care of
+2026-03-20 13:05:21,296 - INFO - TOOL [1] CALLED  : set_reminder
+2026-03-20 13:05:21,297 - INFO -        PARAMETERS : {'delay_minutes': 60, 'message': 'Please review the current farm status, including active alerts and irrigation recommendations.', 'title': 'Review Farm Status'}
+2026-03-20 13:05:21,298 - INFO -        RESPONSE  : {"id": "20260320130520570784", "timestamp": "2026-03-20 13:05:20", "due_time": "2026-03-20 14:05:20", "title": "Review Farm Status", "message": "Please review the current farm status, including active alerts and irrigation recommendations.", "is_read": false}
+2026-03-20 13:05:21,299 - INFO - AGENT REPLY : You have several irrigation recommendations. I've set a reminder for you to review the farm status in 1 hour. 
+
+Would you like to proceed with irrigation for any of the fields or would you like me to check the weather forecast first?
+2026-03-20 13:05:21,300 - INFO - TOKENS      : prompt=3214 | completion=49 | total=3263 | time=0.423s
+2026-03-20 13:05:21,301 - INFO - --------------------------------------------------
+
+2026-03-20 13:05:41,775 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 13:05:41,775 - INFO - USER INPUT  : what are the allowance I have
+2026-03-20 13:05:41,776 - INFO - TOOL [1] CALLED  : set_reminder
+2026-03-20 13:05:41,777 - INFO -        PARAMETERS : {'delay_minutes': 60, 'message': 'Please review the current farm status, including active alerts and irrigation recommendations.', 'title': 'Review Farm Status'}
+2026-03-20 13:05:41,778 - INFO -        RESPONSE  : {"id": "20260320130520570784", "timestamp": "2026-03-20 13:05:20", "due_time": "2026-03-20 14:05:20", "title": "Review Farm Status", "message": "Please review the current farm status, including active alerts and irrigation recommendations.", "is_read": false}
+2026-03-20 13:05:41,779 - INFO - TOOL [2] CALLED  : Crop List Lookup
+2026-03-20 13:05:41,780 - INFO -        PARAMETERS : {}
+2026-03-20 13:05:41,781 - INFO -        RESPONSE  : No crops found in the fields.
+2026-03-20 13:05:41,781 - INFO - AGENT REPLY : You have no crops currently growing in the farm. 
+
+Would you like to add a new crop or check the weather forecast to see if it's suitable for planting?
+2026-03-20 13:05:41,782 - INFO - TOKENS      : prompt=3489 | completion=34 | total=3523 | time=0.357s
+2026-03-20 13:05:41,783 - INFO - --------------------------------------------------
+
+2026-03-20 13:06:15,088 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 13:06:15,090 - INFO - USER INPUT  : psycho can you clear all the alerts for me
+2026-03-20 13:06:15,091 - INFO - TOOL [1] CALLED  : set_reminder
+2026-03-20 13:06:15,091 - INFO -        PARAMETERS : {'delay_minutes': 60, 'message': 'Please review the current farm status, including active alerts and irrigation recommendations.', 'title': 'Review Farm Status'}
+2026-03-20 13:06:15,092 - INFO -        RESPONSE  : {"id": "20260320130520570784", "timestamp": "2026-03-20 13:05:20", "due_time": "2026-03-20 14:05:20", "title": "Review Farm Status", "message": "Please review the current farm status, including active alerts and irrigation recommendations.", "is_read": false}
+2026-03-20 13:06:15,093 - INFO - TOOL [2] CALLED  : Crop List Lookup
+2026-03-20 13:06:15,094 - INFO -        PARAMETERS : {}
+2026-03-20 13:06:15,096 - INFO -        RESPONSE  : No crops found in the fields.
+2026-03-20 13:06:15,097 - INFO - TOOL [3] CALLED  : clear_alerts
+2026-03-20 13:06:15,098 - INFO -        PARAMETERS : {}
+2026-03-20 13:06:15,099 - INFO -        RESPONSE  : All alerts have been cleared.
+2026-03-20 13:06:15,100 - INFO - AGENT REPLY : All active alerts have been cleared. 
+
+Please note that the irrigation recommendations were cleared, but the fields may still need watering. If you would like to re-check the irrigation needs, I can help you with that.
+2026-03-20 13:06:15,101 - INFO - TOKENS      : prompt=3754 | completion=44 | total=3798 | time=0.369s
+2026-03-20 13:06:15,102 - INFO - --------------------------------------------------
+
+2026-03-20 13:06:29,533 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 13:06:29,534 - INFO - USER INPUT  : but there is no crop that right
+2026-03-20 13:06:29,535 - INFO - TOOL [1] CALLED  : set_reminder
+2026-03-20 13:06:29,536 - INFO -        PARAMETERS : {'delay_minutes': 60, 'message': 'Please review the current farm status, including active alerts and irrigation recommendations.', 'title': 'Review Farm Status'}
+2026-03-20 13:06:29,537 - INFO -        RESPONSE  : {"id": "20260320130520570784", "timestamp": "2026-03-20 13:05:20", "due_time": "2026-03-20 14:05:20", "title": "Review Farm Status", "message": "Please review the current farm status, including active alerts and irrigation recommendations.", "is_read": false}
+2026-03-20 13:06:29,538 - INFO - TOOL [2] CALLED  : Crop List Lookup
+2026-03-20 13:06:29,539 - INFO -        PARAMETERS : {}
+2026-03-20 13:06:29,540 - INFO -        RESPONSE  : No crops found in the fields.
+2026-03-20 13:06:29,540 - INFO - TOOL [3] CALLED  : clear_alerts
+2026-03-20 13:06:29,541 - INFO -        PARAMETERS : {}
+2026-03-20 13:06:29,542 - INFO -        RESPONSE  : All alerts have been cleared.
+2026-03-20 13:06:29,543 - INFO - AGENT REPLY : That's correct, since there are no crops currently growing in the farm, the irrigation recommendations are not applicable. 
+
+If you're planning to plant crops, I can help you with that. Please let me know what type of crop you'd like to plant and I can assist you with the process.
+2026-03-20 13:06:29,544 - INFO - TOKENS      : prompt=3836 | completion=61 | total=3897 | time=0.487s
+2026-03-20 13:06:29,545 - INFO - --------------------------------------------------
+
+2026-03-20 13:06:55,497 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 13:06:55,497 - INFO - USER INPUT  : just clear the reminder that I am saying review from status
+2026-03-20 13:06:55,498 - INFO - AGENT REPLY : LIMITATION: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98054, Requested 3940. Please try again in 28m42.816s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-03-20 13:06:55,499 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-20 13:06:55,500 - INFO - --------------------------------------------------
+
+2026-03-20 13:06:55,501 - ERROR - AGENT ERROR: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98054, Requested 3940. Please try again in 28m42.816s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-03-20 15:01:15,073 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 15:01:15,074 - INFO - USER INPUT  : hey Google is there any rain alerts for today
+2026-03-20 15:01:15,075 - INFO - AGENT REPLY : LIMITATION: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=weather{"city": "Kanija Bhavan"}</function>'}}
+2026-03-20 15:01:15,076 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-20 15:01:15,076 - INFO - --------------------------------------------------
+
+2026-03-20 15:01:15,077 - ERROR - AGENT ERROR: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=weather{"city": "Kanija Bhavan"}</function>'}}
+2026-03-20 15:02:25,217 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 15:02:25,218 - INFO - USER INPUT  : what is the weather now
+2026-03-20 15:02:25,219 - INFO - AGENT REPLY : LIMITATION: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=weather {"city": "Kanija Bhavan"}>'}}
+2026-03-20 15:02:25,220 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-20 15:02:25,221 - INFO - --------------------------------------------------
+
+2026-03-20 15:02:25,222 - ERROR - AGENT ERROR: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=weather {"city": "Kanija Bhavan"}>'}}
+2026-03-20 15:14:22,061 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 15:14:22,062 - INFO - USER INPUT  : can you tell me what's the weather now
+2026-03-20 15:14:22,063 - INFO - AGENT REPLY : LIMITATION: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98094, Requested 3086. Please try again in 16m59.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-03-20 15:14:22,064 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-20 15:14:22,064 - INFO - --------------------------------------------------
+
+2026-03-20 15:14:22,065 - ERROR - AGENT ERROR: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 98094, Requested 3086. Please try again in 16m59.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-03-20 15:24:28,130 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 15:24:28,131 - INFO - USER INPUT  : hey Google what is the weather right now
+2026-03-20 15:24:28,131 - INFO - AGENT REPLY : LIMITATION: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 97392, Requested 2905. Please try again in 4m16.608s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-03-20 15:24:28,132 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-20 15:24:28,133 - INFO - --------------------------------------------------
+
+2026-03-20 15:24:28,134 - ERROR - AGENT ERROR: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 97392, Requested 2905. Please try again in 4m16.608s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-03-20 15:28:39,635 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 15:28:39,636 - INFO - USER INPUT  : hey Google what is the weather weather right now
+2026-03-20 15:28:39,637 - INFO - AGENT REPLY : LIMITATION: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 97101, Requested 2970. Please try again in 1m1.344s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-03-20 15:28:39,638 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-20 15:28:39,639 - INFO - --------------------------------------------------
+
+2026-03-20 15:28:39,639 - ERROR - AGENT ERROR: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 97101, Requested 2970. Please try again in 1m1.344s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-03-20 15:35:56,299 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 15:35:56,300 - INFO - USER INPUT  : hey echo what is the weather now
+2026-03-20 15:35:56,301 - INFO - AGENT REPLY : LIMITATION: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99647, Requested 3220. Please try again in 41m17.088s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-03-20 15:35:56,302 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-20 15:35:56,303 - INFO - --------------------------------------------------
+
+2026-03-20 15:35:56,304 - ERROR - AGENT ERROR: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99647, Requested 3220. Please try again in 41m17.088s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}

@@ -81,8 +81,8 @@ header {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--cyan);
-  box-shadow: 0 0 8px var(--cyan);
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
   animation: pulse 2s infinite;
 }
 
@@ -96,6 +96,10 @@ header {
   background: var(--red);
   box-shadow: 0 0 8px var(--red);
   animation: none;
+}
+
+.text-online {
+  color: var(--green) !important;
 }
 
 .text-offline {

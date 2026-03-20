@@ -60,10 +60,10 @@ const VoiceVisualizer = ({ isListening, isSpeaking }) => {
         analyserRef.current.getByteFrequencyData(dataArrayRef.current);
         const sum = dataArrayRef.current.reduce((a, b) => a + b, 0);
         const average = sum / dataArrayRef.current.length;
-        targetAmp = 8 + average * 1.5;
+        targetAmp = 6 + average * 1.0;
         targetFreq = 0.04 + average * 0.003;
       } else if (isSpeaking) {
-        targetAmp = 20 + Math.sin(Date.now() * 0.02) * 12 + Math.random() * 5;
+        targetAmp = 15 + Math.sin(Date.now() * 0.02) * 8 + Math.random() * 3;
         targetFreq = 0.06 + Math.sin(Date.now() * 0.01) * 0.02;
       }
 

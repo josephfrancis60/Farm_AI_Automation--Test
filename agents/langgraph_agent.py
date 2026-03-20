@@ -5,7 +5,8 @@ from llm.llm_model import get_llm
 from tools.agent_tools import (
     crops, add_new_crop, update_existing_field, delete_crop_field,
     fertilizer, inventory, add_inventory_item, update_inventory_stock,
-    remove_from_inventory, irrigation, weather, check_irrigation_status
+    remove_from_inventory, irrigation, weather, check_irrigation_status,
+    set_reminder, clear_alerts, clear_reminders
 )
 from tools.irrigation_decision_tool import evaluate_irrigation_need
 from tools.harvest_prediction_tool import predict_harvest_date
@@ -29,7 +30,10 @@ def get_agent():
         weather,
         check_irrigation_status,
         evaluate_irrigation_need,
-        predict_harvest_date
+        predict_harvest_date,
+        set_reminder,
+        clear_alerts,
+        clear_reminders
     ]
 
     system_message = (
@@ -50,6 +54,9 @@ def get_agent():
         "\n- Speak concisely and with confidence, like a smart assistant."
         "\n- Only use tools when relevant. Keep responses short and direct."
         "\n- Use 'evaluate_irrigation_need' to identify needs, but always check weather FIRST and ASK for permission before activating the sprinkler."
+        "\n- **REMINDERS**: If the user asks to be reminded about something (e.g., 'remind me to irrigate' or 'set a reminder for SMS'), use the `set_reminder` tool. This is different from `irrigation` tool which performs the action."
+        "\n- **CLEARING**: If the user asks to 'clear all alerts' or 'clear all reminders', use the respective `clear_alerts` or `clear_reminders` tools."
+        "\n- **TOOL CALLING**: Do NOT speak or provide any preamble when calling a tool. Call the tool immediately. Do NOT use custom tags like `<function=...>` or explain the tool call."
     )
 
     agent = create_react_agent(

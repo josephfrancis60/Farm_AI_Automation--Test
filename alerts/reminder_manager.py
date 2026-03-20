@@ -4,11 +4,12 @@ from datetime import datetime
 
 REMINDERS_FILE = "alerts/active_reminders.json"
 
-def add_reminder(title, message):
+def add_reminder(title, message, due_time=None):
     """Adds a new reminder to the system."""
     reminder = {
         "id": datetime.now().strftime("%Y%m%d%H%M%S%f"),
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "due_time": due_time or datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "title": title,
         "message": message,
         "is_read": False

@@ -57,7 +57,12 @@ def get_active_alerts():
 def clear_alerts():
     """Clears all alerts."""
     if os.path.exists(ALERTS_FILE):
-        os.remove(ALERTS_FILE)
+        try:
+            os.remove(ALERTS_FILE)
+            return True
+        except:
+            return False
+    return True
 
 def remove_alert(alert_id):
     """Removes a specific alert by its ID."""

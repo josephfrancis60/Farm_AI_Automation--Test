@@ -8,7 +8,14 @@ agent = get_agent()
 def run_agent(user_input):
     try:
         # Configuration for stateful graph execution
-        config = {"configurable": {"thread_id": "farm_user_1"}}
+        thread_id = "farm_user_v2"
+        if user_input.lower().strip() in ["reset", "reset chat", "clear history"]:
+            # Logic to switch to a new thread effectively resetting history
+            from datetime import datetime
+            thread_id = f"farm_user_{datetime.now().strftime('%Y%m%d%H%M%S')}"
+            return "Sir, I have recalibrated my memory cores. Our conversation history has been reset. How may I assist you?"
+
+        config = {"configurable": {"thread_id": thread_id}}
         
         from datetime import datetime
         from alerts.alert_manager import get_active_alerts

@@ -4,6 +4,7 @@ from twilio.rest import Client
 from database.db_connection import get_connection
 from datetime import datetime, date
 from services.logger_service import log_interaction
+import json
 
 def _execute_irrigation(field_id, duration_minutes, crop_name):
     """
@@ -44,6 +45,30 @@ def _execute_irrigation(field_id, duration_minutes, crop_name):
             log_interaction("SYSTEM", f"Failed to send SMS notification: {str(e)}", status="ERROR")
     else:
         log_interaction("SYSTEM", "Twilio credentials not configured. Irrigation SMS skipped.", status="WARNING")
+
+    # Auto-clear related alerts
+    alerts_file = "alerts/active_alerts.json"
+    if os.path.exists(alerts_file):
+        try:
+            with open(alerts_file, "r") as f:
+                alerts = json.load(f)
+            
+            # Filter out alerts that mention this field or crop
+            field_str = f"field {field_id}"
+            new_alerts = []
+            for a in alerts:
+                title = a.get("title", "").lower()
+                msg = a.get("message", "").lower()
+                if field_str in title or field_str in msg or crop_name.lower() in title or crop_name.lower() in msg:
+                    continue
+                new_alerts.append(a)
+            
+            if len(new_alerts) < len(alerts):
+                with open(alerts_file, "w") as f:
+                    json.dump(new_alerts, f, indent=4)
+                print(f"DEBUG: Cleared {len(alerts) - len(new_alerts)} related alerts for {crop_name}.")
+        except Exception as e:
+            print(f"Error clearing alerts during irrigation: {e}")
 
 
 def activate_sprinkler(field_id, duration_minutes, delay_minutes=0):
