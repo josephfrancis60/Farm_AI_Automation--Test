@@ -557,3 +557,14 @@ NEW INTERACTION
 2026-03-20 15:35:56,303 - INFO - --------------------------------------------------
 
 2026-03-20 15:35:56,304 - ERROR - AGENT ERROR: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99647, Requested 3220. Please try again in 41m17.088s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-03-20 17:00:01,311 - INFO - [SYSTEM] SMS summary sent to +919447476650.
+2026-03-20 17:43:40,433 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-20 17:43:40,435 - INFO - USER INPUT  : hey echo what are the crops currently growing in my field
+2026-03-20 17:43:40,436 - INFO - AGENT REPLY : LIMITATION: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 97422, Requested 3415. Please try again in 12m3.168s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}
+2026-03-20 17:43:40,437 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-20 17:43:40,438 - INFO - --------------------------------------------------
+
+2026-03-20 17:43:40,439 - ERROR - AGENT ERROR: Error code: 429 - {'error': {'message': 'Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01k18d4hqjf3nsttzntxm802a3` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 97422, Requested 3415. Please try again in 12m3.168s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}

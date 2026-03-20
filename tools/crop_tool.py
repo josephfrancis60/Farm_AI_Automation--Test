@@ -84,6 +84,20 @@ def delete_field(field_id):
     conn = get_connection()
     cursor = conn.cursor()
 
+    # Get the crop name for this field first
+    cursor.execute("SELECT Crop FROM Fields WHERE FieldId = ?", (field_id,))
+    row = cursor.fetchone()
+    
+    if not row:
+        conn.close()
+        return f"Error: Field ID {field_id} not found."
+    
+    crop_name = row.Crop
+
+    # Delete from IrrigationSchedule first (sync)
+    cursor.execute("DELETE FROM IrrigationSchedule WHERE Crop = ?", (crop_name,))
+    
+    # Delete from Fields
     query = "DELETE FROM Fields WHERE FieldId = ?"
     cursor.execute(query, (field_id,))
     
@@ -92,7 +106,7 @@ def delete_field(field_id):
     conn.close()
     
     if affected > 0:
-        return f"Successfully deleted field {field_id}."
+        return f"Successfully deleted field {field_id} ({crop_name}). All related irrigation schedules were also removed."
     else:
         return f"Error: Field ID {field_id} not found."
 

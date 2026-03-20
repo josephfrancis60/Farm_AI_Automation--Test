@@ -6,7 +6,8 @@ from tools.agent_tools import (
     crops, add_new_crop, update_existing_field, delete_crop_field,
     fertilizer, inventory, add_inventory_item, update_inventory_stock,
     remove_from_inventory, irrigation, weather, check_irrigation_status,
-    set_reminder, clear_alerts, clear_reminders
+    set_reminder, clear_alerts, clear_reminders,
+    get_irrigation_schedule_for_crop, add_irrigation_schedule, remove_irrigation_schedule
 )
 from tools.irrigation_decision_tool import evaluate_irrigation_need
 from tools.harvest_prediction_tool import predict_harvest_date
@@ -33,7 +34,10 @@ def get_agent():
         predict_harvest_date,
         set_reminder,
         clear_alerts,
-        clear_reminders
+        clear_reminders,
+        get_irrigation_schedule_for_crop,
+        add_irrigation_schedule,
+        remove_irrigation_schedule
     ]
 
     system_message = (
@@ -50,6 +54,10 @@ def get_agent():
         "\n5. **DAILY REPORTS**: A detailed report is automatically generated every day at 5:00 PM and sent via SMS summary. "
         "\n   - If the user asks for a 'report' or 'updates' BEFORE 5:00 PM, provide the current status directly in the chat. DO NOT send an SMS manually unless they specifically ask."
         "\n6. **INTELLIGENT VERIFICATION**: If you receive a 'System Redirect' or 'Alert Triggered' message, verify if the action is STILL appropriate before executing."
+        "\n7. **CROP & SCHEDULE SYNC (NEW)**: "
+        "\n   - When a user asks to **add a new crop**, after adding it, ALWAYS check if an irrigation schedule exists for it using `get_irrigation_schedule_for_crop`."
+        "\n   - If no schedule exists, inform the user and ask if they'd like to set one. Offer to 'take care of it' by suggesting a typical schedule based on the crop's needs."
+        "\n   - When a field is **deleted**, inform the user that its corresponding irrigation schedule entries have also been automatically removed."
         "\n\nGENERAL STYLE:"
         "\n- Speak concisely and with confidence, like a smart assistant."
         "\n- Only use tools when relevant. Keep responses short and direct."

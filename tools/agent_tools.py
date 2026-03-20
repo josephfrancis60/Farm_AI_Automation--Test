@@ -8,6 +8,7 @@ from services.weather_service import get_weather, add_weather_history
 from datetime import datetime, timedelta
 from alerts.reminder_manager import add_reminder, clear_reminders as clear_all_reminders
 from alerts.alert_manager import clear_alerts as clear_all_alerts
+from tools.irrigation_mgmt_tool import get_crop_schedule, add_schedule_entry, clear_crop_schedule
 
 @tool
 def crops():
@@ -276,3 +277,43 @@ def clear_reminders():
     print("Tool: clear_reminders()")
     clear_all_reminders()
     return "All reminders have been cleared."
+
+@tool
+def get_irrigation_schedule_for_crop(crop_name: str):
+    """
+    Check the irrigation schedule for a specific crop.
+    Use this when a new crop is added to see if it already has a schedule.
+    """
+    print(f"Tool: get_irrigation_schedule_for_crop('{crop_name}')")
+    schedule = get_crop_schedule(crop_name)
+    if not schedule:
+        return f"No irrigation schedule found for {crop_name}."
+    
+    res = f"Irrigation schedule for {crop_name}:\n"
+    for s in schedule:
+        res += f"- {s['day']} at {s['time']} for {s['duration']} mins\n"
+    return res
+
+@tool
+def add_irrigation_schedule(crop_name: str, day_of_week: str, time_of_day: str, duration_minutes: int):
+    """
+    Add a new irrigation schedule entry for a crop.
+    Args:
+        crop_name: The name of the crop.
+        day_of_week: Day of the week (e.g., 'Monday').
+        time_of_day: Time in 24h format (e.g., '08:00').
+        duration_minutes: Duration in minutes.
+    """
+    print(f"Tool: add_irrigation_schedule('{crop_name}', '{day_of_week}', '{time_of_day}', {duration_minutes})")
+    return add_schedule_entry(crop_name, day_of_week, time_of_day, duration_minutes)
+
+@tool
+def remove_irrigation_schedule(crop_name: str):
+    """
+    Remove all irrigation schedule entries for a specific crop.
+    """
+    print(f"Tool: remove_irrigation_schedule('{crop_name}')")
+    success = clear_crop_schedule(crop_name)
+    if success:
+        return f"Successfully removed irrigation schedule for {crop_name}."
+    return f"No irrigation schedule found to remove for {crop_name}."
