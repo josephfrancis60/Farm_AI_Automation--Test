@@ -257,7 +257,11 @@ function App() {
           {messages.map(msg => (
             <div key={msg.id} className={`message ${msg.role}`}>
               <div className="message-meta">
-                <span className="role-tag">{msg.role === 'echo' ? 'ECHO' : msg.role.toUpperCase()}</span>
+                <span className="role-tag">
+                  {msg.role === 'user' ? 'USER' : 
+                   msg.role === 'echo' ? 'ECHO · AGENT' : 
+                   'SYSTEM'}
+                </span>
                 <span> · {msg.timestamp}</span>
               </div>
               <div className="message-content">{msg.content}</div>
