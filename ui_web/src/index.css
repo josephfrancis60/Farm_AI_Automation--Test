@@ -217,6 +217,19 @@ main {
 .alert-card.WARNING { border-left-color: var(--amber); }
 .alert-card.ERROR { border-left-color: var(--red); }
 .alert-card.SUCCESS { border-left-color: var(--green); }
+.alert-card.highlight-reminder {
+  border: 1px solid var(--cyan);
+  border-left-width: 5px;
+  background: rgba(0, 212, 255, 0.15);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+  animation: pulse-active-reminder 2s infinite;
+}
+
+@keyframes pulse-active-reminder {
+  0% { border-color: var(--cyan); box-shadow: 0 0 10px rgba(0, 212, 255, 0.2); }
+  50% { border-color: white; box-shadow: 0 0 20px rgba(0, 212, 255, 0.4); }
+  100% { border-color: var(--cyan); box-shadow: 0 0 10px rgba(0, 212, 255, 0.2); }
+}
 
 .alert-title {
   font-weight: 600;
@@ -228,18 +241,31 @@ main {
   font-size: 0.8rem;
   color: var(--text-dim);
   line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.reminder-hit-time {
+  font-size: 0.7rem;
+  opacity: 0.6;
+  text-align: right;
+  border-top: 1px solid var(--border);
+  padding-top: 4px;
+  margin-top: 4px;
 }
 
 .alert-clear {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  background: none;
-  border: none;
+  top: 6px;
+  right: 6px;
+  background: var(--bg-main);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 2px 4px;
   color: var(--red);
-  opacity: 0.3;
+  opacity: 0.5;
   cursor: pointer;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
+  z-index: 5;
 }
 
 .alert-card:hover .alert-clear { opacity: 1; }

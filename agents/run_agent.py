@@ -19,8 +19,10 @@ def run_agent(user_input):
         
         from datetime import datetime
         from alerts.alert_manager import get_active_alerts
+        from alerts.reminder_manager import get_active_reminders
         now = datetime.now()
         alerts_list = get_active_alerts()
+        reminders_list = get_active_reminders()
         
         alerts_context = ""
         if alerts_list:
@@ -28,7 +30,13 @@ def run_agent(user_input):
             for i, a in enumerate(alerts_list[:5], start=1):
                 alerts_context += f"{i}. {a['title']}: {a['message']} (Category: {a['category']})\n"
         
-        context = f"[Context: Current time is {now.strftime('%A, %Y-%m-%d %H:%M:%S')}]\n{alerts_context}\n"
+        reminders_context = ""
+        if reminders_list:
+            reminders_context = "\n[Active Reminders Check]:\n"
+            for i, r in enumerate(reminders_list, start=1):
+                reminders_context += f"{i}. {r['title']}: {r['message']} (Due: {r['due_time']})\n"
+        
+        context = f"[Context: Current time is {now.strftime('%A, %Y-%m-%d %H:%M:%S')}]\n{alerts_context}{reminders_context}\n"
         full_input = context + user_input
 
         # Invoke agent

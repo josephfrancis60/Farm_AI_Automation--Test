@@ -1,18 +1,1 @@
-[
-    {
-        "id": "20260323152023835936",
-        "timestamp": "2026-03-23 15:20:23",
-        "due_time": "2026-03-23 15:30:00",
-        "title": "Irrigation Starting NOW",
-        "message": "Irrigation for TestCrop_Alert is starting now as per schedule (15:30).",
-        "is_read": false
-    },
-    {
-        "id": "20260323152023834781",
-        "timestamp": "2026-03-23 15:20:23",
-        "due_time": "2026-03-23 15:25:00",
-        "title": "Irrigation Starting Soon",
-        "message": "Irrigation for TestCrop_Alert is scheduled to start in 5 minutes (at 15:30).",
-        "is_read": false
-    }
-]
+[]

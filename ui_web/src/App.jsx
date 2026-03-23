@@ -12,6 +12,8 @@ function App() {
   const [alerts, setAlerts] = useState([]);
   const [reminders, setReminders] = useState([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const activeReminderIdRef = useRef(null);
+  const [activeReminderId, setActiveReminderId] = useState(null);
 
   const [isBackendOnline, setIsBackendOnline] = useState(true);
   const prevOnlineRef = useRef(true);
@@ -150,9 +152,12 @@ function App() {
       const now = new Date();
       data.forEach(rem => {
         const dueTime = new Date(rem.due_time);
-        if (now >= dueTime && !announcedReminders.current.has(rem.id)) {
-          speak(`Reminder: ${rem.title}. ${rem.message}`);
+        if (now >= dueTime && !announcedReminders.current.has(rem.id) && !activeReminderIdRef.current) {
+          // Trigger natural announcement via hidden chat message
           announcedReminders.current.add(rem.id);
+          activeReminderIdRef.current = rem.id;
+          setActiveReminderId(rem.id);
+          handleTrigger(`[SYSTEM TRIGGER: REMINDER DUE] Title: ${rem.title}, Message: ${rem.message}. Please announce this naturally.`);
         }
       });
 
@@ -162,12 +167,41 @@ function App() {
     }
   };
 
-  const clearReminder = async (id) => {
+  const clearReminder = async (id, isSilent = false) => {
     try {
       await fetch(`${API_BASE}/reminders/${id}`, { method: 'DELETE' });
+      if (!isSilent) {
+        handleTrigger(`[SYSTEM TRIGGER: REMINDER CANCELED] The user manually canceled a reminder. Acknowledge this naturally.`);
+      }
       fetchReminders();
     } catch (err) {
       console.error('Failed to clear reminder', err);
+    }
+  };
+
+  const handleTrigger = async (text) => {
+    if (isProcessing) return;
+    setIsProcessing(true);
+    try {
+      const res = await fetch(`${API_BASE}/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text })
+      });
+      const data = await res.json();
+      
+      const echoMsg = {
+        id: Date.now() + 1,
+        role: 'echo',
+        content: data.reply,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
+      };
+      setMessages(prev => [...prev, echoMsg]);
+      speak(data.reply);
+    } catch (err) {
+      console.error("System trigger failed", err);
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -224,8 +258,20 @@ function App() {
     const utterance = new SpeechSynthesisUtterance(text);
 
     utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
+    utterance.onend = () => {
+      setIsSpeaking(false);
+      // Auto-clear active reminder after speaking finishes
+      if (activeReminderIdRef.current) {
+        clearReminder(activeReminderIdRef.current, true); // true = silent
+        activeReminderIdRef.current = null;
+        setActiveReminderId(null);
+      }
+    };
+    utterance.onerror = () => {
+      setIsSpeaking(false);
+      activeReminderIdRef.current = null;
+      setActiveReminderId(null);
+    };
 
     // Find a good male voice if possible
     const voices = window.speechSynthesis.getVoices();
@@ -306,13 +352,20 @@ function App() {
             {reminders.length === 0 ? (
               <div style={{ color: 'var(--text-dim)', fontSize: '0.8rem', padding: '10px' }}>NO ACTIVE REMINDERS</div>
             ) : (
-              reminders.map(rem => (
-                <div key={rem.id} className="alert-card WARNING">
-                  <button className="alert-clear" onClick={() => clearReminder(rem.id)}>CNCL</button>
-                  <div className="alert-title" style={{ color: 'var(--amber)' }}>{rem.title}</div>
-                  <div className="alert-msg" style={{ fontSize: '0.75rem', opacity: 0.8 }}>{rem.message}</div>
-                </div>
-              ))
+              reminders.map(rem => {
+                const hitTime = new Date(rem.due_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+                return (
+                  <div key={rem.id} className={`alert-card WARNING ${rem.id === activeReminderId ? 'highlight-reminder' : ''}`}>
+                    <button className="alert-clear" onClick={() => clearReminder(rem.id)}>CNCL</button>
+                    <div className="alert-title" style={{ color: 'var(--amber)' }}>{rem.title}</div>
+                    <div className="alert-msg" style={{ fontSize: '0.75rem', opacity: 0.8 }}>{rem.message}</div>
+                    <div className="reminder-hit-time">
+                      <Clock size={10} style={{ verticalAlign: 'middle', marginRight: '4px' }} />
+                      HIT: {hitTime}
+                    </div>
+                  </div>
+                );
+              })
             )}
           </div>
 
