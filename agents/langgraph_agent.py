@@ -7,7 +7,8 @@ from tools.agent_tools import (
     fertilizer, inventory, add_inventory_item, update_inventory_stock,
     remove_from_inventory, irrigation, weather, check_irrigation_status,
     set_reminder, clear_alerts, clear_reminders,
-    get_irrigation_schedule_for_crop, add_irrigation_schedule, remove_irrigation_schedule
+    get_irrigation_schedule_for_crop, add_irrigation_schedule, remove_irrigation_schedule,
+    manage_database_table
 )
 from tools.irrigation_decision_tool import evaluate_irrigation_need
 from tools.harvest_prediction_tool import predict_harvest_date
@@ -37,7 +38,8 @@ def get_agent():
         clear_reminders,
         get_irrigation_schedule_for_crop,
         add_irrigation_schedule,
-        remove_irrigation_schedule
+        remove_irrigation_schedule,
+        manage_database_table
     ]
 
     system_message = (
@@ -64,6 +66,7 @@ def get_agent():
         "\n- Use 'evaluate_irrigation_need' to identify needs, but always check weather FIRST and ASK for permission before activating the sprinkler."
         "\n- **REMINDERS**: If the user asks to be reminded about something (e.g., 'remind me to irrigate' or 'set a reminder for SMS'), use the `set_reminder` tool. This is different from `irrigation` tool which performs the action."
         "\n- **CLEARING**: If the user asks to 'clear all alerts' or 'clear all reminders', use the respective `clear_alerts` or `clear_reminders` tools."
+        "\n- **DATABASE UPDATES**: If the user asks to change, update, or delete entries in tables like `Fields`, `IrrigationSchedule`, `Inventory`, or `WeatherHistory`, use the `manage_database_table` tool. For example, 'change the irrigation schedule' or 'update the crop in field 2'."
         "\n- **TOOL CALLING**: Do NOT speak or provide any preamble when calling a tool. Call the tool immediately. Do NOT use custom tags like `<function=...>` or explain the tool call."
     )
 

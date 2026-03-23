@@ -45,7 +45,7 @@ function App() {
         // System just went offline
         setIsBackendOnline(false);
         prevOnlineRef.current = false;
-        speak("Servers are down, restore connectivity to my main processing cores.");
+        speak("Servers are down, Please restore connectivity to my main processing cores.");
       }
     }
   };
@@ -274,7 +274,7 @@ function App() {
             {isBackendOnline ? 'SYSTEM ONLINE' : 'SYSTEM OFFLINE'}
           </span>
           <span style={{ color: 'var(--text-dim)', margin: '0 4px' }}>·</span>
-          <span style={{ color: 'var(--cyan)' }}>KANIJA BHAVAN</span>
+          <span style={{ color: 'var(--cyan)' }}>Banglore</span>
         </div>
       </header>
 

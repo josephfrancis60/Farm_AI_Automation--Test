@@ -5,6 +5,7 @@ from tools.harvest_prediction_tool import predict_harvest_date
 from services.logger_service import log_agent_action
 from services.weather_service import get_historical_weather, add_weather_history_batch
 from datetime import datetime, timedelta
+from alerts.reminder_manager import add_reminder, get_active_reminders
 
 def check_farm_status(skip_throttle=False):
     """
@@ -32,7 +33,10 @@ def check_farm_status(skip_throttle=False):
         # 1. Check Downtime
         check_system_downtime(cursor)
 
-        # 2. Get all fields
+        # 2. Check upcoming irrigation schedules
+        check_irrigation_alerts(cursor)
+
+        # 3. Get all fields
         cursor.execute("SELECT FieldId, Crop FROM Fields")
         fields = cursor.fetchall()
 
@@ -53,7 +57,7 @@ def check_farm_status(skip_throttle=False):
                 elif harvest_res["status"] == "Ready for Harvest":
                     add_alert("Ready to Harvest", f"{crop} (Field {field_id}) is ready! Expected harvest date was {harvest_res['expected_harvest_date']}.", "SUCCESS")
 
-        # 3. Update LastRunTime
+        # 4. Update LastRunTime
         cursor.execute("UPDATE SystemState SET LastRunTime = ? WHERE Id = 1", (datetime.now(),))
         conn.commit()
         print("DEBUG: Monitoring run completed.")
@@ -80,12 +84,20 @@ def check_system_downtime(cursor):
     
     # Only process significant downtime ( > 2 mins)
     if downtime > timedelta(minutes=2):
-        minutes = int(downtime.total_seconds() / 60)
-        hours = minutes // 60
-        remaining_mins = minutes % 60
-        downtime_str = f"{hours}h {remaining_mins}m" if hours > 0 else f"{minutes}m"
+        total_minutes = int(downtime.total_seconds() / 60)
+        days = total_minutes // (24 * 60)
+        remaining_minutes = total_minutes % (24 * 60)
+        hours = remaining_minutes // 60
+        mins = remaining_minutes % 60
         
-        print(f"  ! Downtime detected: {downtime_str}.")
+        downtime_str = ""
+        if days > 0:
+            downtime_str += f"{days}d "
+        if hours > 0 or days > 0:
+            downtime_str += f"{hours}h "
+        downtime_str += f"{mins}m"
+        
+        print(f"  ! Downtime detected: {downtime_str.strip()}.")
         
         # Clear existing "System Catch-up" alerts to avoid stale ones
         existing_alerts = get_active_alerts()
@@ -109,6 +121,57 @@ def check_system_downtime(cursor):
 
     # Update LastHeartbeat at the end of detection run
     cursor.execute("UPDATE SystemState SET LastHeartbeat = ? WHERE Id = 1", (datetime.now(),))
+
+def check_irrigation_alerts(cursor):
+    """
+    Checks the IrrigationSchedule for entries in the next 35 minutes and sets reminders.
+    """
+    now = datetime.now()
+    day_of_week = now.strftime('%A')
+    
+    # Check for schedules today
+    cursor.execute("SELECT Crop, TimeOfDay, DurationMinutes FROM IrrigationSchedule WHERE DayOfWeek = ?", (day_of_week,))
+    schedules = cursor.fetchall()
+    
+    if not schedules:
+        return
+
+    existing_reminders = get_active_reminders()
+    
+    for crop, time_str, duration in schedules:
+        try:
+            # Parse time (assumed format HH:MM)
+            sched_hour, sched_min = map(int, time_str.split(':'))
+            sched_time = now.replace(hour=sched_hour, minute=sched_min, second=0, microsecond=0)
+            
+            # If the scheduled time is in the past for today, skip unless it's within the next 35 mins (next day case handled by scheduler)
+            # Actually, the scheduler runs every 30 mins, so we want to catch things in the NEXT 35 mins.
+            
+            time_diff = sched_time - now
+            
+            # Check 5-minute pre-alert (if scheduled time is between 5 and 35 minutes from now)
+            if timedelta(minutes=5) <= time_diff <= timedelta(minutes=35):
+                reminder_title = "Irrigation Starting Soon"
+                reminder_msg = f"Irrigation for {crop} is scheduled to start in 5 minutes (at {time_str})."
+                due_time = sched_time - timedelta(minutes=5)
+                
+                # Deduplicate: Don't add if a similar reminder exists for the same time
+                if not any(r['title'] == reminder_title and r['due_time'].startswith(due_time.strftime("%Y-%m-%d %H:%M")) for r in existing_reminders):
+                    add_reminder(reminder_title, reminder_msg, due_time.strftime("%Y-%m-%d %H:%M:%S"))
+                    print(f"  - Proactive Reminder: {reminder_title} for {crop} at {time_str} (Alert at {due_time.strftime('%H:%M')})")
+
+            # Check Start Alert (if scheduled time is between 0 and 30 minutes from now)
+            if timedelta(minutes=0) <= time_diff <= timedelta(minutes=30):
+                reminder_title = "Irrigation Starting NOW"
+                reminder_msg = f"Irrigation for {crop} is starting now as per schedule ({time_str})."
+                due_time = sched_time
+                
+                if not any(r['title'] == reminder_title and r['due_time'].startswith(due_time.strftime("%Y-%m-%d %H:%M")) for r in existing_reminders):
+                    add_reminder(reminder_title, reminder_msg, due_time.strftime("%Y-%m-%d %H:%M:%S"))
+                    print(f"  - Proactive Notification: {reminder_title} for {crop} at {time_str}")
+
+        except Exception as e:
+            print(f"Error parsing schedule for {crop}: {e}")
 
 if __name__ == "__main__":
     check_farm_status()

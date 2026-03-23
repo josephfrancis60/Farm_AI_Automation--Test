@@ -242,21 +242,65 @@ def weather(city: str):
     return get_weather(city)
 
 @tool
-def set_reminder(title: str, message: str, delay_minutes: float = 0.0):
+def manage_database_table(table_name: str, action: str, data: dict, condition: dict = None):
     """
-    Set a reminder for the user. This will be visible in the 'Reminders' section of the UI.
-    Use this when the user asks to be reminded about something (e.g., 'remind me to send an SMS in 5 minutes').
+    Perform INSERT, UPDATE, or DELETE operations on specific farm database tables.
+    Supported tables: 'Fields', 'IrrigationSchedule', 'Inventory', 'WeatherHistory'.
     
     Args:
-        title: A short, descriptive title for the reminder.
-        message: The detailed content of the reminder.
-        delay_minutes: Optional delay in minutes from now when the reminder should 'hit' and notify the user.
+        table_name: The name of the table to modify.
+        action: The action to perform ('INSERT', 'UPDATE', 'DELETE').
+        data: A dictionary of column names and values for INSERT or UPDATE.
+        condition: A dictionary of column names and values for the WHERE clause (required for UPDATE and DELETE).
     """
-    due_dt = datetime.now() + timedelta(minutes=delay_minutes)
-    due_time_str = due_dt.strftime("%Y-%m-%d %H:%M:%S")
+    allowed_tables = ['Fields', 'IrrigationSchedule', 'Inventory', 'WeatherHistory']
+    if table_name not in allowed_tables:
+        return f"Error: Table '{table_name}' is not accessible via this tool."
     
-    print(f"Tool: set_reminder('{title}', '{message}', due={due_time_str})")
-    return add_reminder(title, message, due_time=due_time_str)
+    print(f"Tool: manage_database_table('{table_name}', '{action}', {data}, condition={condition})")
+    
+    from database.db_connection import get_connection
+    conn = get_connection()
+    if not conn:
+        return "Error: Could not connect to database."
+    
+    cursor = conn.cursor()
+    try:
+        if action.upper() == 'INSERT':
+            columns = ", ".join(data.keys())
+            placeholders = ", ".join(["?" for _ in data])
+            values = list(data.values())
+            query = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
+            cursor.execute(query, values)
+            
+        elif action.upper() == 'UPDATE':
+            if not condition:
+                return "Error: UPDATE requires a condition."
+            set_clause = ", ".join([f"{k} = ?" for k in data.keys()])
+            where_clause = " AND ".join([f"{k} = ?" for k in condition.keys()])
+            values = list(data.values()) + list(condition.values())
+            query = f"UPDATE {table_name} SET {set_clause} WHERE {where_clause}"
+            cursor.execute(query, values)
+            
+        elif action.upper() == 'DELETE':
+            if not condition:
+                return "Error: DELETE requires a condition."
+            where_clause = " AND ".join([f"{k} = ?" for k in condition.keys()])
+            values = list(condition.values())
+            query = f"DELETE FROM {table_name} WHERE {where_clause}"
+            cursor.execute(query, values)
+        else:
+            return f"Error: Unsupported action '{action}'."
+        
+        affected = cursor.rowcount
+        conn.commit()
+        return f"Successfully performed {action} on {table_name}. Rows affected: {affected}."
+        
+    except Exception as e:
+        conn.rollback()
+        return f"Database error: {e}"
+    finally:
+        conn.close()
 
 @tool
 def clear_alerts():
