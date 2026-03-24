@@ -1,15 +1,16 @@
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 
 REMINDERS_FILE = "alerts/active_reminders.json"
 
 def add_reminder(title, message, due_time=None):
     """Adds a new reminder to the system."""
+    now_utc = datetime.now(timezone.utc)
     reminder = {
-        "id": datetime.now().strftime("%Y%m%d%H%M%S%f"),
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "due_time": due_time or datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "id": now_utc.strftime("%Y%m%d%H%M%S%f"),
+        "timestamp": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "due_time": due_time or now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "title": title,
         "message": message,
         "is_read": False

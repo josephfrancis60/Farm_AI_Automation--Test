@@ -2,7 +2,7 @@ from services.weather_service import get_weather
 from database.db_connection import get_connection
 from alerts.alert_manager import add_alert
 from services.logger_service import log_agent_action
-from datetime import datetime
+from datetime import datetime, timezone
 
 def monitor_weather(city="Kanija Bhavan"):
     """
@@ -33,7 +33,7 @@ def monitor_weather(city="Kanija Bhavan"):
         INSERT INTO WeatherHistory (Timestamp, Location, Temperature, Rain, Humidity)
         VALUES (?, ?, ?, ?, ?)
         """
-        cursor.execute(query, (datetime.now(), city, temp, condition, humidity))
+        cursor.execute(query, (datetime.now(timezone.utc), city, temp, condition, humidity))
         conn.commit()
         
         print(f"- Logged weather: {temp}°C, {condition}")

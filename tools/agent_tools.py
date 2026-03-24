@@ -5,7 +5,7 @@ from tools.fertilizer_tool import get_fertilizer_recommendation
 from tools.inventory_tool import check_fertilizer_stock, add_fertilizer, update_fertilizer_stock, delete_fertilizer
 from tools.irrigation_tool import activate_sprinkler, get_irrigation_schedule, was_already_watered_today
 from services.weather_service import get_weather, add_weather_history
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from alerts.reminder_manager import add_reminder, clear_reminders as clear_all_reminders
 from alerts.alert_manager import clear_alerts as clear_all_alerts
 from tools.irrigation_mgmt_tool import get_crop_schedule, add_schedule_entry, clear_crop_schedule
@@ -30,8 +30,8 @@ def set_reminder(title: str, message: str, delay_minutes: float = 0.0):
         message: The detailed content of the reminder.
         delay_minutes: Optional delay in minutes from now when the reminder should 'hit' and notify the user.
     """
-    due_dt = datetime.now() + timedelta(minutes=delay_minutes)
-    due_time_str = due_dt.strftime("%Y-%m-%d %H:%M:%S")
+    due_dt = datetime.now(timezone.utc) + timedelta(minutes=delay_minutes)
+    due_time_str = due_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
     
     print(f"Tool: set_reminder('{title}', '{message}', due={due_time_str})")
     return add_reminder(title, message, due_time=due_time_str)
@@ -47,7 +47,7 @@ def check_irrigation_status(city: str):
     """
     print(f"Tool: check_irrigation_status('{city}')")
     
-    now = datetime.now()
+    now = datetime.now(timezone.utc)
     day_of_week = now.strftime('%A') # e.g., 'Monday'
     current_time = now.strftime('%H:%M')
     

@@ -7,10 +7,10 @@ import customtkinter as ctk
 import tkinter as tk
 import threading
 import time
-import datetime
+import os
 import uuid
 import queue
-import os
+from datetime import datetime, timedelta, timezone
 
 # ─── Optional Imports ───────────────────────────────────────────────────────
 try:
@@ -97,8 +97,19 @@ class JarvisUI:
         ).start())
 
     # ══════════════════════════════════════════════════════════════════════════
-    #  LOGIC & TTS
+    #  LOGIC & TTS & TIME
     # ══════════════════════════════════════════════════════════════════════════
+    
+    def _utc_to_local(self, utc_str: str, fmt: str = "%Y-%m-%dT%H:%M:%SZ"):
+        """Converts a UTC time string to local time string."""
+        try:
+            # Parse as UTC
+            dt_utc = datetime.strptime(utc_str, fmt).replace(tzinfo=timezone.utc)
+            # Convert to local timezone
+            dt_local = dt_utc.astimezone()
+            return dt_local
+        except Exception:
+            return None
 
     def _init_tts(self):
         try:
@@ -296,7 +307,7 @@ class JarvisUI:
     # ══════════════════════════════════════════════════════════════════════════
 
     def _add_message(self, mtype: str, sender: str, text: str):
-        now = datetime.datetime.now().strftime("%I:%M %p")
+        now = datetime.now().strftime("%I:%M %p")
         is_user = mtype == "user"
 
         styles = {
@@ -360,7 +371,10 @@ class JarvisUI:
         tk.Frame(c, bg=C["amber"], width=3).pack(side="left", fill="y")
         cnt = tk.Frame(c, bg=C["bg2"], padx=8, pady=8)
         cnt.pack(side="left", fill="x", expand=True)
-        tk.Label(cnt, text=r["title"], font=("Courier New", 10, "bold"), fg="#d4a843", bg=C["bg2"], anchor="w", wraplength=220).pack(fill="x")
+        dt_local = self._utc_to_local(r["due_time"])
+        due_str = dt_local.strftime("%I:%M %p") if dt_local else r["due_time"]
+        
+        tk.Label(cnt, text=f"{r['title']} (Due: {due_str})", font=("Courier New", 10, "bold"), fg="#d4a843", bg=C["bg2"], anchor="w", wraplength=220).pack(fill="x")
         tk.Button(cnt, text="DEL", font=("Courier New", 8), bg=C["bg2"], fg="#5a2a2a",
                   relief="flat", bd=1, command=lambda: self._del_rem(r["id"])).pack(anchor="e")
 
@@ -376,12 +390,12 @@ class JarvisUI:
             from alerts.alert_manager import get_active_alerts
             all_alerts = get_active_alerts()
             
-            # Filtering Logic
-            today_str = datetime.datetime.now().strftime("%Y-%m-%d")
+            # Filtering Logic (Use UTC for consistency with backend)
+            today_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d")
             alerts = []
             for a in all_alerts:
-                ts = a.get("timestamp", "")
-                if ts.startswith(today_str):
+                ts = a.get("timestamp", "") # ISO: 2026-03-24T...
+                if ts.startswith(today_utc):
                     alerts.append(a)
                 else:
                     # Previous days: filter out non-essential alerts
@@ -406,8 +420,11 @@ class JarvisUI:
         cnt = tk.Frame(c, bg=C["bg2"], padx=10, pady=10) # More internal padding
         cnt.pack(side="left", fill="x", expand=True)
 
+        dt_local = self._utc_to_local(a["timestamp"])
+        ts_str = dt_local.strftime("%I:%M %p") if dt_local else ""
+        
         # Title
-        tk.Label(cnt, text=a["title"], font=("Courier New", 10, "bold"),
+        tk.Label(cnt, text=f"{a['title']} · {ts_str}", font=("Courier New", 10, "bold"),
                  fg=C["text"], bg=C["bg2"], anchor="w", wraplength=250).pack(fill="x")
 
         # Message (NEW: Added this back as it was missing!)
@@ -476,26 +493,59 @@ class JarvisUI:
         self.root.after(100, _poll)
 
     def _try_rem(self, uin, rep):
-        import re
-        if "remind" in uin.lower():
-            m = re.search(r"(\d+)\s*min", uin.lower())
-            if m:
-                mins = int(m.group(1))
-                due = (datetime.datetime.now() + datetime.timedelta(minutes=mins)).isoformat()
-                self.reminders.append({"id": str(uuid.uuid4())[:8], "title": uin.capitalize(), "remind_at": due, "fired": False})
-                self.root.after(0, self._render_reminders)
+        # Removed regex-based local reminder creation.
+        # Reminders are now exclusively synced from the backend `alerts/active_reminders.json`.
+        pass
 
     def _start_reminder_thread(self):
         def _c():
             while True:
-                time.sleep(15)
-                n = datetime.datetime.now()
-                for r in self.reminders:
-                    if not r["fired"] and datetime.datetime.fromisoformat(r["remind_at"]) <= n:
-                        r["fired"] = True
-                        self._msg_queue.put(("alert", "⚡ REMINDER", r["title"]))
-                        self._msg_queue.put(("speak", None, f"Reminder: {r['title']}"))
-                        self._msg_queue.put(("redraw", None, None))
+                time.sleep(5)
+                n_utc = datetime.now(timezone.utc)
+                try:
+                    from alerts.reminder_manager import get_active_reminders, remove_reminder
+                    backend_rems = get_active_reminders()
+                    
+                    self.reminders = []
+                    
+                    for r in backend_rems:
+                        try:
+                            # Parse UTC time
+                            dt_rem_utc = datetime.strptime(r["due_time"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+                            
+                            if not r.get("fired") and dt_rem_utc <= n_utc:
+                                # Reminder is due!
+                                r["fired"] = True
+                                self._msg_queue.put(("alert", "⚡ REMINDER", r["title"]))
+                                self._msg_queue.put(("speak", None, f"Reminder: {r['title']}"))
+                                
+                                # Process system trigger so the agent can announce it naturally
+                                msg_text = f"[SYSTEM TRIGGER: REMINDER DUE] Title: {r['title']}, Message: {r.get('message', '')}. Please announce this naturally."
+                                
+                                # We need to invoke the agent for the natural announcement, similar to user providing input
+                                def _trigger_agent(text):
+                                    try:
+                                        from agents.run_agent import run_agent
+                                        reply = run_agent(text)
+                                        self._msg_queue.put(("jarvis", "JARVIS", reply))
+                                        self._msg_queue.put(("speak", None, reply))
+                                    except Exception as e:
+                                        self._msg_queue.put(("error", "ERROR", str(e)))
+                                        
+                                threading.Thread(target=_trigger_agent, args=(msg_text,), daemon=True).start()
+                                
+                                # Remove from backend file so it doesn't trigger again globally
+                                remove_reminder(r["id"])
+                            else:
+                                # Still pending or just fired, add to UI list
+                                self.reminders.append(r)
+                                
+                        except Exception:
+                            continue
+                            
+                    self._msg_queue.put(("redraw", None, None))
+                except Exception:
+                    pass
         threading.Thread(target=_c, daemon=True).start()
 
     def _start_alert_poll_thread(self):
@@ -517,9 +567,10 @@ class JarvisUI:
             while True:
                 time.sleep(60)
                 try:
-                    td = datetime.datetime.now().strftime("%Y-%m-%d")
+                    now_utc = datetime.now(timezone.utc)
+                    td = now_utc.strftime("%Y-%m-%d")
                     if td == self._last_report_spoken: continue
-                    if datetime.datetime.now().hour < 17: continue
+                    if now_utc.hour < 17: continue
                     rf = os.path.join(os.path.dirname(__file__), "..", "reports", "daily_reports", f"report_{td}.txt")
                     if os.path.exists(rf):
                         self._last_report_spoken = td

@@ -1,6 +1,6 @@
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 
 ALERTS_FILE = "alerts/active_alerts.json"
 
@@ -9,9 +9,10 @@ def add_alert(title, message, category="INFO"):
     Adds a new alert to the system.
     Categories: INFO, WARNING, SUCCESS, ERROR
     """
+    now_utc = datetime.now(timezone.utc)
     alert = {
-        "id": datetime.now().strftime("%Y%m%d%H%M%S%f"),
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "id": now_utc.strftime("%Y%m%d%H%M%S%f"),
+        "timestamp": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "title": title,
         "message": message,
         "category": category,

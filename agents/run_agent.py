@@ -1,5 +1,8 @@
 from agents.langgraph_agent import get_agent
 from services.logger_service import log_full_state
+from datetime import datetime, timezone
+from alerts.alert_manager import get_active_alerts
+from alerts.reminder_manager import get_active_reminders
 # import logging
 
 # Initialize agent
@@ -11,16 +14,13 @@ def run_agent(user_input):
         thread_id = "farm_user_v2"
         if user_input.lower().strip() in ["reset", "reset chat", "clear history"]:
             # Logic to switch to a new thread effectively resetting history
-            from datetime import datetime
-            thread_id = f"farm_user_{datetime.now().strftime('%Y%m%d%H%M%S')}"
+            thread_id = f"farm_user_{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}"
             return "Sir, I have recalibrated my memory cores. Our conversation history has been reset. How may I assist you?"
 
         config = {"configurable": {"thread_id": thread_id}}
         
-        from datetime import datetime
-        from alerts.alert_manager import get_active_alerts
-        from alerts.reminder_manager import get_active_reminders
-        now = datetime.now()
+        now_utc = datetime.now(timezone.utc)
+        now_local = datetime.now() # System local time
         alerts_list = get_active_alerts()
         reminders_list = get_active_reminders()
         
@@ -28,15 +28,25 @@ def run_agent(user_input):
         if alerts_list:
             alerts_context = "\n[Active Alerts Check]:\n"
             for i, a in enumerate(alerts_list[:5], start=1):
-                alerts_context += f"{i}. {a['title']}: {a['message']} (Category: {a['category']})\n"
+                ts = a.get("timestamp", "")
+                if ts.endswith("Z"):
+                    try:
+                        ts = datetime.strptime(ts, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S")
+                    except ValueError: pass
+                alerts_context += f"{i}. {a['title']}: {a['message']} (Alerted: {ts}, Category: {a.get('category', 'INFO')})\n"
         
         reminders_context = ""
         if reminders_list:
             reminders_context = "\n[Active Reminders Check]:\n"
             for i, r in enumerate(reminders_list, start=1):
-                reminders_context += f"{i}. {r['title']}: {r['message']} (Due: {r['due_time']})\n"
+                due = r.get("due_time", "")
+                if due.endswith("Z"):
+                    try:
+                         due = datetime.strptime(due, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S")
+                    except ValueError: pass
+                reminders_context += f"{i}. {r['title']}: {r['message']} (Due: {due})\n"
         
-        context = f"[Context: Current time is {now.strftime('%A, %Y-%m-%d %H:%M:%S')}]\n{alerts_context}{reminders_context}\n"
+        context = f"[Context: Current local time is {now_local.strftime('%A, %Y-%m-%d %H:%M:%S')}]\n{alerts_context}{reminders_context}\n"
         full_input = context + user_input
 
         # Invoke agent

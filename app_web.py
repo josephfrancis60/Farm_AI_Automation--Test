@@ -5,7 +5,7 @@ import threading
 import time
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from agents.run_agent import run_agent
 from alerts.alert_manager import get_active_alerts, remove_alert, clear_alerts
 from scheduler.farm_scheduler import start_scheduler
@@ -14,6 +14,7 @@ from alerts.reminder_manager import get_active_reminders, add_reminder, remove_r
 from contextlib import asynccontextmanager
 from services.logger_service import log_agent_action
 
+# Lifespan manager for startup/shutdown
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
@@ -58,10 +59,10 @@ async def chat(request: ChatRequest):
 def alerts():
     # Reuse filtering logic from the Tkinter UI
     all_alerts = get_active_alerts()
-    today_str = datetime.now().strftime("%Y-%m-%d")
+    today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     filtered = []
     for a in all_alerts:
-        ts = a.get("timestamp", "")
+        ts = a.get("timestamp", "") # ISO: 2026-03-24T...
         if ts.startswith(today_str):
             filtered.append(a)
         else:

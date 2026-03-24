@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from twilio.rest import Client
 from database.db_connection import get_connection
 from services.logger_service import log_interaction
@@ -12,7 +12,7 @@ class ReportService:
         Saves the detailed report to a file and optionally sends an SMS summary.
         """
         if target_date is None:
-            target_date = datetime.now()
+            target_date = datetime.now(timezone.utc)
             
         date_str = target_date.strftime('%Y-%m-%d')
         report_dir = r"c:\Users\joseph.francis\My Projects\Farm-AI-agent\reports\daily_reports"

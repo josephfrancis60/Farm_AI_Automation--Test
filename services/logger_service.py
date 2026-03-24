@@ -1,14 +1,14 @@
 import logging
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from logging.handlers import TimedRotatingFileHandler
 
 def get_logger(log_dir="logs"):
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
 
-    # File name based on date: logs/YYYY-MM-DD.log
-    log_file = os.path.join(log_dir, f"{datetime.now().strftime('%Y-%m-%d')}.log")
+    # File name based on date: logs/YYYY-MM-DD.log (UTC)
+    log_file = os.path.join(log_dir, f"{datetime.now(timezone.utc).strftime('%Y-%m-%d')}.log")
 
     # Use a unique name for each log directory to avoid handler overlap
     logger_name = f"FarmAIAgent_{log_dir.replace('/', '_')}"
@@ -18,6 +18,7 @@ def get_logger(log_dir="logs"):
     # Avoid adding multiple handlers if get_logger is called multiple times
     if not logger.handlers:
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        formatter.converter = lambda *args: datetime.now(timezone.utc).timetuple()
 
         file_handler = TimedRotatingFileHandler(
             log_file, when="midnight", interval=1, backupCount=30, encoding='utf-8'

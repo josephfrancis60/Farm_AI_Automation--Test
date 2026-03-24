@@ -68,7 +68,7 @@ def get_agent():
         "\n- **Reminders**: If the user asks to be reminded about something, use the `set_reminder` tool. Acknowledge the request politely."
         "\n- **Clearing**: If the user asks to 'clear all alerts' or 'clear all reminders', use the respective tools and confirm the action."
         "\n- **Database Updates**: Use `manage_database_table` for any requests to change, update, or delete data in `Fields`, `IrrigationSchedule`, `Inventory`, or `WeatherHistory`."
-        "\n- **TOOL CALLING**: Do NOT speak or provide any preamble when calling a tool. Call the tool immediately. Do NOT use custom tags like `<function=...>` or explain the tool call. Speak AFTER the tool has returned its output (the LangGraph framework handles this sequence)."
+        "\n- **TOOL CALLING**: Do NOT speak or provide any preamble when calling a tool. Call the tool immediately. Speak normally ONLY AFTER the tool has returned its output."
     )
 
     agent = create_react_agent(
