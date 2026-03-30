@@ -71,7 +71,11 @@ class JarvisUI:
         self.reminders: list[dict] = []
         self._seen_alert_ids: set = set()
         self.listening = False
-        self.recognizer = sr.Recognizer() if VOICE_AVAILABLE else None
+        if VOICE_AVAILABLE:
+            self.recognizer = sr.Recognizer()
+            self.recognizer.pause_threshold = 2.5 # Wait longer before cutting off speech
+        else:
+            self.recognizer = None
         self.microphone = None
         self._msg_queue: queue.Queue = queue.Queue()
         self._tts_lock = threading.Lock()
@@ -181,7 +185,7 @@ class JarvisUI:
 
         right = tk.Frame(hdr, bg=C["bg2"])
         right.pack(side="right", padx=24)
-        tk.Label(right, text="llama-3.3-70b · groq", font=("Courier New", 10),
+        tk.Label(right, text="llama-3.1-8b · groq", font=("Courier New", 10),
                  fg=C["text_dim"], bg=C["bg"]).pack(side="left", padx=(0, 16))
 
         self._status_dot = tk.Canvas(right, width=10, height=10, bg=C["bg2"], highlightthickness=0)
@@ -607,8 +611,8 @@ class JarvisUI:
                     rf = os.path.join(os.path.dirname(__file__), "..", "reports", "daily_reports", f"report_{td}.txt")
                     if os.path.exists(rf):
                         self._last_report_spoken = td
-                        self._msg_queue.put(("jarvis", "SYSTEM", f"📋 Daily report for {td} generated."))
-                        self._msg_queue.put(("speak", None, "Sir, the daily report has been generated."))
+                        self._msg_queue.put(("jarvis", "SYSTEM", f"📋 Daily report for {td} generated and sent via SMS."))
+                        self._msg_queue.put(("speak", None, "Sir, the daily report has been generated and sent via SMS. Please check your phone."))
                 except: pass
         threading.Thread(target=_w, daemon=True).start()
 

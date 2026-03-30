@@ -68,7 +68,8 @@ def get_agent():
         "\n- **Reminders**: If the user asks to be reminded about something, use the `set_reminder` tool. Acknowledge the request politely."
         "\n- **Clearing**: If the user asks to 'clear all alerts' or 'clear all reminders', use the respective tools and confirm the action."
         "\n- **Database Updates**: Use `manage_database_table` for any requests to change, update, or delete data in `Fields`, `IrrigationSchedule`, `Inventory`, or `WeatherHistory`."
-        "\n- **TOOL CALLING**: Do NOT speak or provide any preamble when calling a tool. Call the tool immediately. Speak normally ONLY AFTER the tool has returned its output."
+        "\n- **TOOL CALLING**: You are equipped with tools. You MUST invoke them natively using the provided JSON tool-call schema. NEVER generate physical `<function=...>` XML/text tags."
+        "\n  - Call the tool immediately and wait for the results. Speak to the user ONLY AFTER you have the tool output."
     )
 
     agent = create_react_agent(

@@ -27,6 +27,8 @@ def add_reminder(title, message, due_time=None):
     # Deduplication Logic: Don't add if EXACT title, message and due_time already exists
     if any(r["title"] == title and r["message"] == message and r["due_time"] == (due_time or r["due_time"]) for r in reminders):
         return next(r for r in reminders if r["title"] == title and r["message"] == message and r["due_time"] == (due_time or r["due_time"]))
+    
+    reminders.append(reminder)  # <= FIX: Actually add the reminder to the list
     reminders = reminders[:20]
 
     with open(REMINDERS_FILE, "w") as f:

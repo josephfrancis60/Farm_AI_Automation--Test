@@ -56,14 +56,16 @@ function App() {
   useEffect(() => {
     if (SpeechRecognition) {
       recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.continuous = false;
-      recognitionRef.current.interimResults = false;
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = true;
       recognitionRef.current.lang = 'en-US';
 
       recognitionRef.current.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
+        const transcript = Array.from(event.results)
+          .map(result => result[0].transcript)
+          .join('');
         setInputValue(transcript);
-        handleSend(transcript);
+        // Do not auto-send here. User must press Send or Enter to finish.
       };
 
       recognitionRef.current.onend = () => {

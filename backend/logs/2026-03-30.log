@@ -22,3 +22,182 @@ NEW INTERACTION
 2026-03-30 09:40:49,422 - INFO - TOKENS      : prompt=4155 | completion=38 | total=4193 | time=0.791s
 2026-03-30 09:40:49,423 - INFO - --------------------------------------------------
 
+2026-03-30 10:56:48,032 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 10:56:48,033 - INFO - USER INPUT  : hey, can you remind me about irrigating tomato field in 2 minutes.
+2026-03-30 10:56:48,033 - INFO - AGENT REPLY : LIMITATION: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=set_reminder{"title": "Irrigation Reminder: Tomato Field", "message": "Irrigation is recommended for the Tomato field. Please review and proceed with irrigation if necessary.", "delay_minutes": 2}</function>'}}
+2026-03-30 10:56:48,033 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-30 10:56:48,034 - INFO - --------------------------------------------------
+
+2026-03-30 10:56:48,034 - ERROR - AGENT ERROR: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=set_reminder{"title": "Irrigation Reminder: Tomato Field", "message": "Irrigation is recommended for the Tomato field. Please review and proceed with irrigation if necessary.", "delay_minutes": 2}</function>'}}
+2026-03-30 11:00:01,708 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 11:00:01,710 - INFO - USER INPUT  : hey, can you remind me about irrigating tomato field in 2 minutes.
+2026-03-30 11:00:01,713 - INFO - AGENT REPLY : LIMITATION: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=set_reminder{"title": "Irrigation Reminder: Tomato Field", "message": "Irrigation is recommended for the Tomato field. Please review and confirm.", "delay_minutes": 2}</function>'}}
+2026-03-30 11:00:01,715 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-30 11:00:01,716 - INFO - --------------------------------------------------
+
+2026-03-30 11:00:01,717 - ERROR - AGENT ERROR: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=set_reminder{"title": "Irrigation Reminder: Tomato Field", "message": "Irrigation is recommended for the Tomato field. Please review and confirm.", "delay_minutes": 2}</function>'}}
+2026-03-30 11:02:40,532 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 11:02:40,533 - INFO - USER INPUT  : hey, can you remind me about irrigating tomato field in 2 minutes.
+2026-03-30 11:02:40,533 - INFO - AGENT REPLY : LIMITATION: Error code: 400 - {'error': {'message': 'The model `llama-3.1-70b-versatile` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+2026-03-30 11:02:40,533 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-30 11:02:40,534 - INFO - --------------------------------------------------
+
+2026-03-30 11:02:40,534 - ERROR - AGENT ERROR: Error code: 400 - {'error': {'message': 'The model `llama-3.1-70b-versatile` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+2026-03-30 11:03:14,971 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 11:03:14,971 - INFO - USER INPUT  : try again
+2026-03-30 11:03:14,971 - INFO - AGENT REPLY : LIMITATION: Error code: 400 - {'error': {'message': 'The model `llama-3.1-70b-versatile` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+2026-03-30 11:03:14,971 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-30 11:03:14,972 - INFO - --------------------------------------------------
+
+2026-03-30 11:03:14,972 - ERROR - AGENT ERROR: Error code: 400 - {'error': {'message': 'The model `llama-3.1-70b-versatile` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+2026-03-30 11:06:18,078 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 11:06:18,078 - INFO - USER INPUT  : hey, can you remind me about irrigating tomato field in 2 minutes.
+2026-03-30 11:06:18,079 - INFO - AGENT REPLY : LIMITATION: Error code: 400 - {'error': {'message': 'The model `llama3-70b-8192` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+2026-03-30 11:06:18,079 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-30 11:06:18,079 - INFO - --------------------------------------------------
+
+2026-03-30 11:06:18,080 - ERROR - AGENT ERROR: Error code: 400 - {'error': {'message': 'The model `llama3-70b-8192` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}
+2026-03-30 11:15:42,095 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 11:15:42,096 - INFO - USER INPUT  : Hey Echo, can you remind me?
+2026-03-30 11:15:42,096 - INFO - AGENT REPLY : Hi, you have a reminder - Irrigation Needed. You have four fields that need watering: Corn (Field 4), Sugarcane (Field 3), Potato (Field 2), and Tomato (Field 1). The reason for the recommendation is low soil moisture and no rain detected.
+2026-03-30 11:15:42,097 - INFO - TOKENS      : prompt=4081 | completion=61 | total=4142 | time=0.398s
+2026-03-30 11:15:42,097 - INFO - --------------------------------------------------
+
+2026-03-30 11:16:07,895 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 11:16:07,895 - INFO - USER INPUT  : Hey Echo, can you remind me of irritating sugar?
+2026-03-30 11:16:07,895 - INFO - AGENT REPLY : Hi, you have a reminder - Irrigation Needed for Sugarcane (Field 3). The reason for the recommendation is low soil moisture and no rain detected. Would you like to proceed with irrigation for this field?
+2026-03-30 11:16:07,896 - INFO - TOKENS      : prompt=4388 | completion=45 | total=4433 | time=0.518s
+2026-03-30 11:16:07,896 - INFO - --------------------------------------------------
+
+2026-03-30 11:17:43,340 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 11:17:43,340 - INFO - USER INPUT  : Hey set a reminder for 2 minutes. I have to send an urgent e-mail.
+2026-03-30 11:17:43,341 - INFO - TOOL [1] CALLED  : set_reminder
+2026-03-30 11:17:43,341 - INFO -        PARAMETERS : {'delay_minutes': 2, 'message': 'Send an urgent email', 'title': 'Urgent Email'}
+2026-03-30 11:17:43,341 - INFO -        RESPONSE  : {"id": "20260330111655661553", "timestamp": "2026-03-30T11:16:55Z", "due_time": "2026-03-30T11:18:55Z", "title": "Urgent Email", "message": "Send an urgent email", "is_read": false}
+2026-03-30 11:17:43,342 - INFO - AGENT REPLY : I've set a reminder for you to send an urgent email in 2 minutes.
+2026-03-30 11:17:43,342 - INFO - TOKENS      : prompt=4803 | completion=18 | total=4821 | time=0.325s
+2026-03-30 11:17:43,342 - INFO - --------------------------------------------------
+
+2026-03-30 11:18:17,710 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 11:18:17,711 - INFO - USER INPUT  : will it rain today?
+2026-03-30 11:18:17,711 - INFO - AGENT REPLY : LIMITATION: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=weather{"city": "Kanija Bhavan"}</function>'}}
+2026-03-30 11:18:17,712 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-30 11:18:17,712 - INFO - --------------------------------------------------
+
+2026-03-30 11:18:17,712 - ERROR - AGENT ERROR: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=weather{"city": "Kanija Bhavan"}</function>'}}
+2026-03-30 11:22:14,527 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 11:22:14,528 - INFO - USER INPUT  : What crops are in my farm and what is the latest weather?
+2026-03-30 11:22:14,529 - INFO - TOOL [1] CALLED  : Crop List Lookup
+2026-03-30 11:22:14,529 - INFO -        PARAMETERS : {}
+2026-03-30 11:22:14,529 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Potato (Sandy soil, 3.0 acres)
+              - ID: 3 | Sugarcane (Clay soil, 5.0 acres)
+              - ID: 4 | Corn (Loamy soil, 4.0 acres)
+              
+2026-03-30 11:22:14,530 - INFO - TOOL [2] CALLED  : Weather Forecast
+2026-03-30 11:22:14,530 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-30 11:22:14,530 - INFO -        RESPONSE  : {"current": {"temperature": 31.63, "humidity": 36, "condition": "scattered clouds"}, "forecast": [{"time": "2026-03-30 12:00:00", "condition": "scattered clouds", "temp": 31.63}, {"time": "2026-03-30 15:00:00", "condition": "broken clouds", "temp": 30.83}, {"time": "2026-03-30 18:00:00", "condition": "broken clouds", "temp": 27.78}, {"time": "2026-03-30 21:00:00", "condition": "clear sky", "temp": 23.69}]}
+2026-03-30 11:22:14,531 - INFO - AGENT REPLY : You have Tomato, Potato, Sugarcane, and Corn in your farm. The current weather in Kanija Bhavan is scattered clouds with a temperature of 31.63°C and humidity of 36%. The forecast shows broken clouds later in the day with temperatures ranging from 30.83°C to 23.69°C.
+2026-03-30 11:22:14,531 - INFO - --------------------------------------------------
+
+2026-03-30 11:25:00,027 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 11:25:00,027 - INFO - USER INPUT  : Hey Echo, in the UI I can see some alerts but I'm a bit busy right?
+2026-03-30 11:25:00,028 - INFO - AGENT REPLY : I've checked the current alerts for you. There are four alerts regarding irrigation recommendations for the fields. 
+
+1. Corn in Field 4 needs watering due to potentially low soil moisture and no detected rain.
+2. Sugarcane in Field 3 also requires watering for the same reasons.
+3. Potato in Field 2 is another crop that might need watering soon.
+4. Lastly, Tomato in Field 1 is showing a similar need for irrigation.
+
+Would you like me to take care of these irrigation tasks or would you prefer to handle them manually?
+2026-03-30 11:25:00,028 - INFO - TOKENS      : prompt=4052 | completion=112 | total=4164 | time=0.573s
+2026-03-30 11:25:00,028 - INFO - --------------------------------------------------
+
+2026-03-30 11:25:18,656 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 11:25:18,656 - INFO - USER INPUT  : Yeah, OK. But I'm a bit busy right now. So can you set a reminder for 2 minutes?
+2026-03-30 11:25:18,656 - INFO - AGENT REPLY : LIMITATION: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=set_reminder{"title": "Irrigation Reminder", "message": "Check and possibly irrigate Corn in Field 4, Sugarcane in Field 3, Potato in Field 2, and Tomato in Field 1", "delay_minutes": 2}</function>'}}
+2026-03-30 11:25:18,657 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-03-30 11:25:18,657 - INFO - --------------------------------------------------
+
+2026-03-30 11:25:18,657 - ERROR - AGENT ERROR: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=set_reminder{"title": "Irrigation Reminder", "message": "Check and possibly irrigate Corn in Field 4, Sugarcane in Field 3, Potato in Field 2, and Tomato in Field 1", "delay_minutes": 2}</function>'}}
+2026-03-30 11:25:31,911 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 11:25:31,912 - INFO - USER INPUT  : Can you set a reminder for 3 minutes? I need to send an urgent e-mail about the.
+2026-03-30 11:25:31,912 - INFO - TOOL [1] CALLED  : set_reminder
+2026-03-30 11:25:31,913 - INFO -        PARAMETERS : {'delay_minutes': 3, 'message': 'Remember to send an urgent email regarding the irrigation alerts for the fields.', 'title': 'Send Urgent Email'}
+2026-03-30 11:25:31,914 - INFO -        RESPONSE  : {"id": "20260330112531225905", "timestamp": "2026-03-30T11:25:31Z", "due_time": "2026-03-30T11:28:31Z", "title": "Send Urgent Email", "message": "Remember to send an urgent email regarding the irrigation alerts for the fields.", "is_read": false}
+2026-03-30 11:25:31,915 - INFO - AGENT REPLY : I've set a reminder for you to send an urgent email in 3 minutes regarding the irrigation alerts for the fields.
+2026-03-30 11:25:31,916 - INFO - TOKENS      : prompt=4810 | completion=25 | total=4835 | time=0.371s
+2026-03-30 11:25:31,916 - INFO - --------------------------------------------------
+
+2026-03-30 11:30:01,707 - INFO - [SYSTEM] SMS summary sent to +919447476650.
+2026-03-30 11:34:20,040 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 11:34:20,041 - INFO - USER INPUT  : What crops are in my farm and what is the latest weather?
+2026-03-30 11:34:20,042 - INFO - TOOL [1] CALLED  : Crop List Lookup
+2026-03-30 11:34:20,043 - INFO -        PARAMETERS : {}
+2026-03-30 11:34:20,044 - INFO -        RESPONSE  : Current crops in the farm:
+              - ID: 1 | Tomato (Loamy soil, 2.5 acres)
+              - ID: 2 | Potato (Sandy soil, 3.0 acres)
+              - ID: 3 | Sugarcane (Clay soil, 5.0 acres)
+              - ID: 4 | Corn (Loamy soil, 4.0 acres)
+              
+2026-03-30 11:34:20,045 - INFO - TOOL [2] CALLED  : Weather Forecast
+2026-03-30 11:34:20,046 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-03-30 11:34:20,046 - INFO -        RESPONSE  : {"current": {"temperature": 31.38, "humidity": 37, "condition": "scattered clouds"}, "forecast": [{"time": "2026-03-30 12:00:00", "condition": "scattered clouds", "temp": 31.38}, {"time": "2026-03-30 15:00:00", "condition": "broken clouds", "temp": 30.66}, {"time": "2026-03-30 18:00:00", "condition": "broken clouds", "temp": 27.69}, {"time": "2026-03-30 21:00:00", "condition": "clear sky", "temp": 23.69}]}
+2026-03-30 11:34:20,047 - INFO - AGENT REPLY : You currently have 4 crops in your farm: Tomato, Potato, Sugarcane, and Corn. The latest weather in Kanija Bhavan is scattered clouds with a temperature of 31.38 degrees Celsius and humidity of 37%. The forecast shows scattered clouds throughout the day with temperatures ranging from 31.38 to 23.69 degrees Celsius.
+2026-03-30 11:34:20,048 - INFO - --------------------------------------------------
+
+2026-03-30 11:36:44,937 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-30 11:36:44,937 - INFO - USER INPUT  : [SYSTEM TRIGGER: REMINDER DUE] Title: Test Reminder, Message: This is a test.. Please announce this naturally.
+2026-03-30 11:36:44,938 - INFO - TOOL [1] CALLED  : set_reminder
+2026-03-30 11:36:44,938 - INFO -        PARAMETERS : {'delay_minutes': 3, 'message': 'Remember to send an urgent email regarding the irrigation alerts for the fields.', 'title': 'Send Urgent Email'}
+2026-03-30 11:36:44,938 - INFO -        RESPONSE  : {"id": "20260330112531225905", "timestamp": "2026-03-30T11:25:31Z", "due_time": "2026-03-30T11:28:31Z", "title": "Send Urgent Email", "message": "Remember to send an urgent email regarding the irrigation alerts for the fields.", "is_read": false}
+2026-03-30 11:36:44,938 - INFO - AGENT REPLY : Hi, you have a reminder - Test Reminder. The message is: This is a test.
+2026-03-30 11:36:44,939 - INFO - TOKENS      : prompt=5130 | completion=20 | total=5150 | time=0.495s
+2026-03-30 11:36:44,939 - INFO - --------------------------------------------------
+
