@@ -2,7 +2,7 @@ import os
 import json
 from datetime import datetime, timezone
 
-REMINDERS_FILE = "alerts/active_reminders.json"
+REMINDERS_FILE = os.path.join(os.path.dirname(__file__), "active_reminders.json")
 
 def add_reminder(title, message, due_time=None):
     """Adds a new reminder to the system."""
@@ -24,7 +24,9 @@ def add_reminder(title, message, due_time=None):
         except:
             reminders = []
 
-    reminders.insert(0, reminder)
+    # Deduplication Logic: Don't add if EXACT title, message and due_time already exists
+    if any(r["title"] == title and r["message"] == message and r["due_time"] == (due_time or r["due_time"]) for r in reminders):
+        return next(r for r in reminders if r["title"] == title and r["message"] == message and r["due_time"] == (due_time or r["due_time"]))
     reminders = reminders[:20]
 
     with open(REMINDERS_FILE, "w") as f:

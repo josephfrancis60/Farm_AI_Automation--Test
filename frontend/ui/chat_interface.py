@@ -1,11 +1,14 @@
-import streamlit as st
-from datetime import datetime
+import os
+import sys
+
+# Add the backend directory to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "backend")))
+
 from agents.run_agent import run_agent
 from alerts.alert_manager import get_active_alerts, clear_alerts, remove_alert
 from streamlit_autorefresh import st_autorefresh
 from database.db_connection import get_connection
 from services.logger_service import log_agent_action
-import os
 
 def start_ui():
     st.set_page_config(page_title="Farm AI Agent", page_icon="🌱", layout="wide")

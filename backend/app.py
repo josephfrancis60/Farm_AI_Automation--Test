@@ -1,7 +1,13 @@
+import sys
+import os
+
+# Add the project root and frontend to sys.path to find ui modules
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend")))
+
 from ui.chat_interface import start_ui          # Streamlit UI (original)
 from ui.chat_interface_2 import start_ui_jarvis  # JARVIS CustomTkinter UI (new)
 from scheduler.farm_scheduler import start_scheduler
-import os
 
 if __name__ == "__main__":
     # Ensure necessary directories exist

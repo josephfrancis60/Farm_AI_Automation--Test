@@ -11,6 +11,11 @@ import os
 import uuid
 import queue
 from datetime import datetime, timedelta, timezone
+import sys
+import requests # Added for health check
+
+# Add the backend directory to sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "backend")))
 
 # ─── Optional Imports ───────────────────────────────────────────────────────
 try:
@@ -82,13 +87,14 @@ class JarvisUI:
             self._init_tts()
 
         # ─── Background threads ───────────────────────────────────────────────
+        self._start_health_check_thread() # New health check thread
         self._start_reminder_thread()
         self._start_alert_poll_thread()
         self._start_report_watch_thread()
         self._start_queue_processor()
 
         # Welcome sequence
-        welcome_text = "Systems initialized. I am Echo. Active monitoring is engaged. How may I assist you with the farm today?"
+        welcome_text = "Welcome back sir. How may I assist you."
         self.root.after(300, lambda: self._add_message("jarvis", "JARVIS", welcome_text))
         self.root.after(400, lambda: threading.Thread(
             target=self._speak,
@@ -131,6 +137,33 @@ class JarvisUI:
                 self._tts_engine.say(text)
                 self._tts_engine.runAndWait()
             except Exception: pass
+
+    def _start_health_check_thread(self):
+        def _check():
+            prev_online = True
+            while True:
+                try:
+                    # Ping the FastAPI backend health endpoint
+                    response = requests.get("http://localhost:8000/health", timeout=2)
+                    online = (response.status_code == 200)
+                except:
+                    online = False
+
+                if online != prev_online:
+                    if online:
+                        self.is_online = True
+                        self._status_var.set("ONLINE")
+                        self._msg_queue.put(("speak", None, "Sir, connectivity has been restored. My processing cores are now online."))
+                        self._msg_queue.put(("jarvis", "JARVIS", "Connectivity restored. Systems operational."))
+                    else:
+                        self.is_online = False
+                        self._status_var.set("OFFLINE")
+                        self._msg_queue.put(("speak", None, "Servers are down...."))
+                        self._msg_queue.put(("error", "SYSTEM", "Servers are down...."))
+                    prev_online = online
+                
+                time.sleep(5)
+        threading.Thread(target=_check, daemon=True).start()
 
     # ══════════════════════════════════════════════════════════════════════════
     #  UI BUILDERS

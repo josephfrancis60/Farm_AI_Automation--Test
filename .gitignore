@@ -62,11 +62,11 @@ db.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:
-instance/
-.webassets-cache
+# instance/
+# .webassets-cache
 
 # Scrapy stuff:
-.scrapy
+# .scrapy
 
 # Sphinx documentation
 docs/_build/
@@ -121,7 +121,8 @@ celerybeat.pid
 .venv
 env/
 venv/
-ENV/
+**/venv/
+**/env/
 env.bak/
 venv.bak/
 
@@ -151,11 +152,14 @@ cython_debug/
 
 # PyCharm
 .idea/
+
 # Web UI (React)
-ui_web/node_modules/
-ui_web/dist/
-ui_web/.env*
-ui_web/npm-debug.log*
-ui_web/yarn-debug.log*
-ui_web/yarn-error.log*
-ui_web/.vscode/
+frontend/ui_web/node_modules/
+frontend/ui_web/dist/
+frontend/ui_web/.env*
+frontend/ui_web/npm-debug.log*
+frontend/ui_web/yarn-debug.log*
+frontend/ui_web/yarn-error.log*
+frontend/ui_web/.vscode/
+node_modules/
+**/node_modules/

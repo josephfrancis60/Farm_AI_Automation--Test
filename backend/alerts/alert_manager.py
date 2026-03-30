@@ -2,7 +2,7 @@ import os
 import json
 from datetime import datetime, timezone
 
-ALERTS_FILE = "alerts/active_alerts.json"
+ALERTS_FILE = os.path.join(os.path.dirname(__file__), "active_alerts.json")
 
 def add_alert(title, message, category="INFO"):
     """
@@ -22,7 +22,7 @@ def add_alert(title, message, category="INFO"):
     # Print to console for instant feedback
     print(f"\n[ALERT - {category}] {title}: {message}")
 
-    # Save to JSON for Streamlit UI
+    # Save to JSON
     alerts = []
     if os.path.exists(ALERTS_FILE):
         try:
@@ -31,7 +31,12 @@ def add_alert(title, message, category="INFO"):
         except:
             alerts = []
 
-    # Deduplication logic for "System Catch-up"
+    # General Deduplication: Don't add if EXACT title and message already exists
+    if any(a["title"] == title and a["message"] == message for a in alerts):
+        # Optional: update timestamp of existing one? No, user said "never show duplicate alerts"
+        return next(a for a in alerts if a["title"] == title and a["message"] == message)
+
+    # Specific Deduplication for "System Catch-up" (Remove any existing ones)
     if "System Catch-up" in title:
         alerts = [a for a in alerts if "System Catch-up" not in a.get("title", "")]
 

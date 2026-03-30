@@ -29,7 +29,7 @@ function App() {
       if (res.ok) {
         if (!prevOnlineRef.current) {
           // System came back online
-          speak("Sir, connectivity has been restored. My processing cores are back online.");
+          speak("Sir, connectivity has been restored. My processing cores are now online.");
           setMessages(prev => [...prev, {
             id: Date.now(),
             role: 'echo',
@@ -47,7 +47,7 @@ function App() {
         // System just went offline
         setIsBackendOnline(false);
         prevOnlineRef.current = false;
-        speak("Servers are down, Please restore connectivity to my main processing cores.");
+        speak("Servers are down. Please restore connectivity to my main processing cores.");
       }
     }
   };
@@ -77,15 +77,15 @@ function App() {
     }
 
     // Initial welcome speech (only if online)
-    const initialGreeting = "Systems initialized. Active monitoring is engaged. How may I assist you?";
+    const initialGreeting = "Welcome back sir. How may I assist you.";
 
     // Initial check
     checkBackendStatus().then(() => {
       const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-      
+
       // If still offline after first check
       if (!prevOnlineRef.current) {
-        const offMsg = "I am unable to connect to my main processing cores. Please ensure that the servers are running.";
+        const offMsg = "Servers are down....";
         speak(offMsg);
         setMessages([{
           id: Date.now(),
@@ -147,7 +147,7 @@ function App() {
     try {
       const res = await fetch(`${API_BASE}/reminders`);
       const data = await res.json();
-      
+
       // Auto-speak reminders when due
       const now = new Date();
       data.forEach(rem => {
@@ -189,7 +189,7 @@ function App() {
         body: JSON.stringify({ message: text })
       });
       const data = await res.json();
-      
+
       const echoMsg = {
         id: Date.now() + 1,
         role: 'echo',
@@ -238,7 +238,7 @@ function App() {
       setMessages(prev => [...prev, echoMsg]);
       speak(data.reply);
     } catch (err) {
-      const offlineMsg = "Servers are down, restore connectivity to my main processing cores.";
+      const offlineMsg = "Servers are down....";
       speak(offlineMsg);
       const errMsg = {
         id: Date.now() + 1,
@@ -330,9 +330,9 @@ function App() {
             <div key={msg.id} className={`message ${msg.role}`}>
               <div className="message-meta">
                 <span className="role-tag">
-                  {msg.role === 'user' ? 'USER' : 
-                   msg.role === 'echo' ? 'ECHO · AGENT' : 
-                   'SYSTEM'}
+                  {msg.role === 'user' ? 'USER' :
+                    msg.role === 'echo' ? 'ECHO · AGENT' :
+                      'SYSTEM'}
                 </span>
                 <span> · {msg.timestamp}</span>
               </div>
