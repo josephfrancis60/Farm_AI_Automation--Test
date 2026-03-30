@@ -2,14 +2,21 @@
 
 A highly intelligent, proactive farm management system powered by AI (`llama-3.3-70b`), designed to help farmers monitor field conditions, manage irrigation, and track inventory.
 
-## 🌟 Core Features
-- **AI-Driven Logic**: Uses `llama-3.3-70b-versatile` via Groq for high-speed, intelligent decision making.
-- **Proactive Monitoring**: A background scheduler (`farm_scheduler.py`) automatically checks field status and weather trends.
-- **Downtime Catch-up**: High-reliability logic fetches and logs historical weather data for periods when the system was offline.
-- **Smart Irrigation**: Autonomous scheduling based on real-time weather forecasts and soil drainage properties.
-- **Inventory & Crop Management**: Full CRUD operations for tracking crops, field data, and fertilizer stock.
-- **Real-time Alerts**: Critical notifications for irrigation needs, rain detection, and system health.
-- **Detailed Logging**: Comprehensive interaction logs in `logs/` and autonomous action logs in `agent_logs/`.
+## 🌟 Core Features & capabilities
+Echo operates via two primary modes: **Reactive** (executing commands) and **Proactive / Autonomous** (managing the farm automatically in the background). 
+
+> 📘 **For full details on the agent's behavior, autonomous capabilities, and persona, see the [Product Specification](PRODUCT_SPECIFICATION.md) document.**
+
+### 🤖 Reactive Activities
+- **Intelligent Assistant:** Interprets voice and text requests using `llama-3.3-70b` (Groq/LangGraph).
+- **CRUD Operations:** Instantly update crop layout, manage fields, and track fertilizer inventory via direct natural language queries.
+- **Smart Analytics:** Answer complex queries regarding weather and schedules.
+
+### ⚙️ Proactive & Autonomous Activities
+- **Weather & Field Polling:** A background `farm_scheduler.py` thread checks real-time weather against daily irrigation schedules.
+- **Smart SMS Reporting:** Aggregates a full farm system daily report at 5:00 PM and autonomously texts the farmer the summary via Twilio.
+- **Autonomous Announcements:** Echo actively reaches out via TTS to announce critical system events, such as when SMS reports are sent or when a field critically requires irrigation.
+- **Downtime Recovery:** Automatically logs offline periods and synthesizes historical catch-up records.
 
 ---
 
