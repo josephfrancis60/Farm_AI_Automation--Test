@@ -608,7 +608,7 @@ class JarvisUI:
                     td = now_utc.strftime("%Y-%m-%d")
                     if td == self._last_report_spoken: continue
                     if now_utc.hour < 17: continue
-                    rf = os.path.join(os.path.dirname(__file__), "..", "reports", "daily_reports", f"report_{td}.txt")
+                    rf = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "reports", "daily_reports", f"report_{td}.txt"))
                     if os.path.exists(rf):
                         self._last_report_spoken = td
                         self._msg_queue.put(("jarvis", "SYSTEM", f"📋 Daily report for {td} generated and sent via SMS."))

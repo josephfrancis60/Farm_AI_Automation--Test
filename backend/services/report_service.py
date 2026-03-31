@@ -15,7 +15,7 @@ class ReportService:
             target_date = datetime.now(timezone.utc)
             
         date_str = target_date.strftime('%Y-%m-%d')
-        report_dir = r"c:\Users\joseph.francis\My Projects\Farm-AI-agent\reports\daily_reports"
+        report_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "reports", "daily_reports"))
         if not os.path.exists(report_dir):
             os.makedirs(report_dir)
             

@@ -55,7 +55,7 @@ def check_for_missed_reports():
     Sends SMS only for today's report if missed and it's past 17:00.
     """
     print("DEBUG: Checking for missed daily reports...")
-    report_dir = r"c:\Users\joseph.francis\My Projects\Farm-AI-agent\reports\daily_reports"
+    report_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "reports", "daily_reports"))
     now = datetime.now()
     
     for i in range(3): # Check last 3 days
