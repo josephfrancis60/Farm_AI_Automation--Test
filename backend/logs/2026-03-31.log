@@ -15,3 +15,69 @@ NEW INTERACTION
 2026-03-31 05:53:54,628 - INFO - TOKENS      : prompt=4179 | completion=64 | total=4243 | time=0.683s
 2026-03-31 05:53:54,629 - INFO - --------------------------------------------------
 
+2026-03-31 06:36:28,924 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-31 06:36:28,926 - INFO - USER INPUT  : hey go can you give me a quick summary of all the alerts that I am seeing
+2026-03-31 06:36:28,928 - INFO - AGENT REPLY : You have 5 active alerts. 
+
+1. The system was offline for 2 minutes and is catching up on missed activities.
+2. Irrigation is recommended for Corn in Field 4 due to potentially low soil moisture and no detected rain.
+3. Irrigation is recommended for Sugarcane in Field 3 for the same reasons as above.
+4. Irrigation is recommended for Potato in Field 2, again due to potential low soil moisture and no rain.
+5. Lastly, irrigation is also recommended for Tomato in Field 1, following the same reasoning.
+
+Would you like me to check the current weather to see if irrigation is still necessary today?
+2026-03-31 06:36:28,931 - INFO - TOKENS      : prompt=4085 | completion=133 | total=4218 | time=0.698s
+2026-03-31 06:36:28,933 - INFO - --------------------------------------------------
+
+2026-03-31 06:41:25,117 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-31 06:41:25,118 - INFO - USER INPUT  : Send irrigation schedule for field 3
+2026-03-31 06:41:25,119 - INFO - TOOL [1] CALLED  : get_irrigation_schedule_for_crop
+2026-03-31 06:41:25,120 - INFO -        PARAMETERS : {'crop_name': 'Sugarcane'}
+2026-03-31 06:41:25,121 - INFO -        RESPONSE  : Irrigation schedule for Sugarcane:
+              - Sunday at 10:00 for 15 mins
+              - Saturday at 18:00 for 45 mins
+              - Friday at 17:00 for 15 mins
+              
+2026-03-31 06:41:25,122 - INFO - AGENT REPLY : The current irrigation schedule for Sugarcane in Field 3 is as follows:
+- Sunday at 10:00 for 15 minutes
+- Saturday at 18:00 for 45 minutes
+- Friday at 17:00 for 15 minutes
+
+Would you like to adjust this schedule or proceed with irrigation based on the current recommendations?
+2026-03-31 06:41:25,123 - INFO - TOKENS      : prompt=4579 | completion=70 | total=4649 | time=0.797s
+2026-03-31 06:41:25,124 - INFO - --------------------------------------------------
+
+2026-03-31 06:43:50,210 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-03-31 06:43:50,210 - INFO - USER INPUT  : Send irrigation schedule for field 3
+2026-03-31 06:43:50,211 - INFO - TOOL [1] CALLED  : get_irrigation_schedule_for_crop
+2026-03-31 06:43:50,211 - INFO -        PARAMETERS : {'crop_name': 'Sugarcane'}
+2026-03-31 06:43:50,211 - INFO -        RESPONSE  : Irrigation schedule for Sugarcane:
+              - Sunday at 10:00 for 15 mins
+              - Saturday at 18:00 for 45 mins
+              - Friday at 17:00 for 15 mins
+              
+2026-03-31 06:43:50,212 - INFO - TOOL [2] CALLED  : get_irrigation_schedule_for_crop
+2026-03-31 06:43:50,212 - INFO -        PARAMETERS : {'crop_name': 'Sugarcane'}
+2026-03-31 06:43:50,213 - INFO -        RESPONSE  : Irrigation schedule for Sugarcane:
+              - Sunday at 10:00 for 15 mins
+              - Saturday at 18:00 for 45 mins
+              - Friday at 17:00 for 15 mins
+              
+2026-03-31 06:43:50,213 - INFO - AGENT REPLY : The current irrigation schedule for Sugarcane in Field 3 is as follows:
+- Sunday at 10:00 for 15 minutes
+- Saturday at 18:00 for 45 minutes
+- Friday at 17:00 for 15 minutes
+
+Would you like to adjust this schedule or proceed with irrigation based on the current recommendations?
+2026-03-31 06:43:50,213 - INFO - TOKENS      : prompt=5010 | completion=70 | total=5080 | time=0.891s
+2026-03-31 06:43:50,214 - INFO - --------------------------------------------------
+

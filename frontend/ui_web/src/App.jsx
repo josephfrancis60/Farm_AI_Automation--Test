@@ -14,8 +14,14 @@ function App() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const activeReminderIdRef = useRef(null);
   const [activeReminderId, setActiveReminderId] = useState(null);
+  const handleSendRef = useRef(null);
 
   const [isBackendOnline, setIsBackendOnline] = useState(true);
+
+  // Keep a fresh reference to handleSend for the speech recognition callback
+  useEffect(() => {
+    handleSendRef.current = handleSend;
+  });
   const prevOnlineRef = useRef(true);
 
   const chatEndRef = useRef(null);
@@ -66,7 +72,11 @@ function App() {
           .map(result => result[0].transcript)
           .join('');
         setInputValue(transcript);
-        // Do not auto-send here. User must press Send or Enter to finish.
+        
+        const isFinal = event.results[event.results.length - 1].isFinal;
+        if (isFinal && handleSendRef.current) {
+          handleSendRef.current(transcript);
+        }
       };
 
       recognitionRef.current.onend = () => {
@@ -76,6 +86,13 @@ function App() {
       recognitionRef.current.onerror = (event) => {
         console.error('Speech recognition error', event.error);
         setIsListening(false);
+        setInputValue('');
+        setMessages(prev => [...prev, {
+          id: Date.now(),
+          role: 'error',
+          content: 'Voice input failed. Please try again.',
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
+        }]);
       };
     }
 
@@ -410,7 +427,7 @@ function App() {
             disabled={isProcessing}
           />
         </div>
-        <button className="send-btn" onClick={() => handleSend()}>
+        <button className="send-btn" onClick={() => handleSend()} disabled={isProcessing || !inputValue.trim()}>
           <Send size={20} />
         </button>
       </footer>
