@@ -163,3 +163,7 @@ frontend/ui_web/yarn-error.log*
 frontend/ui_web/.vscode/
 node_modules/
 **/node_modules/
+
+
+# Antigravity agent rules/skills
+.agents/

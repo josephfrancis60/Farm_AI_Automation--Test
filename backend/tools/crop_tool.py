@@ -13,9 +13,9 @@ def get_all_crops():
     if not rows:
         return "No crops found in the fields."
 
-    summary = "Current crops in the farm:\n"
+    summary = "Here are the crops currently in the farm:\n"
     for row in rows:
-        summary += f"- ID: {row.FieldId} | {row.Crop} ({row.SoilType} soil, {row.Area} acres)\n"
+        summary += f"- {row.Crop}: {row.SoilType} soil, growing in a {row.Area} acre field.\n"
     
     return summary
 
@@ -46,7 +46,7 @@ def add_crop(crop, soil_type, area):
     
     conn.commit()
     conn.close()
-    return f"Successfully added {crop} (ID: {next_id}) to the fields."
+    return f"I've added the {crop} to your farm fields successfully."
 
 def update_field(field_id, crop=None, soil_type=None, area=None):
     conn = get_connection()
@@ -76,9 +76,9 @@ def update_field(field_id, crop=None, soil_type=None, area=None):
     conn.close()
     
     if affected > 0:
-        return f"Successfully updated field {field_id}."
+        return f"I've updated the information for the {crop if crop else 'field'} successfully."
     else:
-        return f"Error: Field ID {field_id} not found."
+        return f"I couldn't find that specific field to update."
 
 def delete_field(field_id):
     conn = get_connection()
@@ -106,9 +106,9 @@ def delete_field(field_id):
     conn.close()
     
     if affected > 0:
-        return f"Successfully deleted field {field_id} ({crop_name}). All related irrigation schedules were also removed."
+        return f"The field for {crop_name} has been removed, and I've also cleared its irrigation schedule."
     else:
-        return f"Error: Field ID {field_id} not found."
+        return f"I couldn't find the field you mentioned to remove."
 
 def get_field_id_by_crop(crop_name):
     """

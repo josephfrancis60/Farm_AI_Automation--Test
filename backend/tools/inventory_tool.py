@@ -11,7 +11,7 @@ def check_fertilizer_stock():
     conn.close()
 
     if not rows:
-        return "Fertilizer inventory is empty."
+        return "The fertilizer inventory is currently empty."
 
     report = "Fertilizer Inventory Report:\n"
     for row in rows:
@@ -28,7 +28,7 @@ def add_fertilizer(name, stock_kg):
     
     conn.commit()
     conn.close()
-    return f"Successfully added {name} to inventory."
+    return f"I've added {name} to the inventory for you."
 
 def update_fertilizer_stock(name, stock_kg):
     conn = get_connection()
@@ -42,9 +42,9 @@ def update_fertilizer_stock(name, stock_kg):
     conn.close()
     
     if affected > 0:
-        return f"Successfully updated stock for {name} to {stock_kg}kg."
+        return f"I've updated the stock for {name} to {stock_kg}kg."
     else:
-        return f"Error: Fertilizer '{name}' not found in inventory."
+        return f"I couldn't find {name} in the inventory to update."
 
 def delete_fertilizer(name):
     conn = get_connection()
@@ -58,6 +58,6 @@ def delete_fertilizer(name):
     conn.close()
     
     if affected > 0:
-        return f"Successfully removed {name} from inventory."
+        return f"I've removed {name} from the inventory."
     else:
-        return f"Error: Fertilizer '{name}' not found in inventory."
+        return f"I couldn't find {name} in the inventory."

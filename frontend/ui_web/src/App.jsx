@@ -15,6 +15,7 @@ function App() {
   const activeReminderIdRef = useRef(null);
   const [activeReminderId, setActiveReminderId] = useState(null);
   const handleSendRef = useRef(null);
+  const autoSendTimeoutRef = useRef(null);
 
   const [isBackendOnline, setIsBackendOnline] = useState(true);
 
@@ -68,6 +69,14 @@ function App() {
       recognitionRef.current.lang = 'en-US';
 
       recognitionRef.current.onresult = (event) => {
+        if (isProcessing) return;
+
+        // Clear any existing auto-send timer
+        if (autoSendTimeoutRef.current) {
+          clearTimeout(autoSendTimeoutRef.current);
+          autoSendTimeoutRef.current = null;
+        }
+
         const transcript = Array.from(event.results)
           .map(result => result[0].transcript)
           .join('');
@@ -75,7 +84,12 @@ function App() {
         
         const isFinal = event.results[event.results.length - 1].isFinal;
         if (isFinal && handleSendRef.current) {
-          handleSendRef.current(transcript);
+          // Instead of immediate send, wait 4 seconds
+          autoSendTimeoutRef.current = setTimeout(() => {
+            recognitionRef.current?.stop();
+            handleSendRef.current(transcript);
+            autoSendTimeoutRef.current = null;
+          }, 4000);
         }
       };
 
@@ -228,6 +242,13 @@ function App() {
   const handleSend = async (text) => {
     const messageText = text || inputValue;
     if (!messageText.trim() || isProcessing) return;
+
+    // Clear any pending auto-send timer (for manual sends)
+    if (autoSendTimeoutRef.current) {
+      clearTimeout(autoSendTimeoutRef.current);
+      autoSendTimeoutRef.current = null;
+      recognitionRef.current?.stop();
+    }
 
     const userMsg = {
       id: Date.now(),

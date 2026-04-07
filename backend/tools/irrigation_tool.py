@@ -94,19 +94,18 @@ def activate_sprinkler(field_id, duration_minutes, delay_minutes=0):
         timer = threading.Timer(delay_minutes * 60.0, _execute_irrigation, args=[field_id, duration_minutes, crop_name])
         timer.start()
         return (
-            f"Irrigation Decision:\n"
-            f"Sprinkler system scheduled to activate for field '{crop_name}' in {delay_minutes} minutes.\n"
+            f"Irrigation confirmed:\n"
+            f"The sprinkler system for '{crop_name}' is scheduled to activate in {delay_minutes} minutes.\n"
             f"Duration: {duration_minutes} minutes."
         )
     else:
         # Execute immediately
         _execute_irrigation(field_id, duration_minutes, crop_name)
         return (
-            f"Irrigation Decision:\n"
-            f"Sprinkler system activated for field '{crop_name}'.\n"
+            f"Irrigation started:\n"
+            f"The sprinklers for '{crop_name}' have been activated.\n"
             f"Duration: {duration_minutes} minutes.\n"
-            f"Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
-            f"Transaction recorded in database and SMS sent (if configured)."
+            f"Activation time: {datetime.now().strftime('%H:%M:%S')}."
         )
 
 def was_already_watered_today(field_id):

@@ -361,3 +361,58 @@ def remove_irrigation_schedule(crop_name: str):
     if success:
         return f"Successfully removed irrigation schedule for {crop_name}."
     return f"No irrigation schedule found to remove for {crop_name}."
+
+@tool
+def get_irrigation_history(crop_name: str = None, limit: int = 5):
+    """
+    Retrieve the recent irrigation history for the farm or a specific crop.
+    Use this to answer questions like 'when was the last time I watered?' or 'how long have I watered my crops?'.
+    
+    Args:
+        crop_name: Optional name of the crop to filter history for.
+        limit: Number of recent records to retrieve (default is 5).
+    """
+    print(f"Tool: get_irrigation_history(crop_name='{crop_name}', limit={limit})")
+    
+    from database.db_connection import get_connection
+    conn = get_connection()
+    if not conn:
+        return "I'm sorry, I couldn't connect to the records right now."
+    
+    cursor = conn.cursor()
+    try:
+        query = """
+            SELECT F.Crop, H.DurationMinutes, H.ActivatedAt 
+            FROM IrrigationHistory H
+            JOIN Fields F ON H.FieldId = F.FieldId
+        """
+        params = []
+        if crop_name:
+            query += " WHERE F.Crop LIKE ?"
+            params.append(f"%{crop_name}%")
+        
+        query += " ORDER BY H.ActivatedAt DESC LIMIT ?"
+        params.append(limit)
+        
+        cursor.execute(query, params)
+        rows = cursor.fetchall()
+        
+        if not rows:
+            return f"I couldn't find any recent irrigation records{f' for {crop_name}' if crop_name else ''}."
+        
+        history_text = f"Recent irrigation history:\n"
+        for row in rows:
+            # Format time nicely
+            try:
+                dt = datetime.fromisoformat(row.ActivatedAt.replace(' ', 'T')) if isinstance(row.ActivatedAt, str) else row.ActivatedAt
+                time_str = dt.strftime("%A, %b %d at %H:%M")
+            except:
+                time_str = str(row.ActivatedAt)
+            history_text += f"- {row.Crop}: Watered for {row.DurationMinutes} minutes on {time_str}.\n"
+        
+        return history_text
+        
+    except Exception as e:
+        return f"I encountered an error while looking up the history: {e}"
+    finally:
+        conn.close()
