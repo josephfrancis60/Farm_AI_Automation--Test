@@ -9,13 +9,16 @@ The system leverages large language models natively via Groq (specifically utili
 - **Name:** Echo (frequently referred to or styled as "JARVIS" in specific desktop HUD implementations).
 - **Tone:** Naturally professional, proactive, intelligent, and conversational.
 - **Demeanor:** Affirmative and helpful. The agent acknowledges user requests explicitly ("Certainly," "I'll take care of that for you") before taking actions.
+- **Natural Persona (STRICT):** Echo is forbidden from using technical jargon or computer-centric terminology. It never mentions "databases", "tables", "JSON", "transactions", or "API endpoints" in conversation. It reports results as a professional human assistant would (e.g., "I've processed that for you" instead of "Transaction recorded").
 - **Interaction Model:** Seamlessly blends reactive command execution with autonomous voice / system interruptions when critical conditions arise.
 
 ## 3. Core Functionalities
 
 ### A. Reactive Activities (User-Driven)
 These are actions directly requested by the user via voice or text chat. The agent interprets the intent, selects the appropriate tool, queries or updates the database, and responds.
-- **Crop Management:** Users can ask the agent to add new crops, delete fields, or check the status of all active fields (e.g., "What crops are growing right now?").
+- **Crop Management:** Users can ask the agent to add new crops, delete fields, or check the status of all active fields.
+- **Irrigation History Tracking:** Users can query past watering activities (e.g., "When was the last time I watered the corn?" or "How long have I irrigated my crops?"). The agent looks up specific session durations and timestamps to provide factual updates.
+- **Ambiguity Guard & Clarification:** For vague or incomplete requests (e.g., "Echo, can you check?"), the agent is programmed to ask follow-up questions for clarity rather than assuming user intent or calling tools prematurely.
 - **Inventory Control:** Users can query the fertilizer stock, ask for crop-specific fertilizer recommendations, and instruct the agent to add or remove fertilizer from the database.
 - **Weather Inquiries:** Real-time fetching of current weather and multi-day forecasts for the farm's location (e.g., Kanija Bhavan).
 - **Manual Irrigation Control:** Users can instruct the agent to manually activate sprinkler systems for specific durations and delays. 
@@ -35,7 +38,10 @@ Echo operates a background `APScheduler` (Farm Scheduler) that actively monitors
 ## 4. User Interfaces
 The product is presented through decoupled frontends:
 1. **Desktop HUD (Jarvis UI):** A `CustomTkinter` desktop application designed for persistent monitoring. It features continuous background polling, real-time alert and reminder displays, an active typing indicator, and local TTS/STT (using `SpeechRecognition` and `pyttsx3`). It features highly tuned pause thresholds (2.5 seconds) to allow users to speak naturally without cutoff.
-2. **Web HUD (React/Vite):** A cutting-edge, glassmorphic modern UI capable of running in a browser. It utilizes the native Web Speech API for continuous transcript streaming.
+2. **Web HUD (React/Vite):** A cutting-edge, glassmorphic modern UI. It utilizes the native Web Speech API with sophisticated handling:
+    - **4-Second Silence Buffer:** To prevent cutting off users while they think or take a breath, the UI waits for a full 4 seconds of silence after a sentence is finalized before auto-sending the request.
+    - **Feedback Loop Prevention:** The microphone explicitly stops listening when a message is sent to prevent transcribing its own spoken responses.
+    - **Dynamic Timer Reset:** Resuming speech within the 4-second window automatically resets the send timer.
 
 ## 5. Security and "Human-in-the-Loop"
 Despite having autonomous capabilities, Echo adheres strictly to a **Human-in-the-loop** protocol for destructive or resource-intensive tasks. While the agent can *recommend* irrigation or *suggest* deleting a crop, it will always ask for final, explicit user confirmation before executing the command in the database or actuating physical sprinklers.
