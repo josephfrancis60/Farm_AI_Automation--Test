@@ -10,6 +10,7 @@ from agents.run_agent import run_agent
 from alerts.alert_manager import get_active_alerts, remove_alert, clear_alerts
 from scheduler.farm_scheduler import start_scheduler
 from alerts.reminder_manager import get_active_reminders, add_reminder, remove_reminder, clear_reminders
+from llm.llm_model import MODEL_NAME
 
 from contextlib import asynccontextmanager
 from services.logger_service import log_agent_action
@@ -45,7 +46,7 @@ class ReminderRequest(BaseModel):
 
 @app.get("/health")
 def health():
-    return {"status": "online"}
+    return {"status": "online", "model": MODEL_NAME}
 
 @app.post("/chat")
 async def chat(request: ChatRequest):

@@ -1,0 +1,10 @@
+[
+    {
+        "id": "20260407113207764422",
+        "timestamp": "2026-04-07T11:32:07Z",
+        "title": "System Catch-up",
+        "message": "System was offline for 3h 55m. Fetching missed activities...",
+        "category": "INFO",
+        "is_read": false
+    }
+]

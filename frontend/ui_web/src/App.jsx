@@ -18,6 +18,7 @@ function App() {
   const autoSendTimeoutRef = useRef(null);
 
   const [isBackendOnline, setIsBackendOnline] = useState(true);
+  const [modelName, setModelName] = useState('');
 
   // Keep a fresh reference to handleSend for the speech recognition callback
   useEffect(() => {
@@ -34,6 +35,8 @@ function App() {
     try {
       const res = await fetch(`${API_BASE}/health`);
       if (res.ok) {
+        const data = await res.json();
+        setModelName(data.model || 'Unknown Model');
         if (!prevOnlineRef.current) {
           // System came back online
           speak("Sir, connectivity has been restored. My processing cores are now online.");
@@ -81,7 +84,7 @@ function App() {
           .map(result => result[0].transcript)
           .join('');
         setInputValue(transcript);
-        
+
         const isFinal = event.results[event.results.length - 1].isFinal;
         if (isFinal && handleSendRef.current) {
           // Instead of immediate send, wait 4 seconds
@@ -354,7 +357,24 @@ function App() {
   return (
     <div className="hud-container">
       <header>
-        <div className="logo">ECHO</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div className="logo">ECHO</div>
+          {modelName && (
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              padding: '2px 10px',
+              borderRadius: '12px',
+              border: '1.5px solid var(--cyan)',
+              backgroundColor: 'rgba(0, 255, 255, 0.08)',
+              color: 'var(--cyan)',
+              fontSize: '0.75rem',
+              fontWeight: '500'
+            }}>
+              {modelName}
+            </div>
+          )}
+        </div>
         <div className="status-indicator">
           <div className={`status-dot ${!isBackendOnline ? 'offline' : ''}`}></div>
           <span className={isBackendOnline ? 'text-online' : 'text-offline'}>
