@@ -17,3 +17,109 @@ NEW INTERACTION
 2026-04-08 04:30:01,119 - INFO - --------------------------------------------------
 
 2026-04-08 04:30:01,119 - ERROR - AGENT ERROR: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': 'The irrigation for Corn is starting now, as scheduled. I\'ll make sure it runs according to plan. Would you like me to check the weather forecast before proceeding, just to confirm it\'s a good time for irrigation? \n\n<function=weather{"city": "Kanija Bhavan"}</function>'}}
+2026-04-08 09:01:51,096 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-04-08 09:01:51,096 - INFO - USER INPUT  : Hey Echo, can you tell me the irrigation schedule for today and also check the weather for today?
+2026-04-08 09:01:51,097 - INFO - TOOL [1] CALLED  : Irrigation Schedule & Weather Check
+2026-04-08 09:01:51,098 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-04-08 09:01:51,098 - INFO -        RESPONSE  : Irrigation Schedule for Wednesday:
+              - Corn: Scheduled for 10:00, 20 mins. Status: Upcoming
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-04-08 09:01:51,098 - INFO - TOOL [2] CALLED  : Weather Forecast
+2026-04-08 09:01:51,099 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-04-08 09:01:51,100 - INFO -        RESPONSE  : {"current": {"temperature": 33.59, "humidity": 30, "condition": "few clouds"}, "forecast": [{"time": "2026-04-08 09:00:00", "condition": "few clouds", "temp": 33.59}, {"time": "2026-04-08 12:00:00", "condition": "scattered clouds", "temp": 33.66}, {"time": "2026-04-08 15:00:00", "condition": "broken clouds", "temp": 31.12}, {"time": "2026-04-08 18:00:00", "condition": "overcast clouds", "temp": 26.83}]}
+2026-04-08 09:01:51,100 - INFO - AGENT REPLY : The current weather in Kanija Bhavan is few clouds with a temperature of 33.59°C and humidity of 30%. The forecast for the day shows no rain. 
+
+As for the irrigation schedule, I see that Corn is scheduled for 10:00, which has already passed. Given the weather conditions and the fact that soil moisture might be low for all the crops, I recommend proceeding with irrigation for Corn, Sugarcane, Potato, and Tomato. Please confirm if you would like me to start the irrigation process.
+2026-04-08 09:01:51,101 - INFO - TOKENS      : prompt=4561 | completion=108 | total=4669 | time=0.796s
+2026-04-08 09:01:51,102 - INFO - --------------------------------------------------
+
+2026-04-08 09:02:44,949 - INFO - [SYSTEM] SMS notification sent to +919447476650 (SID: SMec10093d0a1aca8fad3ec7ef051d75d6).
+2026-04-08 09:02:45,810 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-04-08 09:02:45,811 - INFO - USER INPUT  : OK, start the irrigation only for corn, which is scheduled for today. Leave the rest as it is.
+2026-04-08 09:02:45,811 - INFO - TOOL [1] CALLED  : Irrigation Schedule & Weather Check
+2026-04-08 09:02:45,811 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-04-08 09:02:45,812 - INFO -        RESPONSE  : Irrigation Schedule for Wednesday:
+              - Corn: Scheduled for 10:00, 20 mins. Status: Upcoming
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-04-08 09:02:45,812 - INFO - TOOL [2] CALLED  : Weather Forecast
+2026-04-08 09:02:45,813 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-04-08 09:02:45,813 - INFO -        RESPONSE  : {"current": {"temperature": 33.59, "humidity": 30, "condition": "few clouds"}, "forecast": [{"time": "2026-04-08 09:00:00", "condition": "few clouds", "temp": 33.59}, {"time": "2026-04-08 12:00:00", "condition": "scattered clouds", "temp": 33.66}, {"time": "2026-04-08 15:00:00", "condition": "broken clouds", "temp": 31.12}, {"time": "2026-04-08 18:00:00", "condition": "overcast clouds", "temp": 26.83}]}
+2026-04-08 09:02:45,814 - INFO - TOOL [3] CALLED  : Irrigation Activation (Sprinkler)
+2026-04-08 09:02:45,814 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 20, 'field_id': 4}
+2026-04-08 09:02:45,815 - INFO -        RESPONSE  : Irrigation started:
+              The sprinklers for 'Corn' have been activated.
+              Duration: 20 minutes.
+              Activation time: 14:32:44.
+2026-04-08 09:02:45,815 - INFO - AGENT REPLY : I've started the irrigation for Corn in Field 4 as scheduled. The sprinklers will run for 20 minutes. If you need any further assistance or have any other questions, feel free to ask!
+2026-04-08 09:02:45,816 - INFO - TOKENS      : prompt=5042 | completion=42 | total=5084 | time=0.445s
+2026-04-08 09:02:45,816 - INFO - --------------------------------------------------
+
+2026-04-08 09:04:28,696 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-04-08 09:04:28,696 - INFO - USER INPUT  : Hey Echo, I need you to do me one thing first. Set a reminder for 2 minutes. The reminder is for clearing all the others. So when the reminder is due, just go ahead and clear all the alerts.
+2026-04-08 09:04:28,697 - INFO - TOOL [1] CALLED  : Irrigation Schedule & Weather Check
+2026-04-08 09:04:28,697 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-04-08 09:04:28,697 - INFO -        RESPONSE  : Irrigation Schedule for Wednesday:
+              - Corn: Scheduled for 10:00, 20 mins. Status: Upcoming
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-04-08 09:04:28,698 - INFO - TOOL [2] CALLED  : Weather Forecast
+2026-04-08 09:04:28,698 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-04-08 09:04:28,698 - INFO -        RESPONSE  : {"current": {"temperature": 33.59, "humidity": 30, "condition": "few clouds"}, "forecast": [{"time": "2026-04-08 09:00:00", "condition": "few clouds", "temp": 33.59}, {"time": "2026-04-08 12:00:00", "condition": "scattered clouds", "temp": 33.66}, {"time": "2026-04-08 15:00:00", "condition": "broken clouds", "temp": 31.12}, {"time": "2026-04-08 18:00:00", "condition": "overcast clouds", "temp": 26.83}]}
+2026-04-08 09:04:28,699 - INFO - TOOL [3] CALLED  : Irrigation Activation (Sprinkler)
+2026-04-08 09:04:28,699 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 20, 'field_id': 4}
+2026-04-08 09:04:28,699 - INFO -        RESPONSE  : Irrigation started:
+              The sprinklers for 'Corn' have been activated.
+              Duration: 20 minutes.
+              Activation time: 14:32:44.
+2026-04-08 09:04:28,700 - INFO - TOOL [4] CALLED  : set_reminder
+2026-04-08 09:04:28,703 - INFO -        PARAMETERS : {'delay_minutes': 2, 'message': 'Clear all active alerts', 'title': 'Clear Alerts'}
+2026-04-08 09:04:28,704 - INFO -        RESPONSE  : {"id": "20260408090427980976", "timestamp": "2026-04-08T09:04:27Z", "due_time": "2026-04-08T09:06:27Z", "title": "Clear Alerts", "message": "Clear all active alerts", "is_read": false}
+2026-04-08 09:04:28,704 - INFO - AGENT REPLY : I've set a reminder for you titled "Clear Alerts" with the message "Clear all active alerts" to go off in 2 minutes. When it's due, I'll clear all the active alerts for you.
+2026-04-08 09:04:28,705 - INFO - TOKENS      : prompt=5473 | completion=45 | total=5518 | time=0.455s
+2026-04-08 09:04:28,705 - INFO - --------------------------------------------------
+
+2026-04-08 09:06:28,949 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-04-08 09:06:28,950 - INFO - USER INPUT  : [SYSTEM TRIGGER: REMINDER DUE] Title: Clear Alerts, Message: Clear all active alerts. Please announce this naturally.
+2026-04-08 09:06:28,951 - INFO - TOOL [1] CALLED  : Irrigation Schedule & Weather Check
+2026-04-08 09:06:28,951 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-04-08 09:06:28,952 - INFO -        RESPONSE  : Irrigation Schedule for Wednesday:
+              - Corn: Scheduled for 10:00, 20 mins. Status: Upcoming
+              
+              Recommendation: PROCEED with irrigation. No rain is forecasted.
+              Please confirm if I should start watering the scheduled crops.
+2026-04-08 09:06:28,953 - INFO - TOOL [2] CALLED  : Weather Forecast
+2026-04-08 09:06:28,953 - INFO -        PARAMETERS : {'city': 'Kanija Bhavan'}
+2026-04-08 09:06:28,954 - INFO -        RESPONSE  : {"current": {"temperature": 33.59, "humidity": 30, "condition": "few clouds"}, "forecast": [{"time": "2026-04-08 09:00:00", "condition": "few clouds", "temp": 33.59}, {"time": "2026-04-08 12:00:00", "condition": "scattered clouds", "temp": 33.66}, {"time": "2026-04-08 15:00:00", "condition": "broken clouds", "temp": 31.12}, {"time": "2026-04-08 18:00:00", "condition": "overcast clouds", "temp": 26.83}]}
+2026-04-08 09:06:28,954 - INFO - TOOL [3] CALLED  : Irrigation Activation (Sprinkler)
+2026-04-08 09:06:28,954 - INFO -        PARAMETERS : {'delay_minutes': 0, 'duration_minutes': 20, 'field_id': 4}
+2026-04-08 09:06:28,955 - INFO -        RESPONSE  : Irrigation started:
+              The sprinklers for 'Corn' have been activated.
+              Duration: 20 minutes.
+              Activation time: 14:32:44.
+2026-04-08 09:06:28,955 - INFO - TOOL [4] CALLED  : set_reminder
+2026-04-08 09:06:28,955 - INFO -        PARAMETERS : {'delay_minutes': 2, 'message': 'Clear all active alerts', 'title': 'Clear Alerts'}
+2026-04-08 09:06:28,956 - INFO -        RESPONSE  : {"id": "20260408090427980976", "timestamp": "2026-04-08T09:04:27Z", "due_time": "2026-04-08T09:06:27Z", "title": "Clear Alerts", "message": "Clear all active alerts", "is_read": false}
+2026-04-08 09:06:28,956 - INFO - TOOL [5] CALLED  : clear_alerts
+2026-04-08 09:06:28,957 - INFO -        PARAMETERS : {}
+2026-04-08 09:06:28,957 - INFO -        RESPONSE  : All alerts have been cleared.
+2026-04-08 09:06:28,957 - INFO - AGENT REPLY : Your reminder to "Clear Alerts" is due. I've gone ahead and cleared all the active alerts for you as per your request. If you need any further assistance, feel free to ask!
+2026-04-08 09:06:28,958 - INFO - TOKENS      : prompt=5834 | completion=40 | total=5874 | time=0.794s
+2026-04-08 09:06:28,958 - INFO - --------------------------------------------------
+
