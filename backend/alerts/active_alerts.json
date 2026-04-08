@@ -1,9 +1,41 @@
 [
     {
-        "id": "20260407113207764422",
-        "timestamp": "2026-04-07T11:32:07Z",
+        "id": "20260408041525982687",
+        "timestamp": "2026-04-08T04:15:25Z",
+        "title": "Irrigation Recommended",
+        "message": "Corn (Field 4) needs watering. Reason: Soil moisture might be low and no rain detected.",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
+        "id": "20260408041525959866",
+        "timestamp": "2026-04-08T04:15:25Z",
+        "title": "Irrigation Recommended",
+        "message": "Sugarcane (Field 3) needs watering. Reason: Soil moisture might be low and no rain detected.",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
+        "id": "20260408041525940074",
+        "timestamp": "2026-04-08T04:15:25Z",
+        "title": "Irrigation Recommended",
+        "message": "Potato (Field 2) needs watering. Reason: Soil moisture might be low and no rain detected.",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
+        "id": "20260408041525912181",
+        "timestamp": "2026-04-08T04:15:25Z",
+        "title": "Irrigation Recommended",
+        "message": "Tomato (Field 1) needs watering. Reason: Soil moisture might be low and no rain detected.",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
+        "id": "20260408041525838471",
+        "timestamp": "2026-04-08T04:15:25Z",
         "title": "System Catch-up",
-        "message": "System was offline for 3h 55m. Fetching missed activities...",
+        "message": "System was offline for 16h 23m. Fetching missed activities...",
         "category": "INFO",
         "is_read": false
     }

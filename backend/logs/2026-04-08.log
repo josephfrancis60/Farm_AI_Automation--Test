@@ -1,0 +1,19 @@
+2026-04-08 04:25:01,144 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-04-08 04:25:01,144 - INFO - USER INPUT  : [SYSTEM TRIGGER: REMINDER DUE] Title: Irrigation Starting Soon, Message: Irrigation for Corn is scheduled to start in 5 minutes (at 10:00).. Please announce this naturally.
+2026-04-08 04:25:01,144 - INFO - AGENT REPLY : I'd like to remind you that the irrigation for Corn is scheduled to start in just 5 minutes, at 10:00. Would you like me to proceed with the irrigation as planned or make any adjustments?
+2026-04-08 04:25:01,145 - INFO - TOKENS      : prompt=4414 | completion=44 | total=4458 | time=0.474s
+2026-04-08 04:25:01,145 - INFO - --------------------------------------------------
+
+2026-04-08 04:30:01,118 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-04-08 04:30:01,118 - INFO - USER INPUT  : [SYSTEM TRIGGER: REMINDER DUE] Title: Irrigation Starting NOW, Message: Irrigation for Corn is starting now as per schedule (10:00).. Please announce this naturally.
+2026-04-08 04:30:01,119 - INFO - AGENT REPLY : LIMITATION: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': 'The irrigation for Corn is starting now, as scheduled. I\'ll make sure it runs according to plan. Would you like me to check the weather forecast before proceeding, just to confirm it\'s a good time for irrigation? \n\n<function=weather{"city": "Kanija Bhavan"}</function>'}}
+2026-04-08 04:30:01,119 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-04-08 04:30:01,119 - INFO - --------------------------------------------------
+
+2026-04-08 04:30:01,119 - ERROR - AGENT ERROR: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': 'The irrigation for Corn is starting now, as scheduled. I\'ll make sure it runs according to plan. Would you like me to check the weather forecast before proceeding, just to confirm it\'s a good time for irrigation? \n\n<function=weather{"city": "Kanija Bhavan"}</function>'}}
