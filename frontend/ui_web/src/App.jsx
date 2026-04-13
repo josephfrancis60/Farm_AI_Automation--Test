@@ -381,7 +381,7 @@ function App() {
             {isBackendOnline ? 'SYSTEM ONLINE' : 'SYSTEM OFFLINE'}
           </span>
           <span style={{ color: 'var(--text-dim)', margin: '0 4px' }}>·</span>
-          <span style={{ color: 'var(--cyan)' }}>Banglore</span>
+          <span style={{ color: 'var(--cyan)' }}>BANGLORE</span>
         </div>
       </header>
 
