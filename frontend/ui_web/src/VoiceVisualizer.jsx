@@ -28,7 +28,6 @@ const VoiceVisualizer = ({ isListening, isSpeaking }) => {
       analyserRef.current = audioContextRef.current.createAnalyser();
       analyserRef.current.fftSize = 256;
       source.connect(analyserRef.current);
-      
       const bufferLength = analyserRef.current.frequencyBinCount;
       dataArrayRef.current = new Uint8Array(bufferLength);
     } catch (err) {
@@ -47,6 +46,11 @@ const VoiceVisualizer = ({ isListening, isSpeaking }) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     let phase = 0;
+
+    const SHADOW_BLUR = 15;
+    const LINE_WIDTH = 2;
+    // Max amplitude so waves never clip: half-height minus glow and line
+    const MAX_AMP = canvas.height / 2 - SHADOW_BLUR - LINE_WIDTH - 2;
 
     const render = () => {
       const width = canvas.width;
@@ -67,24 +71,34 @@ const VoiceVisualizer = ({ isListening, isSpeaking }) => {
         targetFreq = 0.06 + Math.sin(Date.now() * 0.01) * 0.02;
       }
 
+      // Clamp so the wave (including glow) never touches the canvas edge
+      targetAmp = Math.min(targetAmp, MAX_AMP);
+
       smoothAmp.current += (targetAmp - smoothAmp.current) * 0.12;
       smoothFreq.current += (targetFreq - smoothFreq.current) * 0.12;
 
       // Use screen blending for neon overlap look
       ctx.globalCompositeOperation = 'screen';
-      ctx.shadowBlur = 15;
+      ctx.shadowBlur = SHADOW_BLUR;
 
       // Define 4 distinct neon waves
       const waves = [
-        { color: '#00d4ff', pOff: 0, fMult: 1, aMult: 1 },         // Cyan
-        { color: '#ff00ff', pOff: Math.PI / 2, fMult: 0.8, aMult: 0.7 }, // Magenta
-        { color: '#ffff00', pOff: Math.PI, fMult: 1.2, aMult: 0.5 },    // Yellow
-        { color: '#0000ff', pOff: Math.PI * 1.5, fMult: 0.7, aMult: 0.8 } // Blue
+        { color: '#00d4ff', pOff: 0, fMult: 1, aMult: 1 },
+        { color: '#ff00ff', pOff: Math.PI / 2, fMult: 0.8, aMult: 0.7 },
+        { color: '#ffff00', pOff: Math.PI, fMult: 1.2, aMult: 0.5 },
+        { color: '#0000ff', pOff: Math.PI * 1.5, fMult: 0.7, aMult: 0.8 },
       ];
 
       waves.forEach(w => {
         ctx.shadowColor = w.color;
-        drawWave(ctx, width, height, phase + w.pOff, smoothAmp.current * w.aMult, smoothFreq.current * w.fMult, w.color, 2);
+        drawWave(
+          ctx, width, height,
+          phase + w.pOff,
+          smoothAmp.current * w.aMult,   // aMult < 1, so always within MAX_AMP
+          smoothFreq.current * w.fMult,
+          w.color,
+          LINE_WIDTH
+        );
       });
 
       phase += 0.06;
@@ -110,7 +124,8 @@ const VoiceVisualizer = ({ isListening, isSpeaking }) => {
 
   return (
     <div className="voice-visualizer-container">
-      <canvas ref={canvasRef} width={200} height={80} className="voice-canvas" />
+      {/* Increased height from 80 → 120 to give waves more room */}
+      <canvas ref={canvasRef} width={200} height={120} className="voice-canvas" />
       {!isListening && !isSpeaking && (
         <div className="voice-tooltip">Press 'M' to toggle voice</div>
       )}
