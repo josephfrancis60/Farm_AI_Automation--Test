@@ -1,0 +1,50 @@
+[
+    {
+        "id": "20260417103052936775",
+        "timestamp": "2026-04-17T10:30:52Z",
+        "title": "Irrigation Recommended",
+        "message": "Corn (Field 4) needs watering. Reason: Soil moisture might be low and no rain detected.",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
+        "id": "20260417103052912058",
+        "timestamp": "2026-04-17T10:30:52Z",
+        "title": "Irrigation Recommended",
+        "message": "Sugarcane (Field 3) needs watering. Reason: Soil moisture might be low and no rain detected.",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
+        "id": "20260417103052890181",
+        "timestamp": "2026-04-17T10:30:52Z",
+        "title": "Irrigation Recommended",
+        "message": "Potato (Field 2) needs watering. Reason: Soil moisture might be low and no rain detected.",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
+        "id": "20260417103052863332",
+        "timestamp": "2026-04-17T10:30:52Z",
+        "title": "Irrigation Recommended",
+        "message": "Tomato (Field 1) needs watering. Reason: Soil moisture might be low and no rain detected.",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
+        "id": "20260417103052786019",
+        "timestamp": "2026-04-17T10:30:52Z",
+        "title": "System Catch-up",
+        "message": "System was offline for 2d 3h 11m. Fetching missed activities...",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
+        "id": "20260417103052761592",
+        "timestamp": "2026-04-17T10:30:52Z",
+        "title": "High Temperature Alert",
+        "message": "It's 35.85\u00b0C in Kanija Bhavan. Crops might need extra water.",
+        "category": "WARNING",
+        "is_read": false
+    }
+]
