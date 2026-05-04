@@ -1,9 +1,17 @@
 [
     {
-        "id": "20260427051554778595",
-        "timestamp": "2026-04-27T05:15:54Z",
+        "id": "20260504063936001715",
+        "timestamp": "2026-05-04T06:39:36Z",
+        "title": "Harvest Near",
+        "message": "Tomato (Field 1) is approaching harvest in 4 days.",
+        "category": "WARNING",
+        "is_read": false
+    },
+    {
+        "id": "20260504063935789227",
+        "timestamp": "2026-05-04T06:39:35Z",
         "title": "System Catch-up",
-        "message": "System was offline for 5d 22h 24m. Fetching missed activities...",
+        "message": "System was offline for 7d 0h 2m. Fetching missed activities...",
         "category": "INFO",
         "is_read": false
     },

@@ -1,18 +1,1 @@
-[
-    {
-        "id": "20260427061551522293",
-        "timestamp": "2026-04-27T06:15:51Z",
-        "due_time": "2026-04-27 11:55:00",
-        "title": "Irrigation Starting Soon",
-        "message": "Irrigation for Corn is scheduled to start in 5 minutes (at 12:00).",
-        "is_read": false
-    },
-    {
-        "id": "20260427061551529897",
-        "timestamp": "2026-04-27T06:15:51Z",
-        "due_time": "2026-04-27 12:00:00",
-        "title": "Irrigation Starting NOW",
-        "message": "Irrigation for Corn is starting now as per schedule (12:00).",
-        "is_read": false
-    }
-]
+[]

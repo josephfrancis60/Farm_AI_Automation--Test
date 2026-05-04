@@ -1,0 +1,37 @@
+2026-05-04 06:40:50,720 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-05-04 06:40:50,720 - INFO - USER INPUT  : [SYSTEM TRIGGER: REMINDER DUE] Title: Irrigation Starting Soon, Message: Irrigation for Corn is scheduled to start in 5 minutes (at 12:00).. Please announce this naturally.
+2026-05-04 06:40:50,721 - INFO - AGENT REPLY : You have a reminder that irrigation for Corn is scheduled to start soon, in about 5 minutes, at 12:00.
+2026-05-04 06:40:50,722 - INFO - TOKENS      : prompt=4403 | completion=27 | total=4430 | time=0.487s
+2026-05-04 06:40:50,723 - INFO - --------------------------------------------------
+
+2026-05-04 06:40:59,465 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-05-04 06:40:59,466 - INFO - USER INPUT  : [SYSTEM TRIGGER: REMINDER DUE] Title: Irrigation Starting NOW, Message: Irrigation for Corn is starting now as per schedule (12:00).. Please announce this naturally.
+2026-05-04 06:40:59,467 - INFO - AGENT REPLY : Irrigation for Corn is starting now as scheduled.
+2026-05-04 06:40:59,469 - INFO - TOKENS      : prompt=4788 | completion=12 | total=4800 | time=0.268s
+2026-05-04 06:40:59,481 - INFO - --------------------------------------------------
+
+2026-05-04 06:43:21,171 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-05-04 06:43:21,222 - INFO - USER INPUT  : Oh, can you give me a quick summary for the alerts I'm seeing?
+2026-05-04 06:43:21,268 - INFO - AGENT REPLY : You have a few alerts to be aware of. Firstly, the Tomato crop in Field 1 is nearing harvest, expected in about 4 days. Additionally, the system is catching up after being offline for a while. You also have irrigation recommendations for Corn, Sugarcane, and Potato fields, as they might be running low on soil moisture and there's no rain forecasted. Would you like me to look into any of these further?
+2026-05-04 06:43:21,297 - INFO - TOKENS      : prompt=5090 | completion=90 | total=5180 | time=0.815s
+2026-05-04 06:43:21,317 - INFO - --------------------------------------------------
+
+2026-05-04 06:44:05,741 - INFO - 
+--------------------------------------------------
+NEW INTERACTION
+--------------------------------------------------
+2026-05-04 06:44:05,746 - INFO - USER INPUT  : Like, how's the weather right now? Like.Like do I need to water or do not need to water?
+2026-05-04 06:44:05,748 - INFO - AGENT REPLY : LIMITATION: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=weather{"city": "Kanija Bhavan"}</function>'}}
+2026-05-04 06:44:05,749 - INFO - TOKENS      : prompt=0 | completion=0 | total=0 | time=0s
+2026-05-04 06:44:05,751 - INFO - --------------------------------------------------
+
+2026-05-04 06:44:05,753 - ERROR - AGENT ERROR: Error code: 400 - {'error': {'message': "Failed to call a function. Please adjust your prompt. See 'failed_generation' for more details.", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '<function=weather{"city": "Kanija Bhavan"}</function>'}}
