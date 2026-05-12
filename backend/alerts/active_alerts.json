@@ -1,58 +1,42 @@
 [
     {
-        "id": "20260504063936001715",
-        "timestamp": "2026-05-04T06:39:36Z",
-        "title": "Harvest Near",
-        "message": "Tomato (Field 1) is approaching harvest in 4 days.",
-        "category": "WARNING",
-        "is_read": false
-    },
-    {
-        "id": "20260504063935789227",
-        "timestamp": "2026-05-04T06:39:35Z",
-        "title": "System Catch-up",
-        "message": "System was offline for 7d 0h 2m. Fetching missed activities...",
-        "category": "INFO",
-        "is_read": false
-    },
-    {
-        "id": "20260417103052936775",
-        "timestamp": "2026-04-17T10:30:52Z",
+        "id": "20260508070609919038",
+        "timestamp": "2026-05-08T07:06:09Z",
         "title": "Irrigation Recommended",
         "message": "Corn (Field 4) needs watering. Reason: Soil moisture might be low and no rain detected.",
         "category": "INFO",
         "is_read": false
     },
     {
-        "id": "20260417103052912058",
-        "timestamp": "2026-04-17T10:30:52Z",
+        "id": "20260508070609906700",
+        "timestamp": "2026-05-08T07:06:09Z",
         "title": "Irrigation Recommended",
         "message": "Sugarcane (Field 3) needs watering. Reason: Soil moisture might be low and no rain detected.",
         "category": "INFO",
         "is_read": false
     },
     {
-        "id": "20260417103052890181",
-        "timestamp": "2026-04-17T10:30:52Z",
+        "id": "20260508070609894108",
+        "timestamp": "2026-05-08T07:06:09Z",
         "title": "Irrigation Recommended",
         "message": "Potato (Field 2) needs watering. Reason: Soil moisture might be low and no rain detected.",
         "category": "INFO",
         "is_read": false
     },
     {
-        "id": "20260417103052863332",
-        "timestamp": "2026-04-17T10:30:52Z",
-        "title": "Irrigation Recommended",
-        "message": "Tomato (Field 1) needs watering. Reason: Soil moisture might be low and no rain detected.",
-        "category": "INFO",
+        "id": "20260508070609882899",
+        "timestamp": "2026-05-08T07:06:09Z",
+        "title": "Ready to Harvest",
+        "message": "Tomato (Field 1) is ready! Expected harvest date was 2026-05-08.",
+        "category": "SUCCESS",
         "is_read": false
     },
     {
-        "id": "20260417103052761592",
-        "timestamp": "2026-04-17T10:30:52Z",
-        "title": "High Temperature Alert",
-        "message": "It's 35.85\u00b0C in Kanija Bhavan. Crops might need extra water.",
-        "category": "WARNING",
+        "id": "20260508070609876254",
+        "timestamp": "2026-05-08T07:06:09Z",
+        "title": "Irrigation Recommended",
+        "message": "Tomato (Field 1) needs watering. Reason: Soil moisture might be low and no rain detected.",
+        "category": "INFO",
         "is_read": false
     }
 ]
