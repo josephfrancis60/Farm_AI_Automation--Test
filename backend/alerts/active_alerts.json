@@ -1,5 +1,13 @@
 [
     {
+        "id": "20260512074216488456",
+        "timestamp": "2026-05-12T07:42:16Z",
+        "title": "System Catch-up",
+        "message": "System was offline for 4d 0h 36m. Fetching missed activities...",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
         "id": "20260508070609919038",
         "timestamp": "2026-05-08T07:06:09Z",
         "title": "Irrigation Recommended",
