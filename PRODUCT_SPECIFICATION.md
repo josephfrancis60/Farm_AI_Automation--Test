@@ -3,7 +3,7 @@
 ## 1. Product Context & Overview
 **Echo** is a comprehensive, highly intelligent, and autonomous AI assistant designed specifically for farm management. It serves as the primary operational brain for agricultural activities, functioning natively on the edge or via local infrastructure to track fields, monitor weather, schedule and trigger irrigation, manage fertilizer inventory, and synthesize daily operational reports. 
 
-The system leverages large language models natively via Groq (specifically utilizing endpoints like Llama 3) orchestrating logic through **LangGraph** to maintain a stateful, agentic workflow. Echo interacts with users via modern graphical UIs enriched with Speech-To-Text (STT) and Text-To-Speech (TTS) capabilities.
+The system leverages large language models through **LangGraph** to maintain a stateful, agentic workflow. The current web experience uses Gemini for standard text requests and Gemini Live for low-latency voice interaction with native audio responses.
 
 ## 2. Agent Persona and Tone
 - **Name:** Echo (frequently referred to or styled as "JARVIS" in specific desktop HUD implementations).
@@ -38,10 +38,10 @@ Echo operates a background `APScheduler` (Farm Scheduler) that actively monitors
 ## 4. User Interfaces
 The product is presented through decoupled frontends:
 1. **Desktop HUD (Jarvis UI):** A `CustomTkinter` desktop application designed for persistent monitoring. It features continuous background polling, real-time alert and reminder displays, an active typing indicator, and local TTS/STT (using `SpeechRecognition` and `pyttsx3`). It features highly tuned pause thresholds (2.5 seconds) to allow users to speak naturally without cutoff.
-2. **Web HUD (React/Vite):** A cutting-edge, glassmorphic modern UI. It utilizes the native Web Speech API with sophisticated handling:
-    - **4-Second Silence Buffer:** To prevent cutting off users while they think or take a breath, the UI waits for a full 4 seconds of silence after a sentence is finalized before auto-sending the request.
-    - **Feedback Loop Prevention:** The microphone explicitly stops listening when a message is sent to prevent transcribing its own spoken responses.
-    - **Dynamic Timer Reset:** Resuming speech within the 4-second window automatically resets the send timer.
+2. **Web HUD (React/Vite):** A cutting-edge, glassmorphic modern UI. It connects to the FastAPI backend over REST for text chat and over a proxied WebSocket (`/ws/live`) for Gemini Live voice sessions.
+    - **Native Gemini Voice:** The web microphone streams PCM audio to Gemini Live and plays Gemini's returned 24 kHz PCM audio in the browser.
+    - **Live Model Configuration:** Users can choose supported Gemini Live voices (`Puck`, `Charon`, `Kore`, `Fenrir`, `Aoede`) and language preferences from the settings panel.
+    - **Usage and Error Visibility:** The header displays Gemini token usage metadata when available, and surfaces quota or Live session errors directly in the HUD.
 
 ## 5. Security and "Human-in-the-Loop"
 Despite having autonomous capabilities, Echo adheres strictly to a **Human-in-the-loop** protocol for destructive or resource-intensive tasks. While the agent can *recommend* irrigation or *suggest* deleting a crop, it will always ask for final, explicit user confirmation before executing the command in the database or actuating physical sprinklers.

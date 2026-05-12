@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Mic, Send, AlertTriangle, Info, CheckCircle, XCircle, Bell, Clock } from 'lucide-react';
+import { Mic, Send, AlertTriangle, Info, CheckCircle, XCircle, Bell, Clock, Settings, X } from 'lucide-react';
 import VoiceVisualizer from './VoiceVisualizer';
 
 const API_BASE = '/api';
+const WS_BASE = `${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.host}/ws/live`;
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -12,146 +13,53 @@ function App() {
   const [alerts, setAlerts] = useState([]);
   const [reminders, setReminders] = useState([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isBackendOnline, setIsBackendOnline] = useState(true);
+  const isBackendOnlineRef = useRef(true);
+  const lastOfflineAnnouncementRef = useRef(0);
+  const [modelName, setModelName] = useState('Gemini 2.5 Flash Live Preview');
+  const [showSettings, setShowSettings] = useState(false);
+  const [usage, setUsage] = useState({ total: 0, prompt: 0, response: 0 });
+  const [quotaStatus, setQuotaStatus] = useState('Waiting for Gemini usage metadata');
+
+  // Settings state
+  const [config, setConfig] = useState({
+    model: 'gemini-2.5-flash-live-preview',
+    voice: 'Kore',
+    language: 'English',
+    affective_dialog: true,
+    proactive_audio: true
+  });
+
   const activeReminderIdRef = useRef(null);
   const [activeReminderId, setActiveReminderId] = useState(null);
-  const handleSendRef = useRef(null);
-  const autoSendTimeoutRef = useRef(null);
-
-  const [isBackendOnline, setIsBackendOnline] = useState(true);
-  const [modelName, setModelName] = useState('');
-
-  // Keep a fresh reference to handleSend for the speech recognition callback
-  useEffect(() => {
-    handleSendRef.current = handleSend;
-  });
-  const prevOnlineRef = useRef(true);
-
   const chatEndRef = useRef(null);
-  const recognitionRef = useRef(null);
-  const isSpokenRef = useRef(false); // To prevent multiple initial speaks
   const announcedReminders = useRef(new Set());
+  const wsRef = useRef(null);
+  const audioContextRef = useRef(null);
+  const processorRef = useRef(null);
+  const audioQueueRef = useRef([]);
+  const isPlayingRef = useRef(false);
 
-  const checkBackendStatus = async () => {
-    try {
-      const res = await fetch(`${API_BASE}/health`);
-      if (res.ok) {
-        const data = await res.json();
-        setModelName(data.model || 'Unknown Model');
-        if (!prevOnlineRef.current) {
-          // System came back online
-          speak("Sir, connectivity has been restored. My processing cores are now online.");
-          setMessages(prev => [...prev, {
-            id: Date.now(),
-            role: 'echo',
-            content: "Connectivity restored. Systems operational.",
-            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
-          }]);
-        }
-        setIsBackendOnline(true);
-        prevOnlineRef.current = true;
-      } else {
-        throw new Error('Offline');
-      }
-    } catch (err) {
-      if (prevOnlineRef.current) {
-        // System just went offline
-        setIsBackendOnline(false);
-        prevOnlineRef.current = false;
-        speak("Servers are down. Please restore connectivity to my main processing cores.");
-      }
-    }
-  };
-
-  // Initialize Speech Recognition
+  // Initialize
   useEffect(() => {
-    const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (SpeechRecognitionAPI) {
-      recognitionRef.current = new SpeechRecognitionAPI();
-      recognitionRef.current.continuous = true;
-      recognitionRef.current.interimResults = true;
-      recognitionRef.current.lang = 'en-US';
+    checkBackendStatus();
+    fetchAlerts();
+    fetchReminders();
 
-      recognitionRef.current.onresult = (event) => {
-        if (isProcessing) return;
+    // Show initial greeting text only — Gemini speaks when live session starts
+    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+    setMessages([{
+      id: Date.now(),
+      role: 'echo',
+      content: 'Welcome back sir. Press Mic or M to start voice interaction.',
+      timestamp: now
+    }]);
 
-        // Clear any existing auto-send timer
-        if (autoSendTimeoutRef.current) {
-          clearTimeout(autoSendTimeoutRef.current);
-          autoSendTimeoutRef.current = null;
-        }
-
-        const transcript = Array.from(event.results)
-          .map(result => result[0].transcript)
-          .join('');
-        setInputValue(transcript);
-
-        const isFinal = event.results[event.results.length - 1].isFinal;
-        if (isFinal && handleSendRef.current) {
-          // Instead of immediate send, wait 4 seconds
-          autoSendTimeoutRef.current = setTimeout(() => {
-            recognitionRef.current?.stop();
-            handleSendRef.current(transcript);
-            autoSendTimeoutRef.current = null;
-          }, 4000);
-        }
-      };
-
-      recognitionRef.current.onend = () => {
-        setIsListening(false);
-      };
-
-      recognitionRef.current.onerror = (event) => {
-        console.error('Speech recognition error', event.error);
-        setIsListening(false);
-        setInputValue('');
-        setMessages(prev => [...prev, {
-          id: Date.now(),
-          role: 'error',
-          content: 'Voice input failed. Please try again.',
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
-        }]);
-      };
-    }
-
-    // Initial welcome speech (only if online)
-    const initialGreeting = "Welcome back sir. How may I assist you.";
-
-    // Initial check
-    checkBackendStatus().then(() => {
-      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-
-      // If still offline after first check
-      if (!prevOnlineRef.current) {
-        const offMsg = "Servers are down....";
-        speak(offMsg);
-        setMessages([{
-          id: Date.now(),
-          role: 'error',
-          content: offMsg,
-          timestamp: now
-        }]);
-        isSpokenRef.current = true;
-      } else if (!isSpokenRef.current) {
-        speak(initialGreeting);
-        setMessages([{
-          id: Date.now(),
-          role: 'echo',
-          content: initialGreeting,
-          timestamp: now
-        }]);
-        isSpokenRef.current = true;
-      }
-    });
-
-    // Polling for backend status, alerts, and reminders
     const interval = setInterval(() => {
       checkBackendStatus();
-      if (prevOnlineRef.current) {
-        fetchAlerts();
-        fetchReminders();
-      }
+      fetchAlerts();
+      fetchReminders();
     }, 5000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -163,12 +71,68 @@ function App() {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key.toLowerCase() === 'm' && document.activeElement.tagName !== 'INPUT') {
-        toggleMic();
+        toggleLiveConnection();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isListening]);
+
+  const checkBackendStatus = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/health`);
+      if (res.ok) {
+        if (!isBackendOnlineRef.current) {
+          // System came back online — show text, Gemini will speak if session is active
+          const onlineMsg = 'Sir, connectivity has been restored. My processing cores are now online.';
+          setMessages(prev => [...prev, {
+            id: Date.now(),
+            role: 'echo',
+            content: onlineMsg,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
+          }]);
+          // If live session is open, send the message through it so Gemini speaks it
+          if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+            wsRef.current.send(JSON.stringify({ type: 'text', text: onlineMsg }));
+          }
+        }
+        setIsBackendOnline(true);
+        isBackendOnlineRef.current = true;
+      } else {
+        throw new Error('Offline');
+      }
+    } catch (err) {
+      const now = Date.now();
+      const shouldAnnounce = isBackendOnlineRef.current || (now - lastOfflineAnnouncementRef.current > 180000); // 3 minutes
+
+      if (shouldAnnounce) {
+        setIsBackendOnline(false);
+        isBackendOnlineRef.current = false;
+        lastOfflineAnnouncementRef.current = now;
+        
+        const offlineMsg = 'Servers are down. Please restore connectivity to my main processing cores.';
+        setMessages(prev => [...prev, {
+          id: Date.now(),
+          role: 'error',
+          content: offlineMsg,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
+        }]);
+      }
+    }
+  };
+
+  // Browser TTS is only used as a last resort when Gemini session is not active
+  const speak = (text) => {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    const voices = window.speechSynthesis.getVoices();
+    const preferred = voices.find(v => v.name.includes('David') || v.name.includes('Microsoft David'));
+    if (preferred) utterance.voice = preferred;
+    window.speechSynthesis.speak(utterance);
+  };
 
   const fetchAlerts = async () => {
     try {
@@ -184,40 +148,195 @@ function App() {
     try {
       const res = await fetch(`${API_BASE}/reminders`);
       const data = await res.json();
-
-      // Auto-speak reminders when due
-      const now = new Date();
-      data.forEach(rem => {
-        const dueTime = new Date(rem.due_time);
-        if (now >= dueTime && !announcedReminders.current.has(rem.id) && !activeReminderIdRef.current) {
-          // Trigger natural announcement via hidden chat message
-          announcedReminders.current.add(rem.id);
-          activeReminderIdRef.current = rem.id;
-          setActiveReminderId(rem.id);
-          handleTrigger(`[SYSTEM TRIGGER: REMINDER DUE] Title: ${rem.title}, Message: ${rem.message}. Please announce this naturally.`);
-        }
-      });
-
       setReminders(data);
     } catch (err) {
       console.error('Failed to fetch reminders', err);
     }
   };
 
-  const clearReminder = async (id, isSilent = false) => {
+  const clearReminder = async (id) => {
     try {
       await fetch(`${API_BASE}/reminders/${id}`, { method: 'DELETE' });
-      if (!isSilent) {
-        handleTrigger(`[SYSTEM TRIGGER: REMINDER CANCELED] The user manually canceled a reminder. Acknowledge this naturally.`);
-      }
       fetchReminders();
     } catch (err) {
       console.error('Failed to clear reminder', err);
     }
   };
 
-  const handleTrigger = async (text) => {
-    if (isProcessing) return;
+  const toggleLiveConnection = () => {
+    if (isListening) {
+      stopLiveConnection();
+    } else {
+      startLiveConnection();
+    }
+  };
+
+  const startLiveConnection = async () => {
+    setIsListening(true);
+    
+    // Connect to WebSocket
+    const ws = new WebSocket(WS_BASE);
+    wsRef.current = ws;
+
+    ws.onopen = () => {
+      console.log('WebSocket connected');
+      setQuotaStatus('Live session connected');
+      ws.send(JSON.stringify({ type: 'config', ...config }));
+      startAudioCapture();
+      // Ask Gemini to greet — Gemini's voice will speak it
+      setTimeout(() => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({ type: 'text', text: 'Greet the user briefly and tell them you are ready to help.' }));
+        }
+      }, 800);
+    };
+
+    ws.onmessage = async (event) => {
+      const data = JSON.parse(event.data);
+      
+      if (data.type === "audio") {
+        const audioData = base64ToArrayBuffer(data.data);
+        queueAudio(audioData);
+      } else if (data.type === "transcript") {
+        updateTranscript(data.role, data.text);
+      } else if (data.type === "usage") {
+        setUsage({
+          total: data.total_tokens || 0,
+          prompt: data.prompt_tokens || 0,
+          response: data.candidates_tokens || 0
+        });
+        setQuotaStatus('Usage updated from Gemini Live');
+      } else if (data.type === "error") {
+        const message = data.message || 'Gemini Live session failed.';
+        updateTranscript('error', message);
+        setQuotaStatus(message);
+      }
+    };
+
+    ws.onclose = () => {
+      console.log("WebSocket closed");
+      stopAudioCapture();
+      setIsListening(false);
+    };
+
+    ws.onerror = (err) => {
+      console.error("WebSocket error", err);
+      setQuotaStatus('WebSocket failed. Confirm the backend is running on port 8000.');
+      setIsListening(false);
+    };
+  };
+
+  const stopLiveConnection = () => {
+    if (wsRef.current) {
+      wsRef.current.close();
+    }
+  };
+
+  const startAudioCapture = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+      const source = audioContextRef.current.createMediaStreamSource(stream);
+      
+      // Use ScriptProcessor for simplicity (AudioWorklet is better but more complex for one file)
+      const processor = audioContextRef.current.createScriptProcessor(4096, 1, 1);
+      processorRef.current = processor;
+
+      processor.onaudioprocess = (e) => {
+        const inputData = e.inputBuffer.getChannelData(0);
+        const pcmData = floatTo16BitPCM(inputData);
+        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+          wsRef.current.send(JSON.stringify({
+            type: "audio",
+            data: arrayBufferToBase64(pcmData)
+          }));
+        }
+      };
+
+      source.connect(processor);
+      processor.connect(audioContextRef.current.destination);
+    } catch (err) {
+      console.error("Failed to capture audio", err);
+    }
+  };
+
+  const stopAudioCapture = () => {
+    if (processorRef.current) {
+      processorRef.current.disconnect();
+      processorRef.current = null;
+    }
+    if (audioContextRef.current) {
+      audioContextRef.current.close();
+      audioContextRef.current = null;
+    }
+  };
+
+  const queueAudio = (buffer) => {
+    audioQueueRef.current.push(buffer);
+    if (!isPlayingRef.current) {
+      playNextInQueue();
+    }
+  };
+
+  const playNextInQueue = async () => {
+    if (audioQueueRef.current.length === 0) {
+      isPlayingRef.current = false;
+      setIsSpeaking(false);
+      return;
+    }
+
+    isPlayingRef.current = true;
+    setIsSpeaking(true);
+    const buffer = audioQueueRef.current.shift();
+    
+    // Play raw PCM 16-bit 24kHz
+    if (!window.playAudioContext) {
+      window.playAudioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 24000 });
+    }
+    
+    const audioBuffer = window.playAudioContext.createBuffer(1, buffer.byteLength / 2, 24000);
+    const nowBuffering = audioBuffer.getChannelData(0);
+    const view = new Int16Array(buffer);
+    for (let i = 0; i < view.length; i++) {
+      nowBuffering[i] = view[i] / 32768.0;
+    }
+
+    const source = window.playAudioContext.createBufferSource();
+    source.buffer = audioBuffer;
+    source.connect(window.playAudioContext.destination);
+    source.onended = playNextInQueue;
+    source.start();
+  };
+
+  const updateTranscript = (role, text) => {
+    setMessages(prev => {
+      // Find last message of same role to append if it's recent
+      const last = prev[prev.length - 1];
+      if (last && last.role === role && (Date.now() - last.id < 5000)) {
+        return [...prev.slice(0, -1), { ...last, content: last.content + " " + text }];
+      }
+      return [...prev, {
+        id: Date.now(),
+        role: role,
+        content: text,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
+      }];
+    });
+  };
+
+  const handleSendText = async () => {
+    if (!inputValue.trim()) return;
+    const text = inputValue.trim();
+    setInputValue('');
+    updateTranscript('user', text);
+
+    // If live WS is open, route through it
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify({ type: 'text', text }));
+      return;
+    }
+
+    // Fallback: use regular REST API
     setIsProcessing(true);
     try {
       const res = await fetch(`${API_BASE}/chat`, {
@@ -226,123 +345,50 @@ function App() {
         body: JSON.stringify({ message: text })
       });
       const data = await res.json();
-
-      const echoMsg = {
-        id: Date.now() + 1,
-        role: 'echo',
-        content: data.reply,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
-      };
-      setMessages(prev => [...prev, echoMsg]);
-      speak(data.reply);
-    } catch (err) {
-      console.error("System trigger failed", err);
-    } finally {
-      setIsProcessing(false);
-    }
-  };
-
-  const handleSend = async (text) => {
-    const messageText = text || inputValue;
-    if (!messageText.trim() || isProcessing) return;
-
-    // Clear any pending auto-send timer (for manual sends)
-    if (autoSendTimeoutRef.current) {
-      clearTimeout(autoSendTimeoutRef.current);
-      autoSendTimeoutRef.current = null;
-      recognitionRef.current?.stop();
-    }
-
-    const userMsg = {
-      id: Date.now(),
-      role: 'user',
-      content: messageText,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
-    };
-
-    setMessages(prev => [...prev, userMsg]);
-    setInputValue('');
-    setIsProcessing(true);
-
-    try {
-      const res = await fetch(`${API_BASE}/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: messageText })
-      });
-      const data = await res.json();
-
-      const echoMsg = {
-        id: Date.now() + 1,
-        role: 'echo',
-        content: data.reply,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
-      };
-
-      setMessages(prev => [...prev, echoMsg]);
-      speak(data.reply);
-    } catch (err) {
-      const offlineMsg = "Servers are down....";
-      speak(offlineMsg);
-      const errMsg = {
-        id: Date.now() + 1,
-        role: 'error',
-        content: offlineMsg,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
-      };
-      setMessages(prev => [...prev, errMsg]);
-    } finally {
-      setIsProcessing(false);
-    }
-  };
-
-  const speak = (text) => {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => {
-      setIsSpeaking(false);
-      // Auto-clear active reminder after speaking finishes
-      if (activeReminderIdRef.current) {
-        clearReminder(activeReminderIdRef.current, true); // true = silent
-        activeReminderIdRef.current = null;
-        setActiveReminderId(null);
+      if (!res.ok) {
+        throw new Error(data.detail || 'Failed to reach server.');
       }
-    };
-    utterance.onerror = () => {
-      setIsSpeaking(false);
-      activeReminderIdRef.current = null;
-      setActiveReminderId(null);
-    };
-
-    // Find a good male voice if possible
-    const voices = window.speechSynthesis.getVoices();
-    const preferred = voices.find(v => v.name.includes('David') || v.name.includes('Microsoft David') || v.name.includes('Daniel'));
-    if (preferred) utterance.voice = preferred;
-
-    utterance.rate = 1.0;
-    utterance.pitch = 0.9;
-    window.speechSynthesis.speak(utterance);
-  };
-
-  const toggleMic = () => {
-    if (isListening) {
-      recognitionRef.current?.stop();
-    } else {
-      setIsListening(true);
-      recognitionRef.current?.start();
-    }
-  };
-
-  const clearAlert = async (id) => {
-    try {
-      await fetch(`${API_BASE}/alerts/${id}`, { method: 'DELETE' });
-      fetchAlerts();
+      updateTranscript('echo', data.reply);
+      // Speak via browser TTS since Gemini live is not active
+      speak(data.reply);
     } catch (err) {
-      console.error('Failed to clear alert', err);
+      const message = err.message || 'Failed to reach server.';
+      updateTranscript('error', message);
+      setQuotaStatus(message);
+    } finally {
+      setIsProcessing(false);
     }
+  };
+
+  // Helpers
+  const floatTo16BitPCM = (input) => {
+    const buffer = new ArrayBuffer(input.length * 2);
+    const view = new DataView(buffer);
+    for (let i = 0; i < input.length; i++) {
+      const s = Math.max(-1, Math.min(1, input[i]));
+      view.setInt16(i * 2, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+    }
+    return buffer;
+  };
+
+  const arrayBufferToBase64 = (buffer) => {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  };
+
+  const base64ToArrayBuffer = (base64) => {
+    const binary_string = window.atob(base64);
+    const len = binary_string.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binary_string.charCodeAt(i);
+    }
+    return bytes.buffer;
   };
 
   const getAlertIcon = (category) => {
@@ -359,8 +405,11 @@ function App() {
       <header>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div className="logo">ECHO</div>
-          {modelName && (
-            <div style={{
+          <div 
+            className="model-badge" 
+            onClick={() => setShowSettings(true)}
+            title="Configure model settings"
+            style={{
               display: 'inline-flex',
               alignItems: 'center',
               padding: '2px 10px',
@@ -370,10 +419,19 @@ function App() {
               color: 'var(--cyan)',
               fontSize: '0.75rem',
               fontWeight: '500'
-            }}>
-              {modelName}
-            </div>
-          )}
+            }}
+          >
+            <button className="settings-icon-btn">
+              <Settings size={12} />
+            </button>
+            {modelName}
+          </div>
+          <div className="usage-stats" title={quotaStatus}>
+            <span>TOKENS: {usage.total}</span>
+            <span>IN: {usage.prompt}</span>
+            <span>OUT: {usage.response}</span>
+            <span>{quotaStatus}</span>
+          </div>
         </div>
         <div className="status-indicator">
           <div className={`status-dot ${!isBackendOnline ? 'offline' : ''}`}></div>
@@ -413,20 +471,13 @@ function App() {
             {reminders.length === 0 ? (
               <div style={{ color: 'var(--text-dim)', fontSize: '0.8rem', padding: '10px' }}>NO ACTIVE REMINDERS</div>
             ) : (
-              reminders.map(rem => {
-                const hitTime = new Date(rem.due_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-                return (
-                  <div key={rem.id} className={`alert-card WARNING ${rem.id === activeReminderId ? 'highlight-reminder' : ''}`}>
-                    <button className="alert-clear" onClick={() => clearReminder(rem.id)}>CNCL</button>
-                    <div className="alert-title" style={{ color: 'var(--amber)' }}>{rem.title}</div>
-                    <div className="alert-msg" style={{ fontSize: '0.75rem', opacity: 0.8 }}>{rem.message}</div>
-                    <div className="reminder-hit-time">
-                      <Clock size={10} style={{ verticalAlign: 'middle', marginRight: '4px' }} />
-                      HIT: {hitTime}
-                    </div>
-                  </div>
-                );
-              })
+              reminders.map(rem => (
+                <div key={rem.id} className={`alert-card WARNING`}>
+                  <button className="alert-clear" onClick={() => clearReminder(rem.id)}>CNCL</button>
+                  <div className="alert-title" style={{ color: 'var(--amber)' }}>{rem.title}</div>
+                  <div className="alert-msg" style={{ fontSize: '0.75rem', opacity: 0.8 }}>{rem.message}</div>
+                </div>
+              ))
             )}
           </div>
 
@@ -437,7 +488,6 @@ function App() {
             ) : (
               alerts.map(alert => (
                 <div key={alert.id} className={`alert-card ${alert.category}`}>
-                  <button className="alert-clear" onClick={() => clearAlert(alert.id)}>CLR</button>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '4px' }}>
                     {getAlertIcon(alert.category)}
                     <span className="alert-title">{alert.title}</span>
@@ -453,7 +503,7 @@ function App() {
       <footer>
         <button
           className={`mic-btn ${isListening ? 'listening' : ''}`}
-          onClick={toggleMic}
+          onClick={toggleLiveConnection}
           title="Press 'M' to toggle"
         >
           <Mic size={20} />
@@ -464,14 +514,78 @@ function App() {
             placeholder="HOW MAY I ASSIST YOU?"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            disabled={isProcessing}
+            onKeyDown={(e) => e.key === 'Enter' && handleSendText()}
+            disabled={!isBackendOnline}
           />
         </div>
-        <button className="send-btn" onClick={() => handleSend()} disabled={isProcessing || !inputValue.trim()}>
+        <button className="send-btn" onClick={handleSendText} disabled={!isBackendOnline || !inputValue.trim()}>
           <Send size={20} />
         </button>
       </footer>
+
+      {showSettings && (
+        <div className="modal-overlay" onClick={() => setShowSettings(false)}>
+          <div className="liquid-glass-modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Model Configuration</h2>
+              <button className="close-btn" onClick={() => setShowSettings(false)}>
+                <X size={20} />
+              </button>
+            </div>
+            <div className="settings-grid">
+              <div className="setting-item">
+                <label>Voice</label>
+                <select 
+                  className="glass-select"
+                  value={config.voice}
+                  onChange={e => setConfig({...config, voice: e.target.value})}
+                >
+                  <option value="Puck">Puck</option>
+                  <option value="Charon">Charon</option>
+                  <option value="Kore">Kore</option>
+                  <option value="Fenrir">Fenrir</option>
+                  <option value="Aoede">Aoede</option>
+                </select>
+              </div>
+              <div className="setting-item">
+                <label>Language</label>
+                <select 
+                  className="glass-select"
+                  value={config.language}
+                  onChange={e => setConfig({...config, language: e.target.value})}
+                >
+                  <option value="English">English</option>
+                  <option value="Tamil">Tamil</option>
+                  <option value="Malayalam">Malayalam</option>
+                  <option value="Hindi">Hindi</option>
+                </select>
+              </div>
+              <div className="switch-group">
+                <span>Affective Dialog</span>
+                <label className="switch">
+                  <input 
+                    type="checkbox" 
+                    checked={config.affective_dialog}
+                    onChange={e => setConfig({...config, affective_dialog: e.target.checked})}
+                  />
+                  <span className="slider"></span>
+                </label>
+              </div>
+              <div className="switch-group">
+                <span>Proactive Audio</span>
+                <label className="switch">
+                  <input 
+                    type="checkbox" 
+                    checked={config.proactive_audio}
+                    onChange={e => setConfig({...config, proactive_audio: e.target.checked})}
+                  />
+                  <span className="slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

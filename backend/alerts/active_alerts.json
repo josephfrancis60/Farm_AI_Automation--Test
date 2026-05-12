@@ -1,1 +1,50 @@
-[]
+[
+    {
+        "id": "20260512113543254169",
+        "timestamp": "2026-05-12T11:35:43Z",
+        "title": "System Catch-up",
+        "message": "System was offline for 18m. Fetching missed activities...",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
+        "id": "20260512102050579601",
+        "timestamp": "2026-05-12T10:20:50Z",
+        "title": "Irrigation Recommended",
+        "message": "Corn (Field 4) needs watering. Reason: Soil moisture might be low and no rain detected.",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
+        "id": "20260512102050544651",
+        "timestamp": "2026-05-12T10:20:50Z",
+        "title": "Irrigation Recommended",
+        "message": "Sugarcane (Field 3) needs watering. Reason: Soil moisture might be low and no rain detected.",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
+        "id": "20260512102050510023",
+        "timestamp": "2026-05-12T10:20:50Z",
+        "title": "Irrigation Recommended",
+        "message": "Potato (Field 2) needs watering. Reason: Soil moisture might be low and no rain detected.",
+        "category": "INFO",
+        "is_read": false
+    },
+    {
+        "id": "20260512102050459639",
+        "timestamp": "2026-05-12T10:20:50Z",
+        "title": "Ready to Harvest",
+        "message": "Tomato (Field 1) is ready! Expected harvest date was 2026-05-08.",
+        "category": "SUCCESS",
+        "is_read": false
+    },
+    {
+        "id": "20260512102050397455",
+        "timestamp": "2026-05-12T10:20:50Z",
+        "title": "Irrigation Recommended",
+        "message": "Tomato (Field 1) needs watering. Reason: Soil moisture might be low and no rain detected.",
+        "category": "INFO",
+        "is_read": false
+    }
+]

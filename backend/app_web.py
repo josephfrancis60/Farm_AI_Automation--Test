@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import threading
@@ -10,7 +10,7 @@ from agents.run_agent import run_agent
 from alerts.alert_manager import get_active_alerts, remove_alert, clear_alerts
 from scheduler.farm_scheduler import start_scheduler
 from alerts.reminder_manager import get_active_reminders, add_reminder, remove_reminder, clear_reminders
-from llm.llm_model import MODEL_NAME
+from llm.llm_model import MODEL_NAME, TEXT_MODEL_NAME, handle_live_chat
 
 from contextlib import asynccontextmanager
 from services.logger_service import log_agent_action
@@ -44,9 +44,13 @@ class ReminderRequest(BaseModel):
     title: str
     message: str
 
+@app.websocket("/ws/live")
+async def websocket_endpoint(websocket: WebSocket):
+    await handle_live_chat(websocket)
+
 @app.get("/health")
 def health():
-    return {"status": "online", "model": MODEL_NAME}
+    return {"status": "online", "live_model": MODEL_NAME, "text_model": TEXT_MODEL_NAME}
 
 @app.post("/chat")
 async def chat(request: ChatRequest):
