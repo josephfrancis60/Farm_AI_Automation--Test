@@ -23,9 +23,39 @@ load_dotenv()
 
 # MODEL_NAME = "openai/gpt-oss-120b:free"  # Openrouter
 # MODEL_NAME = "llama-3.3-70b-versatile"  # GroqCloud
-MODEL_NAME = os.getenv("GEMINI_LIVE_MODEL", "gemini-2.5-flash-native-audio")
+MODEL_NAME = os.getenv("GEMINI_LIVE_MODEL", "gemini-2.5-flash-native-audio-preview-12-2025")
 TEXT_MODEL_NAME = os.getenv("GEMINI_TEXT_MODEL", "gemini-2.5-flash")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+
+def normalize_live_text(value):
+    """
+    Gemini SDK transcript fields can be strings or structured content parts.
+    Keep the Web UI contract simple: always send a displayable string.
+    """
+    if value is None:
+        return ""
+    if isinstance(value, str):
+        return value
+    if isinstance(value, dict):
+        text = value.get("text")
+        if text is not None:
+            return normalize_live_text(text)
+        return str(value)
+    text = getattr(value, "text", None)
+    if text is not None and text is not value:
+        return normalize_live_text(text)
+    return str(value)
+
+
+def modality_counts(details):
+    if not details:
+        return {}
+    counts = {}
+    for detail in details:
+        modality = normalize_live_text(getattr(detail, "modality", "unknown")).lower()
+        counts[modality] = getattr(detail, "token_count", 0) or 0
+    return counts
 
 
 def get_llm():
@@ -168,7 +198,12 @@ async def handle_live_chat(websocket: WebSocket):
             ),
             tools=get_gemini_tools(),
             system_instruction=types.Content(
-                parts=[types.Part(text=f"You are ECHO, a professional farm assistant. Speak in {language}. Be concise and helpful. You have access to tools for managing crops, irrigation, reminders, and inventory.")]
+                parts=[types.Part(text=(
+                    f"You are ECHO, a professional farm assistant. Always respond in {language}. "
+                    f"If the user speaks in another language, understand their intent and still reply in {language}. "
+                    f"Do not reply in English unless the configured language is English. "
+                    f"Be concise and helpful. You have access to tools for managing crops, irrigation, reminders, and inventory."
+                ))]
             ),
             enable_affective_dialog=enable_affective,
             proactivity=types.ProactivityConfig(proactive_audio=enable_proactive),
@@ -181,7 +216,12 @@ async def handle_live_chat(websocket: WebSocket):
             async def send_to_client():
                 async for message in session.receive():
                     # Audio data
-                    if message.server_content and message.server_content.model_turn:
+                    if message.data:
+                        await websocket.send_json({
+                            "type": "audio",
+                            "data": base64.b64encode(message.data).decode('utf-8')
+                        })
+                    elif message.server_content and message.server_content.model_turn:
                         for part in message.server_content.model_turn.parts:
                             if part.inline_data:
                                 await websocket.send_json({
@@ -191,17 +231,23 @@ async def handle_live_chat(websocket: WebSocket):
                     
                     # Transcripts
                     if message.server_content and message.server_content.output_transcription:
+                        text = normalize_live_text(message.server_content.output_transcription.text)
+                        print(f"Gemini: {text}")
                         await websocket.send_json({
                             "type": "transcript",
                             "role": "echo",
-                            "text": message.server_content.output_transcription.text
+                            "text": text,
+                            "finished": bool(message.server_content.output_transcription.finished)
                         })
                     
                     if message.server_content and message.server_content.input_transcription:
+                        text = normalize_live_text(message.server_content.input_transcription.text)
+                        print(f"User: {text}")
                         await websocket.send_json({
                             "type": "transcript",
                             "role": "user",
-                            "text": message.server_content.input_transcription.text
+                            "text": text,
+                            "finished": bool(message.server_content.input_transcription.finished)
                         })
 
                     # Tool calls
@@ -237,11 +283,15 @@ async def handle_live_chat(websocket: WebSocket):
 
                     # Usage metadata
                     if message.usage_metadata:
+                        usage = message.usage_metadata
                         await websocket.send_json({
                             "type": "usage",
-                            "total_tokens": message.usage_metadata.total_token_count,
-                            "prompt_tokens": message.usage_metadata.prompt_token_count,
-                            "candidates_tokens": message.usage_metadata.candidates_token_count
+                            "total_tokens": usage.total_token_count or 0,
+                            "prompt_tokens": usage.prompt_token_count or 0,
+                            "response_tokens": usage.response_token_count or 0,
+                            "thoughts_tokens": usage.thoughts_token_count or 0,
+                            "prompt_tokens_details": modality_counts(usage.prompt_tokens_details),
+                            "response_tokens_details": modality_counts(usage.response_tokens_details)
                         })
 
             async def receive_from_client():

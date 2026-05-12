@@ -94,22 +94,41 @@ header {
   background-color: rgba(0, 212, 255, 0.15) !important;
 }
 
-.usage-stats {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 3px 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 212, 255, 0.2);
-  background: rgba(0, 212, 255, 0.05);
+.usage-meter {
+  min-width: 360px;
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  color: var(--cyan);
-  letter-spacing: 0.5px;
+  color: var(--text-dim);
 }
 
-.usage-stats span {
-  opacity: 0.8;
+.usage-row,
+.usage-bar-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.usage-row {
+  color: var(--cyan);
+}
+
+.usage-bar-label {
+  margin-top: 3px;
+}
+
+.usage-bar {
+  height: 4px;
+  margin-top: 4px;
+  background: rgba(0, 212, 255, 0.12);
+  overflow: hidden;
+}
+
+.usage-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--cyan));
+  transition: width 0.25s ease;
 }
 
 .status-indicator {
@@ -531,6 +550,10 @@ input:focus {
   border-radius: 12px;
 }
 
+.switch-group span {
+  cursor: help;
+}
+
 .switch {
   position: relative;
   display: inline-block;
@@ -576,6 +599,44 @@ input:checked + .slider:before {
   transform: translateX(22px);
 }
 
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.primary-action,
+.secondary-action {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.primary-action {
+  background: rgba(0, 212, 255, 0.16);
+  color: var(--cyan);
+  border-color: var(--cyan-dim);
+}
+
+.secondary-action {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-dim);
+}
+
+.primary-action:hover {
+  background: rgba(0, 212, 255, 0.25);
+  border-color: var(--cyan);
+}
+
+.secondary-action:hover {
+  color: var(--text);
+  border-color: var(--text-dim);
+}
+
 .settings-icon-btn {
   background: none;
   border: none;
@@ -591,14 +652,6 @@ input:checked + .slider:before {
 
 .settings-icon-btn:hover {
   transform: rotate(90deg);
-}
-
-.usage-stats {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  display: flex;
-  gap: 12px;
-  margin-top: 4px;
 }
 
 @keyframes fadeIn {

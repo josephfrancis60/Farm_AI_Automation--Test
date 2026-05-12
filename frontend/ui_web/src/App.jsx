@@ -4,6 +4,27 @@ import VoiceVisualizer from './VoiceVisualizer';
 
 const API_BASE = '/api';
 const WS_BASE = `${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.host}/ws/live`;
+const LIVE_CONTEXT_LIMIT = 131072;
+const LIVE_TPM_LIMIT = 1000000;
+const LANGUAGE_META = {
+  English: { speechCode: 'en-US' },
+  Tamil: { speechCode: 'ta-IN' },
+  Malayalam: { speechCode: 'ml-IN' },
+  Hindi: { speechCode: 'hi-IN' }
+};
+
+const toDisplayText = (value) => {
+  if (value === null || value === undefined) return '';
+  if (typeof value === 'string') return value;
+  if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+  if (Array.isArray(value)) return value.map(toDisplayText).filter(Boolean).join(' ');
+  if (typeof value === 'object') {
+    if ('text' in value) return toDisplayText(value.text);
+    if ('message' in value) return toDisplayText(value.message);
+    return JSON.stringify(value);
+  }
+  return String(value);
+};
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -16,19 +37,27 @@ function App() {
   const [isBackendOnline, setIsBackendOnline] = useState(true);
   const isBackendOnlineRef = useRef(true);
   const lastOfflineAnnouncementRef = useRef(0);
-  const [modelName, setModelName] = useState('Gemini 2.5 Flash Live Preview');
+  const [modelName, setModelName] = useState('Gemini 2.5 Flash Native Audio');
   const [showSettings, setShowSettings] = useState(false);
-  const [usage, setUsage] = useState({ total: 0, prompt: 0, response: 0 });
+  const [usage, setUsage] = useState({
+    total: 0,
+    prompt: 0,
+    response: 0,
+    thoughts: 0,
+    promptDetails: {},
+    responseDetails: {}
+  });
   const [quotaStatus, setQuotaStatus] = useState('Waiting for Gemini usage metadata');
 
   // Settings state
   const [config, setConfig] = useState({
-    model: 'gemini-2.5-flash-live-preview',
+    model: 'gemini-2.5-flash-native-audio-preview-12-2025',
     voice: 'Kore',
     language: 'English',
     affective_dialog: true,
     proactive_audio: true
   });
+  const [draftConfig, setDraftConfig] = useState(config);
 
   const activeReminderIdRef = useRef(null);
   const [activeReminderId, setActiveReminderId] = useState(null);
@@ -39,6 +68,9 @@ function App() {
   const processorRef = useRef(null);
   const audioQueueRef = useRef([]);
   const isPlayingRef = useRef(false);
+  const restartTimerRef = useRef(null);
+  const recognitionRef = useRef(null);
+  const voiceInputMessageIdRef = useRef(null);
 
   // Initialize
   useEffect(() => {
@@ -77,6 +109,25 @@ function App() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isListening]);
+
+  const openSettings = () => {
+    setDraftConfig(config);
+    setShowSettings(true);
+  };
+
+  const cancelSettings = () => {
+    setDraftConfig(config);
+    setShowSettings(false);
+  };
+
+  const applySettings = () => {
+    const nextConfig = { ...draftConfig };
+    setConfig(nextConfig);
+    setShowSettings(false);
+    if (isListening) {
+      restartLiveConnection(nextConfig);
+    }
+  };
 
   const checkBackendStatus = async () => {
     try {
@@ -163,6 +214,9 @@ function App() {
     }
   };
 
+  const tokenWindowPercent = Math.min(100, (usage.total / LIVE_CONTEXT_LIMIT) * 100);
+  const tpmPercent = Math.min(100, (usage.total / LIVE_TPM_LIMIT) * 100);
+
   const toggleLiveConnection = () => {
     if (isListening) {
       stopLiveConnection();
@@ -171,8 +225,12 @@ function App() {
     }
   };
 
-  const startLiveConnection = async () => {
+  const startLiveConnection = async (sessionConfig = config) => {
     setIsListening(true);
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    await ensurePlaybackContext();
     
     // Connect to WebSocket
     const ws = new WebSocket(WS_BASE);
@@ -180,9 +238,10 @@ function App() {
 
     ws.onopen = () => {
       console.log('WebSocket connected');
-      setQuotaStatus('Live session connected');
-      ws.send(JSON.stringify({ type: 'config', ...config }));
+      setQuotaStatus(`Live session connected: ${sessionConfig.voice}`);
+      ws.send(JSON.stringify({ type: 'config', ...sessionConfig }));
       startAudioCapture();
+      startUiSpeechRecognition(sessionConfig.language);
       // Ask Gemini to greet — Gemini's voice will speak it
       setTimeout(() => {
         if (ws.readyState === WebSocket.OPEN) {
@@ -198,12 +257,16 @@ function App() {
         const audioData = base64ToArrayBuffer(data.data);
         queueAudio(audioData);
       } else if (data.type === "transcript") {
+        if (data.role === 'user' && recognitionRef.current) return;
         updateTranscript(data.role, data.text);
       } else if (data.type === "usage") {
         setUsage({
           total: data.total_tokens || 0,
           prompt: data.prompt_tokens || 0,
-          response: data.candidates_tokens || 0
+          response: data.response_tokens || 0,
+          thoughts: data.thoughts_tokens || 0,
+          promptDetails: data.prompt_tokens_details || {},
+          responseDetails: data.response_tokens_details || {}
         });
         setQuotaStatus('Usage updated from Gemini Live');
       } else if (data.type === "error") {
@@ -216,20 +279,41 @@ function App() {
     ws.onclose = () => {
       console.log("WebSocket closed");
       stopAudioCapture();
+      stopUiSpeechRecognition();
       setIsListening(false);
     };
 
     ws.onerror = (err) => {
       console.error("WebSocket error", err);
       setQuotaStatus('WebSocket failed. Confirm the backend is running on port 8000.');
+      stopUiSpeechRecognition();
       setIsListening(false);
     };
   };
 
   const stopLiveConnection = () => {
+    if (restartTimerRef.current) {
+      clearTimeout(restartTimerRef.current);
+      restartTimerRef.current = null;
+    }
     if (wsRef.current) {
       wsRef.current.close();
+      wsRef.current = null;
     }
+    stopUiSpeechRecognition();
+  };
+
+  const restartLiveConnection = (nextConfig) => {
+    if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
+    setQuotaStatus(`Restarting Live session for ${nextConfig.voice}`);
+    audioQueueRef.current = [];
+    isPlayingRef.current = false;
+    stopAudioCapture();
+    wsRef.current.close();
+    wsRef.current = null;
+    restartTimerRef.current = setTimeout(() => {
+      startLiveConnection(nextConfig);
+    }, 500);
   };
 
   const startAudioCapture = async () => {
@@ -278,6 +362,105 @@ function App() {
     }
   };
 
+  const updateVoiceInputTranscript = (text, isFinal) => {
+    const displayText = toDisplayText(text).trim();
+    if (!displayText) return;
+
+    setMessages(prev => {
+      const id = voiceInputMessageIdRef.current || Date.now();
+      voiceInputMessageIdRef.current = isFinal ? null : id;
+      const existingIndex = prev.findIndex(msg => msg.id === id);
+      const nextMessage = {
+        id,
+        role: 'user',
+        content: displayText,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
+      };
+
+      if (existingIndex >= 0) {
+        return prev.map(msg => msg.id === id ? nextMessage : msg);
+      }
+
+      return [...prev, nextMessage];
+    });
+  };
+
+  const startUiSpeechRecognition = (language) => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      setQuotaStatus('Live session connected. Browser speech transcript is unavailable here.');
+      return;
+    }
+
+    stopUiSpeechRecognition();
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = LANGUAGE_META[language]?.speechCode || 'en-US';
+    recognition.onresult = (event) => {
+      let interim = '';
+      let finalText = '';
+
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0]?.transcript || '';
+        if (event.results[i].isFinal) {
+          finalText += transcript;
+        } else {
+          interim += transcript;
+        }
+      }
+
+      if (interim) updateVoiceInputTranscript(interim, false);
+      if (finalText) updateVoiceInputTranscript(finalText, true);
+    };
+    recognition.onerror = () => {
+      voiceInputMessageIdRef.current = null;
+    };
+    recognition.onend = () => {
+      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+        try {
+          recognition.start();
+        } catch (err) {
+          // The browser can briefly reject immediate restarts.
+        }
+      }
+    };
+
+    recognitionRef.current = recognition;
+    try {
+      recognition.start();
+    } catch (err) {
+      recognitionRef.current = null;
+    }
+  };
+
+  const stopUiSpeechRecognition = () => {
+    const recognition = recognitionRef.current;
+    recognitionRef.current = null;
+    voiceInputMessageIdRef.current = null;
+    if (recognition) {
+      recognition.onend = null;
+      recognition.onerror = null;
+      recognition.onresult = null;
+      try {
+        recognition.stop();
+      } catch (err) {
+        // Already stopped.
+      }
+    }
+  };
+
+  const ensurePlaybackContext = async () => {
+    if (!window.playAudioContext) {
+      window.playAudioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 24000 });
+    }
+    if (window.playAudioContext.state === 'suspended') {
+      await window.playAudioContext.resume();
+    }
+    return window.playAudioContext;
+  };
+
   const playNextInQueue = async () => {
     if (audioQueueRef.current.length === 0) {
       isPlayingRef.current = false;
@@ -289,10 +472,8 @@ function App() {
     setIsSpeaking(true);
     const buffer = audioQueueRef.current.shift();
     
-    // Play raw PCM 16-bit 24kHz
-    if (!window.playAudioContext) {
-      window.playAudioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 24000 });
-    }
+    // Play raw PCM 16-bit 24kHz from Gemini Live.
+    await ensurePlaybackContext();
     
     const audioBuffer = window.playAudioContext.createBuffer(1, buffer.byteLength / 2, 24000);
     const nowBuffering = audioBuffer.getChannelData(0);
@@ -309,16 +490,19 @@ function App() {
   };
 
   const updateTranscript = (role, text) => {
+    const displayText = toDisplayText(text);
+    if (!displayText) return;
+
     setMessages(prev => {
       // Find last message of same role to append if it's recent
       const last = prev[prev.length - 1];
       if (last && last.role === role && (Date.now() - last.id < 5000)) {
-        return [...prev.slice(0, -1), { ...last, content: last.content + " " + text }];
+        return [...prev.slice(0, -1), { ...last, content: `${toDisplayText(last.content)} ${displayText}` }];
       }
       return [...prev, {
         id: Date.now(),
         role: role,
-        content: text,
+        content: displayText,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
       }];
     });
@@ -407,7 +591,7 @@ function App() {
           <div className="logo">ECHO</div>
           <div 
             className="model-badge" 
-            onClick={() => setShowSettings(true)}
+            onClick={openSettings}
             title="Configure model settings"
             style={{
               display: 'inline-flex',
@@ -426,11 +610,20 @@ function App() {
             </button>
             {modelName}
           </div>
-          <div className="usage-stats" title={quotaStatus}>
-            <span>TOKENS: {usage.total}</span>
-            <span>IN: {usage.prompt}</span>
-            <span>OUT: {usage.response}</span>
-            <span>{quotaStatus}</span>
+          <div className="usage-meter" title={quotaStatus}>
+            <div className="usage-row">
+              <span>Total {usage.total.toLocaleString()}</span>
+              <span>In {usage.prompt.toLocaleString()}</span>
+              <span>Out {usage.response.toLocaleString()}</span>
+              <span>Think {usage.thoughts.toLocaleString()}</span>
+            </div>
+            <div className="usage-bar-label">
+              <span>Context {tokenWindowPercent.toFixed(2)}%</span>
+              <span>TPM {tpmPercent.toFixed(3)}%</span>
+            </div>
+            <div className="usage-bar">
+              <div className="usage-bar-fill" style={{ width: `${tokenWindowPercent}%` }}></div>
+            </div>
           </div>
         </div>
         <div className="status-indicator">
@@ -455,7 +648,7 @@ function App() {
                 </span>
                 <span> · {msg.timestamp}</span>
               </div>
-              <div className="message-content">{msg.content}</div>
+              <div className="message-content">{toDisplayText(msg.content)}</div>
             </div>
           ))}
           <VoiceVisualizer isListening={isListening} isSpeaking={isSpeaking} />
@@ -524,11 +717,11 @@ function App() {
       </footer>
 
       {showSettings && (
-        <div className="modal-overlay" onClick={() => setShowSettings(false)}>
+        <div className="modal-overlay" onClick={cancelSettings}>
           <div className="liquid-glass-modal" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
               <h2>Model Configuration</h2>
-              <button className="close-btn" onClick={() => setShowSettings(false)}>
+              <button className="close-btn" onClick={cancelSettings}>
                 <X size={20} />
               </button>
             </div>
@@ -537,8 +730,8 @@ function App() {
                 <label>Voice</label>
                 <select 
                   className="glass-select"
-                  value={config.voice}
-                  onChange={e => setConfig({...config, voice: e.target.value})}
+                  value={draftConfig.voice}
+                  onChange={e => setDraftConfig({...draftConfig, voice: e.target.value})}
                 >
                   <option value="Puck">Puck</option>
                   <option value="Charon">Charon</option>
@@ -551,8 +744,8 @@ function App() {
                 <label>Language</label>
                 <select 
                   className="glass-select"
-                  value={config.language}
-                  onChange={e => setConfig({...config, language: e.target.value})}
+                  value={draftConfig.language}
+                  onChange={e => setDraftConfig({...draftConfig, language: e.target.value})}
                 >
                   <option value="English">English</option>
                   <option value="Tamil">Tamil</option>
@@ -560,27 +753,31 @@ function App() {
                   <option value="Hindi">Hindi</option>
                 </select>
               </div>
-              <div className="switch-group">
+              <div className="switch-group" title="Lets Gemini adapt tone and delivery based on the user's expression and mood.">
                 <span>Affective Dialog</span>
                 <label className="switch">
                   <input 
                     type="checkbox" 
-                    checked={config.affective_dialog}
-                    onChange={e => setConfig({...config, affective_dialog: e.target.checked})}
+                    checked={draftConfig.affective_dialog}
+                    onChange={e => setDraftConfig({...draftConfig, affective_dialog: e.target.checked})}
                   />
                   <span className="slider"></span>
                 </label>
               </div>
-              <div className="switch-group">
+              <div className="switch-group" title="Lets Gemini decide when an audio response is useful, instead of replying to every sound.">
                 <span>Proactive Audio</span>
                 <label className="switch">
                   <input 
                     type="checkbox" 
-                    checked={config.proactive_audio}
-                    onChange={e => setConfig({...config, proactive_audio: e.target.checked})}
+                    checked={draftConfig.proactive_audio}
+                    onChange={e => setDraftConfig({...draftConfig, proactive_audio: e.target.checked})}
                   />
                   <span className="slider"></span>
                 </label>
+              </div>
+              <div className="modal-actions">
+                <button className="secondary-action" onClick={cancelSettings}>Cancel</button>
+                <button className="primary-action" onClick={applySettings}>Apply Changes</button>
               </div>
             </div>
           </div>

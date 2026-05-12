@@ -39,9 +39,9 @@ Echo operates a background `APScheduler` (Farm Scheduler) that actively monitors
 The product is presented through decoupled frontends:
 1. **Desktop HUD (Jarvis UI):** A `CustomTkinter` desktop application designed for persistent monitoring. It features continuous background polling, real-time alert and reminder displays, an active typing indicator, and local TTS/STT (using `SpeechRecognition` and `pyttsx3`). It features highly tuned pause thresholds (2.5 seconds) to allow users to speak naturally without cutoff.
 2. **Web HUD (React/Vite):** A cutting-edge, glassmorphic modern UI. It connects to the FastAPI backend over REST for text chat and over a proxied WebSocket (`/ws/live`) for Gemini Live voice sessions.
-    - **Native Gemini Voice:** The web microphone streams PCM audio to Gemini Live and plays Gemini's returned 24 kHz PCM audio in the browser.
-    - **Live Model Configuration:** Users can choose supported Gemini Live voices (`Puck`, `Charon`, `Kore`, `Fenrir`, `Aoede`) and language preferences from the settings panel.
-    - **Usage and Error Visibility:** The header displays Gemini token usage metadata when available, and surfaces quota or Live session errors directly in the HUD.
+    - **Native Gemini Voice:** The web microphone streams PCM audio to Gemini Live using `gemini-2.5-flash-native-audio-preview-12-2025` and plays Gemini's returned 24 kHz PCM audio in the browser.
+    - **Live Model Configuration:** Users can choose supported Gemini Live voices (`Puck`, `Charon`, `Kore`, `Fenrir`, `Aoede`) and language preferences from the settings panel. If a Live session is already active, changing voice or Live behavior restarts the session so the new voice takes effect.
+    - **Usage and Error Visibility:** The header displays Gemini token usage metadata as plain counters with context and TPM percentage bars, and surfaces quota or Live session errors directly in the HUD.
 
 ## 5. Security and "Human-in-the-Loop"
 Despite having autonomous capabilities, Echo adheres strictly to a **Human-in-the-loop** protocol for destructive or resource-intensive tasks. While the agent can *recommend* irrigation or *suggest* deleting a crop, it will always ask for final, explicit user confirmation before executing the command in the database or actuating physical sprinklers.
